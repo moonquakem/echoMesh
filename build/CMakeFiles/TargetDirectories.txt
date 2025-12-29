@@ -1,0 +1,3 @@
+/home/moon/桌面/code/echoMesh/build/CMakeFiles/echomesh_server.dir
+/home/moon/桌面/code/echoMesh/build/CMakeFiles/edit_cache.dir
+/home/moon/桌面/code/echoMesh/build/CMakeFiles/rebuild_cache.dir

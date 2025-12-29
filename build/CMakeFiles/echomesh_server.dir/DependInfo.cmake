@@ -1,0 +1,31 @@
+
+# Consider dependencies only in project.
+set(CMAKE_DEPENDS_IN_PROJECT_ONLY OFF)
+
+# The set of languages for which implicit dependencies are needed:
+set(CMAKE_DEPENDS_LANGUAGES
+  )
+
+# The set of dependency files which are needed:
+set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/home/moon/桌面/code/echoMesh/src/Acceptor.cpp" "CMakeFiles/echomesh_server.dir/src/Acceptor.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/Acceptor.cpp.o.d"
+  "/home/moon/桌面/code/echoMesh/src/Buffer.cpp" "CMakeFiles/echomesh_server.dir/src/Buffer.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/Buffer.cpp.o.d"
+  "/home/moon/桌面/code/echoMesh/src/Channel.cpp" "CMakeFiles/echomesh_server.dir/src/Channel.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/Channel.cpp.o.d"
+  "/home/moon/桌面/code/echoMesh/src/EpollPoller.cpp" "CMakeFiles/echomesh_server.dir/src/EpollPoller.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/EpollPoller.cpp.o.d"
+  "/home/moon/桌面/code/echoMesh/src/EventLoop.cpp" "CMakeFiles/echomesh_server.dir/src/EventLoop.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/EventLoop.cpp.o.d"
+  "/home/moon/桌面/code/echoMesh/src/TcpConnection.cpp" "CMakeFiles/echomesh_server.dir/src/TcpConnection.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/TcpConnection.cpp.o.d"
+  "/home/moon/桌面/code/echoMesh/src/TcpServer.cpp" "CMakeFiles/echomesh_server.dir/src/TcpServer.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/TcpServer.cpp.o.d"
+  "/home/moon/桌面/code/echoMesh/src/ThreadPool.cpp" "CMakeFiles/echomesh_server.dir/src/ThreadPool.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/ThreadPool.cpp.o.d"
+  "/home/moon/桌面/code/echoMesh/src/main.cpp" "CMakeFiles/echomesh_server.dir/src/main.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/main.cpp.o.d"
+  )
+
+# Targets to which this target links which contain Fortran sources.
+set(CMAKE_Fortran_TARGET_LINKED_INFO_FILES
+  )
+
+# Targets to which this target links which contain Fortran sources.
+set(CMAKE_Fortran_TARGET_FORWARD_LINKED_INFO_FILES
+  )
+
+# Fortran module output directory.
+set(CMAKE_Fortran_TARGET_MODULE_DIR "")
