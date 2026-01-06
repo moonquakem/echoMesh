@@ -1,3 +1,79 @@
+# EchoMesh 项目调试日志
+
+本文档记录了在开发 EchoMesh 项目过程中遇到的主要 Bug 及其修复过程，旨在帮助开发者理解问题根源、学习调试思路。
+
+---
+
+## Bug 1: 客户端断开连接时服务器断言失败
+
+### 问题现象
+
+在修复了服务器无法启动的 `std::bad_function_call` 问题之后，服务器能够正常运行。Python 测试客户端可以成功连接、登录、创建/加入房间并发送消息。然而，当客户端正常关闭连接或连接超时后，服务器立即因断言失败而崩溃。
+
+报错信息如下：
+```
+echomesh_server: /home/moon/桌面/code/echoMesh/src/EpollPoller.cpp:72: void EpollPoller::removeChannel(Channel*): Assertion `index == 1' failed.
+```
+
+### 分析与思考过程
+
+1.  **定位问题**: 错误信息非常明确，问题出在 `EpollPoller.cpp` 的 `removeChannel` 函数中，一个 `assert(index == 1)` 的断言失败了。这说明在调用此函数时，传入的 `channel` 对象的 `index` 成员变量不等于 `1`。
+
+2.  **理解 `Channel::index` 的作用**: 通过分析 `EpollPoller` 的代码，我们知道 `index` 变量是用来追踪一个 `Channel` 在 `epoll` 中的状态的：
+    *   `-1`: 表示该 `Channel` 不在 `epoll` 的监听集合中。
+    *   `1`: 表示该 `Channel` 已经被 `EPOLL_CTL_ADD` 添加到 `epoll` 的监听集合中。
+
+3.  **追踪调用链**: 为了弄清楚 `removeChannel` 是在什么情况下被调用的，以及为什么 `index` 的值不为 `1`，我们从客户端断开连接的源头开始追踪：
+    *   客户端断开连接，服务器的 `TcpConnection::handleRead` 读取到0字节，调用 `handleClose()`。
+    *   在 `handleClose()` 中，会调用 `channel_->disableAll()` 来禁止该 Channel 上的所有事件。
+    *   `disableAll()` 会将 Channel 的监听事件 `events_` 设为 `kNoneEvent`，然后调用 `update()`。
+    *   `update()` 会触发 `EpollPoller::updateChannel()`。
+    *   在 `updateChannel()` 中，代码检查到 `channel->isNoneEvent()` 为 `true`，于是执行了 `update(EPOLL_CTL_DEL, channel)`，**并将 `channel->set_index(-1)`**。这一步是关键！这意味着，仅仅是“禁用”一个 Channel，就已经将其从 `epoll` 内核事件表中移除了，并更新了 `index` 状态。
+    *   `handleClose()` 继续执行，最终会触发连接销毁的逻辑 `connectDestroyed()`。
+    *   `connectDestroyed()` 调用 `channel_->remove()`。
+    *   `channel_->remove()` 调用 `EpollPoller::removeChannel()`。
+
+4.  **发现根本原因**: 当程序执行到 `EpollPoller::removeChannel()` 时，传入的 `channel` 对象的 `index` 已经是 `-1` 了（在第3步中被 `updateChannel` 修改）。因此，`assert(index == 1)` 断言自然就失败了。
+
+    **结论**: Bug 的根源在于对 Channel 的状态管理混乱。一个 Channel 在其生命周期结束时，被事实상地从 `epoll` 中移除了两次：一次是在 `updateChannel` 中（当事件被禁用时），另一次是在 `removeChannel` 中（当连接被销毁时）。而 `removeChannel` 函数的实现过于理想化，没有预料到 `channel` 可能已经被移除了。
+
+### 解决方法
+
+为了解决这个问题，需要让 `removeChannel` 函数变得更加健壮，能够正确处理一个已经被部分清理过的 `Channel` 对象。
+
+1.  修改 `EpollPoller::removeChannel` 的实现，使其能够应对 `index` 为 `1` (仍在 epoll 中) 或 `-1` (已从 epoll 中移除) 的两种情况。
+2.  只有当 `index` 为 `1` 时，才需要执行 `update(EPOLL_CTL_DEL, channel)` 来通知内核移除文件描述符。
+3.  无论 `index` 是多少，都需要将 `channel` 从 `EpollPoller` 的内部 `channels_` 哈希表中移除，并最终确保其 `index` 被设为 `-1`。
+
+最终的修复代码如下 (`EpollPoller.cpp`)：
+
+```cpp
+void EpollPoller::removeChannel(Channel* channel) {
+    ownerLoop_->assertInLoopThread();
+    int fd = channel->fd();
+    assert(channels_.find(fd) != channels_.end());
+    assert(channels_[fd] == channel);
+    assert(channel->isNoneEvent());
+    int index = channel->index();
+    // 关键修复：断言 index 可以是 1 或 -1
+    assert(index == 1 || index == -1);
+    size_t n = channels_.erase(fd);
+    assert(n == 1);
+
+    // 关键修复：只有当 channel 还在 epoll 监听集合中时，才执行 DEL
+    if (index == 1) {
+        update(EPOLL_CTL_DEL, channel);
+    }
+    channel->set_index(-1);
+}
+```
+
+在应用此修复的过程中，还解决了两个连带的编译错误：
+*   在 `EpollPoller.cpp` 中添加了 `#include "EventLoop.h"`，因为新代码调用了 `ownerLoop_` 的方法，需要 `EventLoop` 的完整定义。
+*   在 `TcpConnection.h` 中添加了 `peerAddress()` 的公有 `getter` 方法，使得回调函数可以访问连接的对端地址。
+
+经过这一系列修复，服务器不再因为客户端断开而崩溃，整个通信链路完全打通。
+
 ---
 
 ## Bug 2: 服务器启动时 `std::bad_function_call` 崩溃
