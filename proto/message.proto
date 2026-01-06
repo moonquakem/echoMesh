@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package echomesh;
+
+enum MsgType {
+  MT_UNKNOWN = 0;
+  MT_LOGIN_REQUEST = 1;
+  MT_LOGIN_RESPONSE = 2;
+  MT_CHAT_MSG = 3;
+  MT_ROOM_ACTION = 4;
+  MT_VOICE_ANNOUNCE = 5;
+}
+
+enum StatusCode {
+  SC_OK = 0;
+  SC_ERROR = 1;
+  SC_ROOM_NOT_FOUND = 101;
+  SC_USER_NOT_IN_ROOM = 102;
+}
+
+message LoginRequest {
+  string username = 1;
+  string password = 2; // For demonstration, not secure
+}
+
+message LoginResponse {
+  StatusCode status_code = 1;
+  int64 user_id = 2;
+  string message = 3;
+}
+
+message ChatMsg {
+  int64 user_id = 1;
+  string room_id = 2;
+  string content = 3;
+}
+
+enum RoomActionType {
+  RA_UNKNOWN = 0;
+  RA_CREATE = 1;
+  RA_JOIN = 2;
+  RA_LEAVE = 3;
+}
+
+message RoomAction {
+  RoomActionType action_type = 1;
+  string room_id = 2;
+  int64 user_id = 3;
+}
+
+message VoiceAnnounce {
+  string sdp = 1; // Simplified for example
+  string room_id = 2;
+  int64 user_id = 3;
+}
+
+message EchoMsg {
+  MsgType type = 1;
+  oneof payload {
+    LoginRequest login_request = 2;
+    LoginResponse login_response = 3;
+    ChatMsg chat_msg = 4;
+    RoomAction room_action = 5;
+    VoiceAnnounce voice_announce = 6;
+  }
+}

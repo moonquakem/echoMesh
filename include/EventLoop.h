@@ -4,6 +4,7 @@
 #include <memory>
 #include <functional>
 #include <mutex>
+#include <thread>
 #include "ThreadPool.h"
 
 class Channel;

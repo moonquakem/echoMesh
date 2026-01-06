@@ -10,6 +10,10 @@
 class EventLoop;
 class TcpConnection;
 
+namespace echomesh {
+class EchoMsg;
+}
+
 using TcpConnectionPtr = std::shared_ptr<TcpConnection>;
 using ConnectionCallback = std::function<void(const TcpConnectionPtr&)>;
 using MessageCallback = std::function<void(const TcpConnectionPtr&, Buffer*)>;
@@ -30,6 +34,7 @@ public:
     void connectDestroyed();
 
     void send(const std::string& message);
+    void send(const echomesh::EchoMsg& message);
     void shutdown();
 
     EventLoop* getLoop() const { return loop_; }

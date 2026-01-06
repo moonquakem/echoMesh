@@ -1,30 +1,27 @@
 #include "ThreadPool.h"
+#include "EventLoop.h"
+#include "EventLoopThread.h"
 
-ThreadPool::ThreadPool(size_t threads) {
-    for(size_t i = 0; i < threads; ++i) {
-        workers.emplace_back([this](std::stop_token st) {
-            while (!st.stop_requested()) {
-                std::function<void()> task;
-                {
-                    std::unique_lock<std::mutex> lock(this->queue_mutex);
-                    this->condition.wait(lock, st, [this, &st] { 
-                        return st.stop_requested() || !this->tasks.empty(); 
-                    });
-                    if (st.stop_requested() && this->tasks.empty()) {
-                        return;
-                    }
-                    task = std::move(this->tasks.front());
-                    this->tasks.pop();
-                }
-                task();
-            }
-        });
-    }
+ThreadPool::ThreadPool(int threadNum)
+    : numThreads_(threadNum),
+      next_(0) {
 }
 
 ThreadPool::~ThreadPool() {
-    for (std::jthread& worker : workers) {
-        worker.request_stop();
+}
+
+void ThreadPool::start() {
+    for (int i = 0; i < numThreads_; ++i) {
+        threads_.emplace_back(std::make_unique<EventLoopThread>());
+        loops_.push_back(threads_[i]->startLoop());
     }
-    condition.notify_all();
+}
+
+EventLoop* ThreadPool::getNextLoop() {
+    if (loops_.empty()) {
+        return nullptr;
+    }
+    EventLoop* loop = loops_[next_];
+    next_ = (next_ + 1) % loops_.size();
+    return loop;
 }

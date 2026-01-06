@@ -14,15 +14,13 @@ class ThreadPool;
 class TcpServer {
 public:
     using ConnectionCallback = std::function<void(const TcpConnectionPtr&)>;
-    using MessageCallback = std::function<void(const TcpConnectionPtr&, Buffer*)>;
 
-    TcpServer(EventLoop* loop, const sockaddr_in& listenAddr, int threadNum);
+    TcpServer(EventLoop* loop, uint16_t port, int threadNum);
     ~TcpServer();
 
     void start();
 
     void setConnectionCallback(const ConnectionCallback& cb) { connectionCallback_ = cb; }
-    void setMessageCallback(const MessageCallback& cb) { messageCallback_ = cb; }
 
 private:
     void newConnection(int sockfd, const sockaddr_in& peerAddr);

@@ -1,6 +1,8 @@
 #include "Buffer.h"
 #include <sys/uio.h>
 #include <cerrno>
+#include <arpa/inet.h>
+#include <cstring>
 
 ssize_t Buffer::readFd(int fd, int* savedErrno) {
     char extrabuf[65536];
@@ -24,4 +26,17 @@ ssize_t Buffer::readFd(int fd, int* savedErrno) {
         append(extrabuf, n - writable);
     }
     return n;
+}
+
+int32_t Buffer::peekInt32() const {
+    // assert(readableBytes() >= sizeof(int32_t));
+    int32_t be32 = 0;
+    ::memcpy(&be32, peek(), sizeof(be32));
+    return ntohl(be32);
+}
+
+int32_t Buffer::readInt32() {
+    int32_t result = peekInt32();
+    retrieve(sizeof(int32_t));
+    return result;
 }

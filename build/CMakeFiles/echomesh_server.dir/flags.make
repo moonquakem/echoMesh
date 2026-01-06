@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/moon/桌面/code/echoMesh/include
+CXX_INCLUDES = -I/home/moon/桌面/code/echoMesh/build -I/home/moon/桌面/code/echoMesh/include
 
-CXX_FLAGS =  -Wall -Wextra -std=gnu++20
+CXX_FLAGS = -std=gnu++20
 

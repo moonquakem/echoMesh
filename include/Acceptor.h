@@ -10,7 +10,7 @@ class Acceptor {
 public:
     using NewConnectionCallback = std::function<void(int sockfd, const sockaddr_in& peerAddr)>;
 
-    Acceptor(EventLoop* loop, const sockaddr_in& listenAddr);
+    Acceptor(EventLoop* loop, uint16_t port, bool reuseport);
     ~Acceptor();
 
     void setNewConnectionCallback(const NewConnectionCallback& cb) {

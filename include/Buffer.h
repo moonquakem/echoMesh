@@ -25,6 +25,9 @@ public:
     char* beginWrite() { return begin() + writerIndex_; }
     const char* beginWrite() const { return begin() + writerIndex_; }
 
+    int32_t peekInt32() const;
+    int32_t readInt32();
+
     void retrieve(size_t len) {
         if (len < readableBytes()) {
             readerIndex_ += len;
