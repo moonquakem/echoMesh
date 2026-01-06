@@ -1,5 +1,6 @@
 #include "EpollPoller.h"
 #include "Channel.h"
+#include "EventLoop.h"
 #include <sys/epoll.h>
 #include <unistd.h>
 #include <cassert>
@@ -65,13 +66,19 @@ void EpollPoller::updateChannel(Channel* channel) {
 }
 
 void EpollPoller::removeChannel(Channel* channel) {
-    assert(channels_.find(channel->fd()) != channels_.end());
-    assert(channels_[channel->fd()] == channel);
+    ownerLoop_->assertInLoopThread();
+    int fd = channel->fd();
+    assert(channels_.find(fd) != channels_.end());
+    assert(channels_[fd] == channel);
     assert(channel->isNoneEvent());
     int index = channel->index();
-    assert(index == 1);
-    channels_.erase(channel->fd());
-    update(EPOLL_CTL_DEL, channel);
+    assert(index == 1 || index == -1);
+    size_t n = channels_.erase(fd);
+    assert(n == 1);
+
+    if (index == 1) {
+        update(EPOLL_CTL_DEL, channel);
+    }
     channel->set_index(-1);
 }
 

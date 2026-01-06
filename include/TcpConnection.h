@@ -39,6 +39,7 @@ public:
 
     EventLoop* getLoop() const { return loop_; }
     const std::string& name() const { return name_; }
+    const sockaddr_in& peerAddress() const { return peerAddr_; }
     bool connected() const { return state_ == kConnected; }
 
 private:

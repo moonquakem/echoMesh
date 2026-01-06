@@ -130,37 +130,11 @@ void TcpConnection::handleRead() {
   int savedErrno = 0;
   ssize_t n = inputBuffer_.readFd(channel_->fd(), &savedErrno);
   if (n > 0) {
-    while (inputBuffer_.readableBytes() >= 4) {
-      int32_t len = inputBuffer_.peekInt32();
-      if (len > 65536 || len < 0) {
-        // Invalid length, close connection
-        handleClose();
-        return;
-      } else if (inputBuffer_.readableBytes() >=
-                 static_cast<size_t>(len) + 4) {
-        inputBuffer_.retrieve(4);
-        std::string msg_data(inputBuffer_.peek(), len);
-        inputBuffer_.retrieve(len);
-
-        echomesh::EchoMsg msg;
-        if (msg.ParseFromString(msg_data)) {
-          // Get the dispatcher and dispatch the message
-          MsgDispatcher::getInstance().dispatch(shared_from_this(), msg);
-        } else {
-          // Parse error, close connection
-          handleClose();
-          return;
-        }
-      } else {
-        // Not enough data for a full message, wait for more
-        break;
-      }
-    }
+    messageCallback_(shared_from_this(), &inputBuffer_);
   } else if (n == 0) {
     handleClose();
   } else {
     errno = savedErrno;
-    // Log error
     handleError();
   }
 }

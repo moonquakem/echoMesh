@@ -3,15 +3,53 @@
 #include "EventLoop.h"
 #include "TcpConnection.h"
 #include "ThreadPool.h"
+#include "MsgDispatcher.h" 
 #include <cassert>
 #include <functional>
 #include <iostream>
+
+namespace {
+void defaultConnectionCallback(const TcpConnectionPtr &conn) {
+  if (conn->connected()) {
+    std::cout << "New connection " << conn->name() << " from "
+              << conn->peerAddress().sin_addr.s_addr << std::endl;
+  } else {
+    std::cout << "Connection " << conn->name() << " is down." << std::endl;
+  }
+}
+
+void defaultMessageCallback(const TcpConnectionPtr &conn, Buffer *buffer) {
+    while (buffer->readableBytes() >= 4) {
+        int32_t len = buffer->peekInt32();
+        if (len > 65536 || len < 0) {
+            conn->shutdown();
+            break;
+        } else if (buffer->readableBytes() >= static_cast<size_t>(len) + 4) {
+            buffer->retrieve(4);
+            std::string msg_data(buffer->peek(), len);
+            buffer->retrieve(len);
+
+            echomesh::EchoMsg msg;
+            if (msg.ParseFromString(msg_data)) {
+                MsgDispatcher::getInstance().dispatch(conn, msg);
+            } else {
+                conn->shutdown();
+                break;
+            }
+        } else {
+            break;
+        }
+    }
+}
+}
 
 TcpServer::TcpServer(EventLoop *loop, uint16_t port, int threadNum)
     : loop_(loop),
       acceptor_(std::make_unique<Acceptor>(loop, port, true)),
       threadPool_(std::make_shared<ThreadPool>(threadNum)), started_(false),
-      nextConnId_(1) {
+      nextConnId_(1),
+      connectionCallback_(defaultConnectionCallback),
+      messageCallback_(defaultMessageCallback) {
   acceptor_->setNewConnectionCallback(
       [this](int sockfd, const sockaddr_in &peerAddr) {
         this->newConnection(sockfd, peerAddr);
@@ -52,6 +90,7 @@ void TcpServer::newConnection(int sockfd, const sockaddr_in &peerAddr) {
       std::make_shared<TcpConnection>(ioLoop, connName, sockfd, localAddr, peerAddr);
   connections_[connName] = conn;
   conn->setConnectionCallback(connectionCallback_);
+  conn->setMessageCallback(messageCallback_);
   conn->setCloseCallback(
       [this](const TcpConnectionPtr &c) { this->removeConnection(c); });
 
