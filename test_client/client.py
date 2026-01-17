@@ -1,6 +1,29 @@
 import socket
 import struct
+import threading
 from proto import message_pb2 # Assuming proto folder is in the same directory as this script
+
+def udp_server_thread():
+    UDP_IP = "127.0.0.1"
+    UDP_PORT = 12345
+
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    sock.bind((UDP_IP, UDP_PORT))
+
+    print(f"UDP server listening on {UDP_IP}:{UDP_PORT}")
+
+    while True:
+        data, addr = sock.recvfrom(1024) # buffer size is 1024 bytes
+        if not data:
+            break
+        
+        # Deserialize VoicePacket
+        sequence = struct.unpack("!I", data[0:4])[0]
+        timestamp = struct.unpack("!I", data[4:8])[0]
+        userId = struct.unpack("!I", data[8:12])[0]
+        
+        print(f"Received voice packet: seq={sequence}, ts={timestamp}, user={userId}, size={len(data)} bytes")
+
 
 def create_login_request(username, password):
     login_req = message_pb2.LoginRequest()
@@ -66,6 +89,9 @@ def receive_message(sock):
 if __name__ == "__main__":
     HOST = 'localhost'
     PORT = 8888
+
+    udp_thread = threading.Thread(target=udp_server_thread, daemon=True)
+    udp_thread.start()
 
     try:
         # Step 1: Login

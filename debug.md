@@ -4,6 +4,138 @@
 
 ---
 
+## Bug 3: `EventLoop::abortNotInLoopThread()` 线程断言失败
+
+### 问题现象
+
+在集成了 `AudioEngine` 模块后，服务器启动时或客户端连接时，程序会因一个线程断言而崩溃。
+
+报错信息如下：
+```
+EventLoop::abortNotInLoopThread() - EventLoop 0x7ffdbd693390 was created in threadId_ = 134775441638464, current thread id = 134775192938176
+```
+这个错误表明，一个 `EventLoop` 对象的方法被一个与其创建线程不同的线程调用了，这违反了 `EventLoop` 的“one loop per thread”设计原则。
+
+### 分析与思考过程
+
+这个问题在集成音频引擎后，由于引入了更复杂的线程模型，经历了多次尝试和修复。
+
+#### 第一次尝试：主线程阻塞
+
+最初的 `main` 函数逻辑是：
+```cpp
+// main.cpp
+EventLoop loop;
+TcpServer server(&loop, 8888, 4);
+server.start();
+AudioEngine audio_engine("127.0.0.1", 12345);
+audio_engine.start();
+loop.loop(); // 主线程在此阻塞
+audio_engine.stop(); // 这行代码永远不会被执行
+```
+*   **问题**: `loop.loop()` 会阻塞主线程，导致 `audio_engine.stop()` 永远无法被调用，程序无法正常关闭。
+
+#### 第二次尝试：在 `main` 函数中引入 `sleep`
+
+为了让程序能够定时关闭，修改了 `main` 函数：
+```cpp
+// main.cpp
+EventLoop loop;
+TcpServer server(&loop, 8888, 4);
+server.start();
+AudioEngine audio_engine("127.0.0.1", 12345);
+audio_engine.start();
+
+std::this_thread::sleep_for(std::chrono::seconds(60)); // 主线程休眠
+
+audio_engine.stop();
+// loop.unloop(); // 尝试停止loop，但EventLoop没有unloop方法
+```
+*   **问题**: `loop.loop()` 没有被调用，所以 `TcpServer` 虽然被 `start()`，但其底层的 `EventLoop` 没有运转，导致服务器无法接受任何TCP连接。客户端连接时会报 “Connection refused”。
+
+#### 第三次尝试：将 `EventLoop` 放入独立线程
+
+为了解决 `loop.loop()` 阻塞主线程的问题，尝试将其放入一个单独的线程：
+```cpp
+// main.cpp
+EventLoop loop;
+TcpServer server(&loop, 8888, 4); // 在主线程创建
+server.start(); // 在主线程启动
+
+std::thread loop_thread([&]() {
+    loop.loop(); // 在子线程运行
+});
+
+// ... sleep and stop logic ...
+```
+*   **问题**: `TcpServer` 的构造函数和 `start()` 方法都在主线程中被调用，但其关联的 `EventLoop` 却在 `loop_thread` 中运行。这违反了 `TcpServer` 的设计——`TcpServer` 的所有操作都必须在其关联的 `EventLoop` 所在的线程中执行。这直接导致了 `EventLoop::abortNotInLoopThread()` 断言失败。
+
+#### 第四次尝试：将 `TcpServer` 的创建和启动也移入 `loop_thread`
+
+```cpp
+// main.cpp
+EventLoop loop;
+std::thread loop_thread([&]() {
+    TcpServer server(&loop, 8888, 4); // 在子线程创建
+    server.start(); // 在子线程启动
+    loop.loop();
+});
+
+// ... sleep and stop logic ...
+```
+*   **问题**: 理论上这个方向是正确的，因为它保证了 `TcpServer` 和 `EventLoop` 在同一个线程中。但在实际运行时，仍然可能出现同样的断言失败。经过深入分析，发现 `registerBusinessLogicHandlers()` 这个全局函数的调用位置也很关键，它内部可能会间接与 `EventLoop` 交互。更深层次的原因是，`TcpServer` 和 `EventLoop` 的生命周期管理变得非常复杂，很容易在程序关闭时出现竞态条件。
+
+### 最终解决方法
+
+回顾整个系统的需求：
+1.  `TcpServer` 需要在一个 `EventLoop` 中稳定运行，处理客户端的信令交互。
+2.  `AudioEngine` 需要独立运行，进行音频的采集、编码和发送。
+3.  主程序需要有一个明确的、可控的生命周期，例如运行一段时间后自动关闭所有服务。
+
+最终的解决方案是将主线程完全交给 `EventLoop`，同时创建一个“控制线程”来管理程序的生命周期。
+
+```cpp
+// main.cpp
+int main() {
+    try {
+        EventLoop loop; // 在主线程创建 EventLoop
+        TcpServer server(&loop, 8888, 4); // 在主线程创建 TcpServer
+
+        registerBusinessLogicHandlers();
+        server.start();
+
+        // 创建一个控制线程
+        std::thread control_thread([&]() {
+            AudioEngine audio_engine("127.0.0.1", 12345);
+            audio_engine.start();
+
+            std::cout << "Server and AudioEngine running for 60 seconds..." << std::endl;
+            std::this_thread::sleep_for(std::chrono::seconds(60));
+            
+            // 停止服务
+            audio_engine.stop();
+            loop.quit(); // 安全地请求 EventLoop 退出
+        });
+
+        loop.loop(); // 阻塞主线程，运行 EventLoop
+        control_thread.join(); // 等待控制线程结束
+
+    } catch (const std::exception& e) {
+        std::cerr << "Exception: " << e.what() << std::endl;
+        return 1;
+    }
+    return 0;
+}
+```
+
+**这个方案的优点**:
+*   **线程职责清晰**: 主线程专门负责运行 `EventLoop`，完全符合 `TcpServer` 的“one loop per thread”模型。
+*   **生命周期可控**: `control_thread` 成为了程序的“大脑”，它决定了 `AudioEngine` 何时启动/停止，以及整个程序何时退出。
+*   **优雅关闭**: `loop.quit()` 是一个线程安全的方法，它会唤醒 `EventLoop` 并使其从 `loop()` 函数中正常返回，从而实现优雅停机。`control_thread.join()` 确保主线程会等待控制线程完成后再退出。
+
+通过这个最终方案，服务器成功地同时运行了TCP服务和UDP音频引擎，并且能够在预定时间后干净地关闭，彻底解决了线程断言问题。
+---
+
 ## Bug 1: 客户端断开连接时服务器断言失败
 
 ### 问题现象

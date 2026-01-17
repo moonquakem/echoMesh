@@ -273,10 +273,66 @@ CMakeFiles/echomesh_server.dir/src/EventLoopThread.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/echomesh_server.dir/src/EventLoopThread.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/moon/桌面/code/echoMesh/src/EventLoopThread.cpp -o CMakeFiles/echomesh_server.dir/src/EventLoopThread.cpp.s
 
+CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.o: CMakeFiles/echomesh_server.dir/flags.make
+CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.o: /home/moon/桌面/code/echoMesh/src/audio/OpusWrapper.cpp
+CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.o: CMakeFiles/echomesh_server.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/moon/桌面/code/echoMesh/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.o -MF CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.o.d -o CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.o -c /home/moon/桌面/code/echoMesh/src/audio/OpusWrapper.cpp
+
+CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/moon/桌面/code/echoMesh/src/audio/OpusWrapper.cpp > CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.i
+
+CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/moon/桌面/code/echoMesh/src/audio/OpusWrapper.cpp -o CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.s
+
+CMakeFiles/echomesh_server.dir/src/audio/UdpSender.cpp.o: CMakeFiles/echomesh_server.dir/flags.make
+CMakeFiles/echomesh_server.dir/src/audio/UdpSender.cpp.o: /home/moon/桌面/code/echoMesh/src/audio/UdpSender.cpp
+CMakeFiles/echomesh_server.dir/src/audio/UdpSender.cpp.o: CMakeFiles/echomesh_server.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/moon/桌面/code/echoMesh/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/echomesh_server.dir/src/audio/UdpSender.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/echomesh_server.dir/src/audio/UdpSender.cpp.o -MF CMakeFiles/echomesh_server.dir/src/audio/UdpSender.cpp.o.d -o CMakeFiles/echomesh_server.dir/src/audio/UdpSender.cpp.o -c /home/moon/桌面/code/echoMesh/src/audio/UdpSender.cpp
+
+CMakeFiles/echomesh_server.dir/src/audio/UdpSender.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/echomesh_server.dir/src/audio/UdpSender.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/moon/桌面/code/echoMesh/src/audio/UdpSender.cpp > CMakeFiles/echomesh_server.dir/src/audio/UdpSender.cpp.i
+
+CMakeFiles/echomesh_server.dir/src/audio/UdpSender.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/echomesh_server.dir/src/audio/UdpSender.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/moon/桌面/code/echoMesh/src/audio/UdpSender.cpp -o CMakeFiles/echomesh_server.dir/src/audio/UdpSender.cpp.s
+
+CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.o: CMakeFiles/echomesh_server.dir/flags.make
+CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.o: /home/moon/桌面/code/echoMesh/src/audio/JitterBuffer.cpp
+CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.o: CMakeFiles/echomesh_server.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/moon/桌面/code/echoMesh/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.o -MF CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.o.d -o CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.o -c /home/moon/桌面/code/echoMesh/src/audio/JitterBuffer.cpp
+
+CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/moon/桌面/code/echoMesh/src/audio/JitterBuffer.cpp > CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.i
+
+CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/moon/桌面/code/echoMesh/src/audio/JitterBuffer.cpp -o CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.s
+
+CMakeFiles/echomesh_server.dir/src/audio/AudioEngine.cpp.o: CMakeFiles/echomesh_server.dir/flags.make
+CMakeFiles/echomesh_server.dir/src/audio/AudioEngine.cpp.o: /home/moon/桌面/code/echoMesh/src/audio/AudioEngine.cpp
+CMakeFiles/echomesh_server.dir/src/audio/AudioEngine.cpp.o: CMakeFiles/echomesh_server.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/moon/桌面/code/echoMesh/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/echomesh_server.dir/src/audio/AudioEngine.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/echomesh_server.dir/src/audio/AudioEngine.cpp.o -MF CMakeFiles/echomesh_server.dir/src/audio/AudioEngine.cpp.o.d -o CMakeFiles/echomesh_server.dir/src/audio/AudioEngine.cpp.o -c /home/moon/桌面/code/echoMesh/src/audio/AudioEngine.cpp
+
+CMakeFiles/echomesh_server.dir/src/audio/AudioEngine.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/echomesh_server.dir/src/audio/AudioEngine.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/moon/桌面/code/echoMesh/src/audio/AudioEngine.cpp > CMakeFiles/echomesh_server.dir/src/audio/AudioEngine.cpp.i
+
+CMakeFiles/echomesh_server.dir/src/audio/AudioEngine.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/echomesh_server.dir/src/audio/AudioEngine.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/moon/桌面/code/echoMesh/src/audio/AudioEngine.cpp -o CMakeFiles/echomesh_server.dir/src/audio/AudioEngine.cpp.s
+
 CMakeFiles/echomesh_server.dir/message.pb.cc.o: CMakeFiles/echomesh_server.dir/flags.make
 CMakeFiles/echomesh_server.dir/message.pb.cc.o: message.pb.cc
 CMakeFiles/echomesh_server.dir/message.pb.cc.o: CMakeFiles/echomesh_server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/moon/桌面/code/echoMesh/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/echomesh_server.dir/message.pb.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/moon/桌面/code/echoMesh/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/echomesh_server.dir/message.pb.cc.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/echomesh_server.dir/message.pb.cc.o -MF CMakeFiles/echomesh_server.dir/message.pb.cc.o.d -o CMakeFiles/echomesh_server.dir/message.pb.cc.o -c /home/moon/桌面/code/echoMesh/build/message.pb.cc
 
 CMakeFiles/echomesh_server.dir/message.pb.cc.i: cmake_force
@@ -303,6 +359,10 @@ echomesh_server_OBJECTS = \
 "CMakeFiles/echomesh_server.dir/src/RoomManager.cpp.o" \
 "CMakeFiles/echomesh_server.dir/src/BusinessLogic.cpp.o" \
 "CMakeFiles/echomesh_server.dir/src/EventLoopThread.cpp.o" \
+"CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.o" \
+"CMakeFiles/echomesh_server.dir/src/audio/UdpSender.cpp.o" \
+"CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.o" \
+"CMakeFiles/echomesh_server.dir/src/audio/AudioEngine.cpp.o" \
 "CMakeFiles/echomesh_server.dir/message.pb.cc.o"
 
 # External object files for target echomesh_server
@@ -322,11 +382,16 @@ echomesh_server: CMakeFiles/echomesh_server.dir/src/UserManager.cpp.o
 echomesh_server: CMakeFiles/echomesh_server.dir/src/RoomManager.cpp.o
 echomesh_server: CMakeFiles/echomesh_server.dir/src/BusinessLogic.cpp.o
 echomesh_server: CMakeFiles/echomesh_server.dir/src/EventLoopThread.cpp.o
+echomesh_server: CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.o
+echomesh_server: CMakeFiles/echomesh_server.dir/src/audio/UdpSender.cpp.o
+echomesh_server: CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.o
+echomesh_server: CMakeFiles/echomesh_server.dir/src/audio/AudioEngine.cpp.o
 echomesh_server: CMakeFiles/echomesh_server.dir/message.pb.cc.o
 echomesh_server: CMakeFiles/echomesh_server.dir/build.make
 echomesh_server: /usr/lib/x86_64-linux-gnu/libprotobuf.so
+echomesh_server: /usr/lib/x86_64-linux-gnu/libprotobuf.so
 echomesh_server: CMakeFiles/echomesh_server.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/moon/桌面/code/echoMesh/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Linking CXX executable echomesh_server"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/moon/桌面/code/echoMesh/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Linking CXX executable echomesh_server"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/echomesh_server.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

@@ -22,6 +22,10 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/moon/桌面/code/echoMesh/src/TcpServer.cpp" "CMakeFiles/echomesh_server.dir/src/TcpServer.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/TcpServer.cpp.o.d"
   "/home/moon/桌面/code/echoMesh/src/ThreadPool.cpp" "CMakeFiles/echomesh_server.dir/src/ThreadPool.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/ThreadPool.cpp.o.d"
   "/home/moon/桌面/code/echoMesh/src/UserManager.cpp" "CMakeFiles/echomesh_server.dir/src/UserManager.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/UserManager.cpp.o.d"
+  "/home/moon/桌面/code/echoMesh/src/audio/AudioEngine.cpp" "CMakeFiles/echomesh_server.dir/src/audio/AudioEngine.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/audio/AudioEngine.cpp.o.d"
+  "/home/moon/桌面/code/echoMesh/src/audio/JitterBuffer.cpp" "CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.o.d"
+  "/home/moon/桌面/code/echoMesh/src/audio/OpusWrapper.cpp" "CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.o.d"
+  "/home/moon/桌面/code/echoMesh/src/audio/UdpSender.cpp" "CMakeFiles/echomesh_server.dir/src/audio/UdpSender.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/audio/UdpSender.cpp.o.d"
   "/home/moon/桌面/code/echoMesh/src/main.cpp" "CMakeFiles/echomesh_server.dir/src/main.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/main.cpp.o.d"
   )
 

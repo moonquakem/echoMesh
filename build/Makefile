@@ -465,6 +465,102 @@ src/UserManager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/UserManager.cpp.s
 .PHONY : src/UserManager.cpp.s
 
+src/audio/AudioEngine.o: src/audio/AudioEngine.cpp.o
+.PHONY : src/audio/AudioEngine.o
+
+# target to build an object file
+src/audio/AudioEngine.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/audio/AudioEngine.cpp.o
+.PHONY : src/audio/AudioEngine.cpp.o
+
+src/audio/AudioEngine.i: src/audio/AudioEngine.cpp.i
+.PHONY : src/audio/AudioEngine.i
+
+# target to preprocess a source file
+src/audio/AudioEngine.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/audio/AudioEngine.cpp.i
+.PHONY : src/audio/AudioEngine.cpp.i
+
+src/audio/AudioEngine.s: src/audio/AudioEngine.cpp.s
+.PHONY : src/audio/AudioEngine.s
+
+# target to generate assembly for a file
+src/audio/AudioEngine.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/audio/AudioEngine.cpp.s
+.PHONY : src/audio/AudioEngine.cpp.s
+
+src/audio/JitterBuffer.o: src/audio/JitterBuffer.cpp.o
+.PHONY : src/audio/JitterBuffer.o
+
+# target to build an object file
+src/audio/JitterBuffer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.o
+.PHONY : src/audio/JitterBuffer.cpp.o
+
+src/audio/JitterBuffer.i: src/audio/JitterBuffer.cpp.i
+.PHONY : src/audio/JitterBuffer.i
+
+# target to preprocess a source file
+src/audio/JitterBuffer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.i
+.PHONY : src/audio/JitterBuffer.cpp.i
+
+src/audio/JitterBuffer.s: src/audio/JitterBuffer.cpp.s
+.PHONY : src/audio/JitterBuffer.s
+
+# target to generate assembly for a file
+src/audio/JitterBuffer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.s
+.PHONY : src/audio/JitterBuffer.cpp.s
+
+src/audio/OpusWrapper.o: src/audio/OpusWrapper.cpp.o
+.PHONY : src/audio/OpusWrapper.o
+
+# target to build an object file
+src/audio/OpusWrapper.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.o
+.PHONY : src/audio/OpusWrapper.cpp.o
+
+src/audio/OpusWrapper.i: src/audio/OpusWrapper.cpp.i
+.PHONY : src/audio/OpusWrapper.i
+
+# target to preprocess a source file
+src/audio/OpusWrapper.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.i
+.PHONY : src/audio/OpusWrapper.cpp.i
+
+src/audio/OpusWrapper.s: src/audio/OpusWrapper.cpp.s
+.PHONY : src/audio/OpusWrapper.s
+
+# target to generate assembly for a file
+src/audio/OpusWrapper.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.s
+.PHONY : src/audio/OpusWrapper.cpp.s
+
+src/audio/UdpSender.o: src/audio/UdpSender.cpp.o
+.PHONY : src/audio/UdpSender.o
+
+# target to build an object file
+src/audio/UdpSender.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/audio/UdpSender.cpp.o
+.PHONY : src/audio/UdpSender.cpp.o
+
+src/audio/UdpSender.i: src/audio/UdpSender.cpp.i
+.PHONY : src/audio/UdpSender.i
+
+# target to preprocess a source file
+src/audio/UdpSender.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/audio/UdpSender.cpp.i
+.PHONY : src/audio/UdpSender.cpp.i
+
+src/audio/UdpSender.s: src/audio/UdpSender.cpp.s
+.PHONY : src/audio/UdpSender.s
+
+# target to generate assembly for a file
+src/audio/UdpSender.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/audio/UdpSender.cpp.s
+.PHONY : src/audio/UdpSender.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -540,6 +636,18 @@ help:
 	@echo "... src/UserManager.o"
 	@echo "... src/UserManager.i"
 	@echo "... src/UserManager.s"
+	@echo "... src/audio/AudioEngine.o"
+	@echo "... src/audio/AudioEngine.i"
+	@echo "... src/audio/AudioEngine.s"
+	@echo "... src/audio/JitterBuffer.o"
+	@echo "... src/audio/JitterBuffer.i"
+	@echo "... src/audio/JitterBuffer.s"
+	@echo "... src/audio/OpusWrapper.o"
+	@echo "... src/audio/OpusWrapper.i"
+	@echo "... src/audio/OpusWrapper.s"
+	@echo "... src/audio/UdpSender.o"
+	@echo "... src/audio/UdpSender.i"
+	@echo "... src/audio/UdpSender.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
