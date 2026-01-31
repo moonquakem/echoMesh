@@ -80,6 +80,20 @@ struct RoomActionDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RoomActionDefaultTypeInternal _RoomAction_default_instance_;
+PROTOBUF_CONSTEXPR RoomActionResponse::RoomActionResponse(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.message_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.status_code_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct RoomActionResponseDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR RoomActionResponseDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~RoomActionResponseDefaultTypeInternal() {}
+  union {
+    RoomActionResponse _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RoomActionResponseDefaultTypeInternal _RoomActionResponse_default_instance_;
 PROTOBUF_CONSTEXPR VoiceAnnounce::VoiceAnnounce(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.sdp_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
@@ -111,7 +125,7 @@ struct EchoMsgDefaultTypeInternal {
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 EchoMsgDefaultTypeInternal _EchoMsg_default_instance_;
 }  // namespace echomesh
-static ::_pb::Metadata file_level_metadata_message_2eproto[6];
+static ::_pb::Metadata file_level_metadata_message_2eproto[7];
 static const ::_pb::EnumDescriptor* file_level_enum_descriptors_message_2eproto[3];
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_message_2eproto = nullptr;
 
@@ -152,6 +166,14 @@ const uint32_t TableStruct_message_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
   PROTOBUF_FIELD_OFFSET(::echomesh::RoomAction, _impl_.room_id_),
   PROTOBUF_FIELD_OFFSET(::echomesh::RoomAction, _impl_.user_id_),
   ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::echomesh::RoomActionResponse, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::echomesh::RoomActionResponse, _impl_.status_code_),
+  PROTOBUF_FIELD_OFFSET(::echomesh::RoomActionResponse, _impl_.message_),
+  ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::echomesh::VoiceAnnounce, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
@@ -172,6 +194,7 @@ const uint32_t TableStruct_message_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
   ::_pbi::kInvalidFieldOffsetTag,
   ::_pbi::kInvalidFieldOffsetTag,
   ::_pbi::kInvalidFieldOffsetTag,
+  ::_pbi::kInvalidFieldOffsetTag,
   PROTOBUF_FIELD_OFFSET(::echomesh::EchoMsg, _impl_.payload_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
@@ -179,8 +202,9 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 8, -1, -1, sizeof(::echomesh::LoginResponse)},
   { 17, -1, -1, sizeof(::echomesh::ChatMsg)},
   { 26, -1, -1, sizeof(::echomesh::RoomAction)},
-  { 35, -1, -1, sizeof(::echomesh::VoiceAnnounce)},
-  { 44, -1, -1, sizeof(::echomesh::EchoMsg)},
+  { 35, -1, -1, sizeof(::echomesh::RoomActionResponse)},
+  { 43, -1, -1, sizeof(::echomesh::VoiceAnnounce)},
+  { 52, -1, -1, sizeof(::echomesh::EchoMsg)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -188,6 +212,7 @@ static const ::_pb::Message* const file_default_instances[] = {
   &::echomesh::_LoginResponse_default_instance_._instance,
   &::echomesh::_ChatMsg_default_instance_._instance,
   &::echomesh::_RoomAction_default_instance_._instance,
+  &::echomesh::_RoomActionResponse_default_instance_._instance,
   &::echomesh::_VoiceAnnounce_default_instance_._instance,
   &::echomesh::_EchoMsg_default_instance_._instance,
 };
@@ -201,29 +226,33 @@ const char descriptor_table_protodef_message_2eproto[] PROTOBUF_SECTION_VARIABLE
   "\017\n\007room_id\030\002 \001(\t\022\017\n\007content\030\003 \001(\t\"]\n\nRoo"
   "mAction\022-\n\013action_type\030\001 \001(\0162\030.echomesh."
   "RoomActionType\022\017\n\007room_id\030\002 \001(\t\022\017\n\007user_"
-  "id\030\003 \001(\003\">\n\rVoiceAnnounce\022\013\n\003sdp\030\001 \001(\t\022\017"
-  "\n\007room_id\030\002 \001(\t\022\017\n\007user_id\030\003 \001(\003\"\240\002\n\007Ech"
-  "oMsg\022\037\n\004type\030\001 \001(\0162\021.echomesh.MsgType\022/\n"
-  "\rlogin_request\030\002 \001(\0132\026.echomesh.LoginReq"
-  "uestH\000\0221\n\016login_response\030\003 \001(\0132\027.echomes"
-  "h.LoginResponseH\000\022%\n\010chat_msg\030\004 \001(\0132\021.ec"
-  "homesh.ChatMsgH\000\022+\n\013room_action\030\005 \001(\0132\024."
-  "echomesh.RoomActionH\000\0221\n\016voice_announce\030"
-  "\006 \001(\0132\027.echomesh.VoiceAnnounceH\000B\t\n\007payl"
-  "oad*\202\001\n\007MsgType\022\016\n\nMT_UNKNOWN\020\000\022\024\n\020MT_LO"
-  "GIN_REQUEST\020\001\022\025\n\021MT_LOGIN_RESPONSE\020\002\022\017\n\013"
-  "MT_CHAT_MSG\020\003\022\022\n\016MT_ROOM_ACTION\020\004\022\025\n\021MT_"
-  "VOICE_ANNOUNCE\020\005*U\n\nStatusCode\022\t\n\005SC_OK\020"
-  "\000\022\014\n\010SC_ERROR\020\001\022\025\n\021SC_ROOM_NOT_FOUND\020e\022\027"
-  "\n\023SC_USER_NOT_IN_ROOM\020f*J\n\016RoomActionTyp"
-  "e\022\016\n\nRA_UNKNOWN\020\000\022\r\n\tRA_CREATE\020\001\022\013\n\007RA_J"
-  "OIN\020\002\022\014\n\010RA_LEAVE\020\003b\006proto3"
+  "id\030\003 \001(\003\"P\n\022RoomActionResponse\022)\n\013status"
+  "_code\030\001 \001(\0162\024.echomesh.StatusCode\022\017\n\007mes"
+  "sage\030\002 \001(\t\">\n\rVoiceAnnounce\022\013\n\003sdp\030\001 \001(\t"
+  "\022\017\n\007room_id\030\002 \001(\t\022\017\n\007user_id\030\003 \001(\003\"\336\002\n\007E"
+  "choMsg\022\037\n\004type\030\001 \001(\0162\021.echomesh.MsgType\022"
+  "/\n\rlogin_request\030\002 \001(\0132\026.echomesh.LoginR"
+  "equestH\000\0221\n\016login_response\030\003 \001(\0132\027.echom"
+  "esh.LoginResponseH\000\022%\n\010chat_msg\030\004 \001(\0132\021."
+  "echomesh.ChatMsgH\000\022+\n\013room_action\030\005 \001(\0132"
+  "\024.echomesh.RoomActionH\000\0221\n\016voice_announc"
+  "e\030\006 \001(\0132\027.echomesh.VoiceAnnounceH\000\022<\n\024ro"
+  "om_action_response\030\007 \001(\0132\034.echomesh.Room"
+  "ActionResponseH\000B\t\n\007payload*\237\001\n\007MsgType\022"
+  "\016\n\nMT_UNKNOWN\020\000\022\024\n\020MT_LOGIN_REQUEST\020\001\022\025\n"
+  "\021MT_LOGIN_RESPONSE\020\002\022\017\n\013MT_CHAT_MSG\020\003\022\022\n"
+  "\016MT_ROOM_ACTION\020\004\022\025\n\021MT_VOICE_ANNOUNCE\020\005"
+  "\022\033\n\027MT_ROOM_ACTION_RESPONSE\020\007*U\n\nStatusC"
+  "ode\022\t\n\005SC_OK\020\000\022\014\n\010SC_ERROR\020\001\022\025\n\021SC_ROOM_"
+  "NOT_FOUND\020e\022\027\n\023SC_USER_NOT_IN_ROOM\020f*J\n\016"
+  "RoomActionType\022\016\n\nRA_UNKNOWN\020\000\022\r\n\tRA_CRE"
+  "ATE\020\001\022\013\n\007RA_JOIN\020\002\022\014\n\010RA_LEAVE\020\003b\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_message_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_message_2eproto = {
-    false, false, 987, descriptor_table_protodef_message_2eproto,
+    false, false, 1160, descriptor_table_protodef_message_2eproto,
     "message.proto",
-    &descriptor_table_message_2eproto_once, nullptr, 0, 6,
+    &descriptor_table_message_2eproto_once, nullptr, 0, 7,
     schemas, file_default_instances, TableStruct_message_2eproto::offsets,
     file_level_metadata_message_2eproto, file_level_enum_descriptors_message_2eproto,
     file_level_service_descriptors_message_2eproto,
@@ -247,6 +276,7 @@ bool MsgType_IsValid(int value) {
     case 3:
     case 4:
     case 5:
+    case 7:
       return true;
     default:
       return false;
@@ -1353,6 +1383,239 @@ void RoomAction::InternalSwap(RoomAction* other) {
 
 // ===================================================================
 
+class RoomActionResponse::_Internal {
+ public:
+};
+
+RoomActionResponse::RoomActionResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:echomesh.RoomActionResponse)
+}
+RoomActionResponse::RoomActionResponse(const RoomActionResponse& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  RoomActionResponse* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.message_){}
+    , decltype(_impl_.status_code_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.message_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.message_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_message().empty()) {
+    _this->_impl_.message_.Set(from._internal_message(), 
+      _this->GetArenaForAllocation());
+  }
+  _this->_impl_.status_code_ = from._impl_.status_code_;
+  // @@protoc_insertion_point(copy_constructor:echomesh.RoomActionResponse)
+}
+
+inline void RoomActionResponse::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.message_){}
+    , decltype(_impl_.status_code_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.message_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.message_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+
+RoomActionResponse::~RoomActionResponse() {
+  // @@protoc_insertion_point(destructor:echomesh.RoomActionResponse)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void RoomActionResponse::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.message_.Destroy();
+}
+
+void RoomActionResponse::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void RoomActionResponse::Clear() {
+// @@protoc_insertion_point(message_clear_start:echomesh.RoomActionResponse)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.message_.ClearToEmpty();
+  _impl_.status_code_ = 0;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* RoomActionResponse::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // .echomesh.StatusCode status_code = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+          _internal_set_status_code(static_cast<::echomesh::StatusCode>(val));
+        } else
+          goto handle_unusual;
+        continue;
+      // string message = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          auto str = _internal_mutable_message();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "echomesh.RoomActionResponse.message"));
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* RoomActionResponse::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:echomesh.RoomActionResponse)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // .echomesh.StatusCode status_code = 1;
+  if (this->_internal_status_code() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteEnumToArray(
+      1, this->_internal_status_code(), target);
+  }
+
+  // string message = 2;
+  if (!this->_internal_message().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_message().data(), static_cast<int>(this->_internal_message().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "echomesh.RoomActionResponse.message");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_message(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:echomesh.RoomActionResponse)
+  return target;
+}
+
+size_t RoomActionResponse::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:echomesh.RoomActionResponse)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string message = 2;
+  if (!this->_internal_message().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_message());
+  }
+
+  // .echomesh.StatusCode status_code = 1;
+  if (this->_internal_status_code() != 0) {
+    total_size += 1 +
+      ::_pbi::WireFormatLite::EnumSize(this->_internal_status_code());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData RoomActionResponse::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    RoomActionResponse::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*RoomActionResponse::GetClassData() const { return &_class_data_; }
+
+
+void RoomActionResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<RoomActionResponse*>(&to_msg);
+  auto& from = static_cast<const RoomActionResponse&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:echomesh.RoomActionResponse)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_message().empty()) {
+    _this->_internal_set_message(from._internal_message());
+  }
+  if (from._internal_status_code() != 0) {
+    _this->_internal_set_status_code(from._internal_status_code());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void RoomActionResponse::CopyFrom(const RoomActionResponse& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:echomesh.RoomActionResponse)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool RoomActionResponse::IsInitialized() const {
+  return true;
+}
+
+void RoomActionResponse::InternalSwap(RoomActionResponse* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.message_, lhs_arena,
+      &other->_impl_.message_, rhs_arena
+  );
+  swap(_impl_.status_code_, other->_impl_.status_code_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata RoomActionResponse::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_message_2eproto_getter, &descriptor_table_message_2eproto_once,
+      file_level_metadata_message_2eproto[4]);
+}
+
+// ===================================================================
+
 class VoiceAnnounce::_Internal {
  public:
 };
@@ -1628,7 +1891,7 @@ void VoiceAnnounce::InternalSwap(VoiceAnnounce* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata VoiceAnnounce::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_message_2eproto_getter, &descriptor_table_message_2eproto_once,
-      file_level_metadata_message_2eproto[4]);
+      file_level_metadata_message_2eproto[5]);
 }
 
 // ===================================================================
@@ -1640,6 +1903,7 @@ class EchoMsg::_Internal {
   static const ::echomesh::ChatMsg& chat_msg(const EchoMsg* msg);
   static const ::echomesh::RoomAction& room_action(const EchoMsg* msg);
   static const ::echomesh::VoiceAnnounce& voice_announce(const EchoMsg* msg);
+  static const ::echomesh::RoomActionResponse& room_action_response(const EchoMsg* msg);
 };
 
 const ::echomesh::LoginRequest&
@@ -1661,6 +1925,10 @@ EchoMsg::_Internal::room_action(const EchoMsg* msg) {
 const ::echomesh::VoiceAnnounce&
 EchoMsg::_Internal::voice_announce(const EchoMsg* msg) {
   return *msg->_impl_.payload_.voice_announce_;
+}
+const ::echomesh::RoomActionResponse&
+EchoMsg::_Internal::room_action_response(const EchoMsg* msg) {
+  return *msg->_impl_.payload_.room_action_response_;
 }
 void EchoMsg::set_allocated_login_request(::echomesh::LoginRequest* login_request) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
@@ -1737,6 +2005,21 @@ void EchoMsg::set_allocated_voice_announce(::echomesh::VoiceAnnounce* voice_anno
   }
   // @@protoc_insertion_point(field_set_allocated:echomesh.EchoMsg.voice_announce)
 }
+void EchoMsg::set_allocated_room_action_response(::echomesh::RoomActionResponse* room_action_response) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  clear_payload();
+  if (room_action_response) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(room_action_response);
+    if (message_arena != submessage_arena) {
+      room_action_response = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, room_action_response, submessage_arena);
+    }
+    set_has_room_action_response();
+    _impl_.payload_.room_action_response_ = room_action_response;
+  }
+  // @@protoc_insertion_point(field_set_allocated:echomesh.EchoMsg.room_action_response)
+}
 EchoMsg::EchoMsg(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
@@ -1779,6 +2062,11 @@ EchoMsg::EchoMsg(const EchoMsg& from)
     case kVoiceAnnounce: {
       _this->_internal_mutable_voice_announce()->::echomesh::VoiceAnnounce::MergeFrom(
           from._internal_voice_announce());
+      break;
+    }
+    case kRoomActionResponse: {
+      _this->_internal_mutable_room_action_response()->::echomesh::RoomActionResponse::MergeFrom(
+          from._internal_room_action_response());
       break;
     }
     case PAYLOAD_NOT_SET: {
@@ -1851,6 +2139,12 @@ void EchoMsg::clear_payload() {
     case kVoiceAnnounce: {
       if (GetArenaForAllocation() == nullptr) {
         delete _impl_.payload_.voice_announce_;
+      }
+      break;
+    }
+    case kRoomActionResponse: {
+      if (GetArenaForAllocation() == nullptr) {
+        delete _impl_.payload_.room_action_response_;
       }
       break;
     }
@@ -1928,6 +2222,14 @@ const char* EchoMsg::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) 
         } else
           goto handle_unusual;
         continue;
+      // .echomesh.RoomActionResponse room_action_response = 7;
+      case 7:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 58)) {
+          ptr = ctx->ParseMessage(_internal_mutable_room_action_response(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
       default:
         goto handle_unusual;
     }  // switch
@@ -1999,6 +2301,13 @@ uint8_t* EchoMsg::_InternalSerialize(
         _Internal::voice_announce(this).GetCachedSize(), target, stream);
   }
 
+  // .echomesh.RoomActionResponse room_action_response = 7;
+  if (_internal_has_room_action_response()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(7, _Internal::room_action_response(this),
+        _Internal::room_action_response(this).GetCachedSize(), target, stream);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -2057,6 +2366,13 @@ size_t EchoMsg::ByteSizeLong() const {
           *_impl_.payload_.voice_announce_);
       break;
     }
+    // .echomesh.RoomActionResponse room_action_response = 7;
+    case kRoomActionResponse: {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+          *_impl_.payload_.room_action_response_);
+      break;
+    }
     case PAYLOAD_NOT_SET: {
       break;
     }
@@ -2108,6 +2424,11 @@ void EchoMsg::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOB
           from._internal_voice_announce());
       break;
     }
+    case kRoomActionResponse: {
+      _this->_internal_mutable_room_action_response()->::echomesh::RoomActionResponse::MergeFrom(
+          from._internal_room_action_response());
+      break;
+    }
     case PAYLOAD_NOT_SET: {
       break;
     }
@@ -2137,7 +2458,7 @@ void EchoMsg::InternalSwap(EchoMsg* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata EchoMsg::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_message_2eproto_getter, &descriptor_table_message_2eproto_once,
-      file_level_metadata_message_2eproto[5]);
+      file_level_metadata_message_2eproto[6]);
 }
 
 // @@protoc_insertion_point(namespace_scope)
@@ -2158,6 +2479,10 @@ Arena::CreateMaybeMessage< ::echomesh::ChatMsg >(Arena* arena) {
 template<> PROTOBUF_NOINLINE ::echomesh::RoomAction*
 Arena::CreateMaybeMessage< ::echomesh::RoomAction >(Arena* arena) {
   return Arena::CreateMessageInternal< ::echomesh::RoomAction >(arena);
+}
+template<> PROTOBUF_NOINLINE ::echomesh::RoomActionResponse*
+Arena::CreateMaybeMessage< ::echomesh::RoomActionResponse >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::echomesh::RoomActionResponse >(arena);
 }
 template<> PROTOBUF_NOINLINE ::echomesh::VoiceAnnounce*
 Arena::CreateMaybeMessage< ::echomesh::VoiceAnnounce >(Arena* arena) {

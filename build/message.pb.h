@@ -61,6 +61,9 @@ extern LoginResponseDefaultTypeInternal _LoginResponse_default_instance_;
 class RoomAction;
 struct RoomActionDefaultTypeInternal;
 extern RoomActionDefaultTypeInternal _RoomAction_default_instance_;
+class RoomActionResponse;
+struct RoomActionResponseDefaultTypeInternal;
+extern RoomActionResponseDefaultTypeInternal _RoomActionResponse_default_instance_;
 class VoiceAnnounce;
 struct VoiceAnnounceDefaultTypeInternal;
 extern VoiceAnnounceDefaultTypeInternal _VoiceAnnounce_default_instance_;
@@ -71,6 +74,7 @@ template<> ::echomesh::EchoMsg* Arena::CreateMaybeMessage<::echomesh::EchoMsg>(A
 template<> ::echomesh::LoginRequest* Arena::CreateMaybeMessage<::echomesh::LoginRequest>(Arena*);
 template<> ::echomesh::LoginResponse* Arena::CreateMaybeMessage<::echomesh::LoginResponse>(Arena*);
 template<> ::echomesh::RoomAction* Arena::CreateMaybeMessage<::echomesh::RoomAction>(Arena*);
+template<> ::echomesh::RoomActionResponse* Arena::CreateMaybeMessage<::echomesh::RoomActionResponse>(Arena*);
 template<> ::echomesh::VoiceAnnounce* Arena::CreateMaybeMessage<::echomesh::VoiceAnnounce>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace echomesh {
@@ -82,12 +86,13 @@ enum MsgType : int {
   MT_CHAT_MSG = 3,
   MT_ROOM_ACTION = 4,
   MT_VOICE_ANNOUNCE = 5,
+  MT_ROOM_ACTION_RESPONSE = 7,
   MsgType_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   MsgType_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool MsgType_IsValid(int value);
 constexpr MsgType MsgType_MIN = MT_UNKNOWN;
-constexpr MsgType MsgType_MAX = MT_VOICE_ANNOUNCE;
+constexpr MsgType MsgType_MAX = MT_ROOM_ACTION_RESPONSE;
 constexpr int MsgType_ARRAYSIZE = MsgType_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* MsgType_descriptor();
@@ -859,6 +864,170 @@ class RoomAction final :
 };
 // -------------------------------------------------------------------
 
+class RoomActionResponse final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:echomesh.RoomActionResponse) */ {
+ public:
+  inline RoomActionResponse() : RoomActionResponse(nullptr) {}
+  ~RoomActionResponse() override;
+  explicit PROTOBUF_CONSTEXPR RoomActionResponse(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  RoomActionResponse(const RoomActionResponse& from);
+  RoomActionResponse(RoomActionResponse&& from) noexcept
+    : RoomActionResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline RoomActionResponse& operator=(const RoomActionResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline RoomActionResponse& operator=(RoomActionResponse&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const RoomActionResponse& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const RoomActionResponse* internal_default_instance() {
+    return reinterpret_cast<const RoomActionResponse*>(
+               &_RoomActionResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    4;
+
+  friend void swap(RoomActionResponse& a, RoomActionResponse& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(RoomActionResponse* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(RoomActionResponse* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  RoomActionResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<RoomActionResponse>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const RoomActionResponse& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const RoomActionResponse& from) {
+    RoomActionResponse::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(RoomActionResponse* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "echomesh.RoomActionResponse";
+  }
+  protected:
+  explicit RoomActionResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kMessageFieldNumber = 2,
+    kStatusCodeFieldNumber = 1,
+  };
+  // string message = 2;
+  void clear_message();
+  const std::string& message() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_message(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_message();
+  PROTOBUF_NODISCARD std::string* release_message();
+  void set_allocated_message(std::string* message);
+  private:
+  const std::string& _internal_message() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_message(const std::string& value);
+  std::string* _internal_mutable_message();
+  public:
+
+  // .echomesh.StatusCode status_code = 1;
+  void clear_status_code();
+  ::echomesh::StatusCode status_code() const;
+  void set_status_code(::echomesh::StatusCode value);
+  private:
+  ::echomesh::StatusCode _internal_status_code() const;
+  void _internal_set_status_code(::echomesh::StatusCode value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:echomesh.RoomActionResponse)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr message_;
+    int status_code_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_message_2eproto;
+};
+// -------------------------------------------------------------------
+
 class VoiceAnnounce final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:echomesh.VoiceAnnounce) */ {
  public:
@@ -907,7 +1076,7 @@ class VoiceAnnounce final :
                &_VoiceAnnounce_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    4;
+    5;
 
   friend void swap(VoiceAnnounce& a, VoiceAnnounce& b) {
     a.Swap(&b);
@@ -1088,6 +1257,7 @@ class EchoMsg final :
     kChatMsg = 4,
     kRoomAction = 5,
     kVoiceAnnounce = 6,
+    kRoomActionResponse = 7,
     PAYLOAD_NOT_SET = 0,
   };
 
@@ -1096,7 +1266,7 @@ class EchoMsg final :
                &_EchoMsg_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    5;
+    6;
 
   friend void swap(EchoMsg& a, EchoMsg& b) {
     a.Swap(&b);
@@ -1175,6 +1345,7 @@ class EchoMsg final :
     kChatMsgFieldNumber = 4,
     kRoomActionFieldNumber = 5,
     kVoiceAnnounceFieldNumber = 6,
+    kRoomActionResponseFieldNumber = 7,
   };
   // .echomesh.MsgType type = 1;
   void clear_type();
@@ -1275,6 +1446,24 @@ class EchoMsg final :
       ::echomesh::VoiceAnnounce* voice_announce);
   ::echomesh::VoiceAnnounce* unsafe_arena_release_voice_announce();
 
+  // .echomesh.RoomActionResponse room_action_response = 7;
+  bool has_room_action_response() const;
+  private:
+  bool _internal_has_room_action_response() const;
+  public:
+  void clear_room_action_response();
+  const ::echomesh::RoomActionResponse& room_action_response() const;
+  PROTOBUF_NODISCARD ::echomesh::RoomActionResponse* release_room_action_response();
+  ::echomesh::RoomActionResponse* mutable_room_action_response();
+  void set_allocated_room_action_response(::echomesh::RoomActionResponse* room_action_response);
+  private:
+  const ::echomesh::RoomActionResponse& _internal_room_action_response() const;
+  ::echomesh::RoomActionResponse* _internal_mutable_room_action_response();
+  public:
+  void unsafe_arena_set_allocated_room_action_response(
+      ::echomesh::RoomActionResponse* room_action_response);
+  ::echomesh::RoomActionResponse* unsafe_arena_release_room_action_response();
+
   void clear_payload();
   PayloadCase payload_case() const;
   // @@protoc_insertion_point(class_scope:echomesh.EchoMsg)
@@ -1285,6 +1474,7 @@ class EchoMsg final :
   void set_has_chat_msg();
   void set_has_room_action();
   void set_has_voice_announce();
+  void set_has_room_action_response();
 
   inline bool has_payload() const;
   inline void clear_has_payload();
@@ -1302,6 +1492,7 @@ class EchoMsg final :
       ::echomesh::ChatMsg* chat_msg_;
       ::echomesh::RoomAction* room_action_;
       ::echomesh::VoiceAnnounce* voice_announce_;
+      ::echomesh::RoomActionResponse* room_action_response_;
     } payload_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
     uint32_t _oneof_case_[1];
@@ -1731,6 +1922,80 @@ inline void RoomAction::_internal_set_user_id(int64_t value) {
 inline void RoomAction::set_user_id(int64_t value) {
   _internal_set_user_id(value);
   // @@protoc_insertion_point(field_set:echomesh.RoomAction.user_id)
+}
+
+// -------------------------------------------------------------------
+
+// RoomActionResponse
+
+// .echomesh.StatusCode status_code = 1;
+inline void RoomActionResponse::clear_status_code() {
+  _impl_.status_code_ = 0;
+}
+inline ::echomesh::StatusCode RoomActionResponse::_internal_status_code() const {
+  return static_cast< ::echomesh::StatusCode >(_impl_.status_code_);
+}
+inline ::echomesh::StatusCode RoomActionResponse::status_code() const {
+  // @@protoc_insertion_point(field_get:echomesh.RoomActionResponse.status_code)
+  return _internal_status_code();
+}
+inline void RoomActionResponse::_internal_set_status_code(::echomesh::StatusCode value) {
+  
+  _impl_.status_code_ = value;
+}
+inline void RoomActionResponse::set_status_code(::echomesh::StatusCode value) {
+  _internal_set_status_code(value);
+  // @@protoc_insertion_point(field_set:echomesh.RoomActionResponse.status_code)
+}
+
+// string message = 2;
+inline void RoomActionResponse::clear_message() {
+  _impl_.message_.ClearToEmpty();
+}
+inline const std::string& RoomActionResponse::message() const {
+  // @@protoc_insertion_point(field_get:echomesh.RoomActionResponse.message)
+  return _internal_message();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void RoomActionResponse::set_message(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.message_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:echomesh.RoomActionResponse.message)
+}
+inline std::string* RoomActionResponse::mutable_message() {
+  std::string* _s = _internal_mutable_message();
+  // @@protoc_insertion_point(field_mutable:echomesh.RoomActionResponse.message)
+  return _s;
+}
+inline const std::string& RoomActionResponse::_internal_message() const {
+  return _impl_.message_.Get();
+}
+inline void RoomActionResponse::_internal_set_message(const std::string& value) {
+  
+  _impl_.message_.Set(value, GetArenaForAllocation());
+}
+inline std::string* RoomActionResponse::_internal_mutable_message() {
+  
+  return _impl_.message_.Mutable(GetArenaForAllocation());
+}
+inline std::string* RoomActionResponse::release_message() {
+  // @@protoc_insertion_point(field_release:echomesh.RoomActionResponse.message)
+  return _impl_.message_.Release();
+}
+inline void RoomActionResponse::set_allocated_message(std::string* message) {
+  if (message != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.message_.SetAllocated(message, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.message_.IsDefault()) {
+    _impl_.message_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:echomesh.RoomActionResponse.message)
 }
 
 // -------------------------------------------------------------------
@@ -2251,6 +2516,80 @@ inline ::echomesh::VoiceAnnounce* EchoMsg::mutable_voice_announce() {
   return _msg;
 }
 
+// .echomesh.RoomActionResponse room_action_response = 7;
+inline bool EchoMsg::_internal_has_room_action_response() const {
+  return payload_case() == kRoomActionResponse;
+}
+inline bool EchoMsg::has_room_action_response() const {
+  return _internal_has_room_action_response();
+}
+inline void EchoMsg::set_has_room_action_response() {
+  _impl_._oneof_case_[0] = kRoomActionResponse;
+}
+inline void EchoMsg::clear_room_action_response() {
+  if (_internal_has_room_action_response()) {
+    if (GetArenaForAllocation() == nullptr) {
+      delete _impl_.payload_.room_action_response_;
+    }
+    clear_has_payload();
+  }
+}
+inline ::echomesh::RoomActionResponse* EchoMsg::release_room_action_response() {
+  // @@protoc_insertion_point(field_release:echomesh.EchoMsg.room_action_response)
+  if (_internal_has_room_action_response()) {
+    clear_has_payload();
+    ::echomesh::RoomActionResponse* temp = _impl_.payload_.room_action_response_;
+    if (GetArenaForAllocation() != nullptr) {
+      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+    }
+    _impl_.payload_.room_action_response_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline const ::echomesh::RoomActionResponse& EchoMsg::_internal_room_action_response() const {
+  return _internal_has_room_action_response()
+      ? *_impl_.payload_.room_action_response_
+      : reinterpret_cast< ::echomesh::RoomActionResponse&>(::echomesh::_RoomActionResponse_default_instance_);
+}
+inline const ::echomesh::RoomActionResponse& EchoMsg::room_action_response() const {
+  // @@protoc_insertion_point(field_get:echomesh.EchoMsg.room_action_response)
+  return _internal_room_action_response();
+}
+inline ::echomesh::RoomActionResponse* EchoMsg::unsafe_arena_release_room_action_response() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:echomesh.EchoMsg.room_action_response)
+  if (_internal_has_room_action_response()) {
+    clear_has_payload();
+    ::echomesh::RoomActionResponse* temp = _impl_.payload_.room_action_response_;
+    _impl_.payload_.room_action_response_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline void EchoMsg::unsafe_arena_set_allocated_room_action_response(::echomesh::RoomActionResponse* room_action_response) {
+  clear_payload();
+  if (room_action_response) {
+    set_has_room_action_response();
+    _impl_.payload_.room_action_response_ = room_action_response;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:echomesh.EchoMsg.room_action_response)
+}
+inline ::echomesh::RoomActionResponse* EchoMsg::_internal_mutable_room_action_response() {
+  if (!_internal_has_room_action_response()) {
+    clear_payload();
+    set_has_room_action_response();
+    _impl_.payload_.room_action_response_ = CreateMaybeMessage< ::echomesh::RoomActionResponse >(GetArenaForAllocation());
+  }
+  return _impl_.payload_.room_action_response_;
+}
+inline ::echomesh::RoomActionResponse* EchoMsg::mutable_room_action_response() {
+  ::echomesh::RoomActionResponse* _msg = _internal_mutable_room_action_response();
+  // @@protoc_insertion_point(field_mutable:echomesh.EchoMsg.room_action_response)
+  return _msg;
+}
+
 inline bool EchoMsg::has_payload() const {
   return payload_case() != PAYLOAD_NOT_SET;
 }
@@ -2263,6 +2602,8 @@ inline EchoMsg::PayloadCase EchoMsg::payload_case() const {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

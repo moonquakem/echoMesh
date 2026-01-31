@@ -56,6 +56,14 @@ std::optional<sockaddr_in> Room::getUserAddress(UserId userId) const {
 
 // --- RoomManager Implementation ---
 
+bool RoomManager::createRoom_nl(const RoomId &roomId) {
+    if (rooms_.count(roomId)) {
+        return false; // Room already exists
+    }
+    rooms_[roomId] = std::make_shared<Room>();
+    return true;
+}
+
 RoomManager &RoomManager::getInstance() {
   static RoomManager instance;
   return instance;
@@ -63,11 +71,7 @@ RoomManager &RoomManager::getInstance() {
 
 bool RoomManager::createRoom(const RoomId &roomId) {
   std::lock_guard<std::mutex> lock(mutex_);
-  if (rooms_.count(roomId)) {
-    return false; // Room already exists
-  }
-  rooms_[roomId] = std::make_shared<Room>();
-  return true;
+  return createRoom_nl(roomId);
 }
 
 bool RoomManager::joinRoom(const RoomId &roomId, UserId userId) {
@@ -75,7 +79,7 @@ bool RoomManager::joinRoom(const RoomId &roomId, UserId userId) {
   auto it = rooms_.find(roomId);
   if (it == rooms_.end()) {
     // Room not found, let's create it
-    if (!createRoom(roomId)) return false;
+    if (!createRoom_nl(roomId)) return false;
     it = rooms_.find(roomId);
   }
   it->second->addUser(userId);

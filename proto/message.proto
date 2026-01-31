@@ -9,6 +9,7 @@ enum MsgType {
   MT_CHAT_MSG = 3;
   MT_ROOM_ACTION = 4;
   MT_VOICE_ANNOUNCE = 5;
+  MT_ROOM_ACTION_RESPONSE = 7;
 }
 
 enum StatusCode {
@@ -48,6 +49,11 @@ message RoomAction {
   int64 user_id = 3;
 }
 
+message RoomActionResponse {
+  StatusCode status_code = 1;
+  string message = 2;
+}
+
 message VoiceAnnounce {
   string sdp = 1; // Simplified for example
   string room_id = 2;
@@ -62,5 +68,6 @@ message EchoMsg {
     ChatMsg chat_msg = 4;
     RoomAction room_action = 5;
     VoiceAnnounce voice_announce = 6;
+    RoomActionResponse room_action_response = 7;
   }
 }

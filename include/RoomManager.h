@@ -56,6 +56,8 @@ private:
   RoomManager(const RoomManager &) = delete;
   RoomManager &operator=(const RoomManager &) = delete;
 
+  bool createRoom_nl(const RoomId &roomId);
+
   std::mutex mutex_;
   std::unordered_map<RoomId, std::shared_ptr<Room>> rooms_;
 };

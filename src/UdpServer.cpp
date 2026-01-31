@@ -73,15 +73,16 @@ void UdpServer::handleRead() {
     if (n > 0) {
         buffer.resize(n);
         
-        // Deserialize to get user and room info
         VoicePacket packet = VoicePacket::deserialize(buffer);
         uint32_t userId = packet.userId;
+
+        std::cout << "[UDP] Received packet from user " << userId << std::endl;
 
         auto& userMgr = UserManager::getInstance();
         std::string roomId = userMgr.getRoomId(userId);
 
         if (roomId.empty()) {
-            // User is not in a room, or invalid user ID
+            std::cout << "[UDP] Warning: User " << userId << " is not in any room. Packet dropped." << std::endl;
             return;
         }
 
@@ -90,15 +91,17 @@ void UdpServer::handleRead() {
         // IMPORTANT: Update the user's UDP address. This is how the server learns it.
         roomMgr.updateUserAddress(roomId, userId, cliaddr);
 
-        // Get all users in the room
         auto users = roomMgr.getUsersInRoom(roomId);
         
         // Forward the packet to all *other* users in the room
-        for (const auto& user : users) {
-            if (user != userId) {
-                auto userAddr = roomMgr.getUserAddress(roomId, user);
+        for (const auto& other_user_id : users) {
+            if (other_user_id != userId) {
+                auto userAddr = roomMgr.getUserAddress(roomId, other_user_id);
                 if (userAddr) {
+                    std::cout << "[UDP] Forwarding packet from " << userId << " to " << other_user_id << std::endl;
                     send(buffer.data(), buffer.size(), *userAddr);
+                } else {
+                    std::cout << "[UDP] Warning: Could not find address for user " << other_user_id << " in room " << roomId << ". Cannot forward." << std::endl;
                 }
             }
         }

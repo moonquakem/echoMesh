@@ -38,30 +38,50 @@ def list_audio_devices():
 
 
 def audio_receiver_thread(sock, stop_event):
-    # (Omitted for brevity, no changes here)
+    """
+    Listens for incoming UDP packets from the server, decodes the Opus audio,
+    and plays it back.
+    """
     p = pyaudio.PyAudio()
-    stream = p.open(format=FORMAT, channels=CHANNELS, rate=SAMPLE_RATE, output=True, frames_per_buffer=FRAMES_PER_BUFFER)
+    stream = p.open(format=FORMAT,
+                    channels=CHANNELS,
+                    rate=SAMPLE_RATE,
+                    output=True,
+                    frames_per_buffer=FRAMES_PER_BUFFER)
+    
     decoder = opuslib.Decoder(SAMPLE_RATE, CHANNELS)
-    print("Audio receiver thread started...")
+    print("Audio receiver thread started. Waiting for audio from server...")
+    received_packet_count = 0
+
     while not stop_event.is_set():
         try:
             data, addr = sock.recvfrom(2048)
             if data:
+                received_packet_count += 1
+                if received_packet_count % 100 == 0:
+                    print("R", end="", flush=True)
+                # Unpack header
+                sequence, timestamp, userId = struct.unpack("!III", data[:12])
                 opus_data = data[12:]
+                
+                # Decode and play
                 pcm_data = decoder.decode(opus_data, FRAMES_PER_BUFFER)
                 stream.write(pcm_data)
         except socket.timeout:
             continue
         except Exception:
+            # print(f"Receiver error: {e}") # Can be noisy
             pass
-    print("Audio receiver stopping.")
+            
+    print("\nAudio receiver stopping.")
     stream.stop_stream()
     stream.close()
     p.terminate()
 
 def audio_sender_thread(sock, user_id, server_address, stop_event, input_device_index=None):
     """
-    Captures audio from the specified input device, encodes it, and sends it.
+    Captures audio from the specified input device, encodes it with Opus, and sends it
+    to the server.
     """
     p = pyaudio.PyAudio()
     try:
@@ -80,24 +100,29 @@ def audio_sender_thread(sock, user_id, server_address, stop_event, input_device_
     encoder.bitrate = OPUS_BITRATE
     
     sequence = 0
-    print(f"Audio sender thread started on device index {input_device_index or 'default'}...")
+    sent_packet_count = 0
+    print(f"Audio sender thread started on device index {input_device_index or 'default'}. Capturing audio...")
 
     while not stop_event.is_set():
         try:
             pcm_data = stream.read(FRAMES_PER_BUFFER)
             opus_data = encoder.encode(pcm_data, FRAMES_PER_BUFFER)
             
+            # Pack header and send
             timestamp = int(time.time())
             header = struct.pack("!III", sequence, timestamp, user_id)
             packet = header + opus_data
             
             sock.sendto(packet, server_address)
             sequence += 1
+            sent_packet_count += 1
+            if sent_packet_count % 100 == 0:
+                print("S", end="", flush=True)
         except Exception as e:
             print(f"Sender error: {e}")
             break
     
-    print("Audio sender stopping.")
+    print("\nAudio sender stopping.")
     stream.stop_stream()
     stream.close()
     p.terminate()
@@ -171,9 +196,18 @@ if __name__ == "__main__":
             else:
                 raise Exception("Login failed.")
 
+            # Step 2: Join Room and wait for confirmation
             tcp_socket.sendall(create_room_action_request(message_pb2.RA_JOIN, args.room_id, user_id))
             print(f"Sent join room request for room '{args.room_id}'.")
-            
+
+            join_response = receive_message(tcp_socket)
+            if join_response and join_response.type == message_pb2.MT_ROOM_ACTION_RESPONSE and join_response.room_action_response.status_code == message_pb2.SC_OK:
+                print("Successfully joined room.")
+            else:
+                error_msg = join_response.room_action_response.message if join_response else "No response"
+                raise Exception(f"Failed to join room: {error_msg}")
+
+            # Step 3: Start audio threads now that we are confirmed in the room
             server_udp_address = (UDP_HOST, UDP_PORT)
             
             if args.mode == "speaker":
@@ -184,8 +218,15 @@ if __name__ == "__main__":
                 receiver = threading.Thread(target=audio_receiver_thread, args=(udp_socket, stop_event))
                 receiver.start()
                 print(f"Client running in LISTENER mode. UserID: {user_id}.")
+                
+                # Send a dummy UDP packet to register our address with the server
+                dummy_header = struct.pack("!III", 0, int(time.time()), user_id)
+                dummy_packet = dummy_header + b'' # Empty opus data
+                udp_socket.sendto(dummy_packet, server_udp_address)
+                print("Sent dummy UDP packet to server to register listener address.")
             
             print("\nVoice chat running. Press Ctrl+C to exit.")
+            # We no longer need to listen for TCP messages here, just keep alive
             while True:
                 time.sleep(1)
 
