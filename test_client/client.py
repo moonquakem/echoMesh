@@ -1,43 +1,85 @@
 import socket
 import struct
 import threading
-from proto import message_pb2 # Assuming proto folder is in the same directory as this script
+import argparse
+import pyaudio
+import opuslib # Import the opus library
+from proto import message_pb2
 
-def udp_server_thread():
+# Audio constants
+SAMPLE_RATE = 48000
+CHANNELS = 1
+FRAMES_PER_BUFFER = 960  # 20ms at 48kHz
+FORMAT = pyaudio.paInt16
+
+def udp_audio_thread(stop_event):
+    """
+    This thread listens for incoming UDP packets, decodes the Opus audio,
+    and plays it back.
+    """
     UDP_IP = "127.0.0.1"
     UDP_PORT = 12345
 
+    # Initialize PyAudio for playback
+    p = pyaudio.PyAudio()
+    stream = p.open(format=FORMAT,
+                    channels=CHANNELS,
+                    rate=SAMPLE_RATE,
+                    output=True,
+                    frames_per_buffer=FRAMES_PER_BUFFER)
+
+    # Initialize Opus decoder
+    try:
+        decoder = opuslib.Decoder(SAMPLE_RATE, CHANNELS)
+    except Exception as e:
+        print(f"Failed to initialize Opus decoder: {e}")
+        print("Please ensure the Opus library is correctly installed on your system (e.g., 'sudo apt install libopus0')")
+        return
+
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.bind((UDP_IP, UDP_PORT))
+    sock.settimeout(1.0)
 
-    print(f"UDP server listening on {UDP_IP}:{UDP_PORT}")
+    print(f"UDP audio listener started on {UDP_IP}:{UDP_PORT}. Waiting for audio...")
 
-    while True:
-        data, addr = sock.recvfrom(1024) # buffer size is 1024 bytes
-        if not data:
-            break
-        
-        # Deserialize VoicePacket
-        sequence = struct.unpack("!I", data[0:4])[0]
-        timestamp = struct.unpack("!I", data[4:8])[0]
-        userId = struct.unpack("!I", data[8:12])[0]
-        
-        print(f"Received voice packet: seq={sequence}, ts={timestamp}, user={userId}, size={len(data)} bytes")
+    while not stop_event.is_set():
+        try:
+            data, addr = sock.recvfrom(2048)
+            if data:
+                # First 12 bytes are custom header (seq, ts, userId)
+                opus_data = data[12:]
+                
+                # Decode the Opus data to PCM
+                pcm_data = decoder.decode(opus_data, FRAMES_PER_BUFFER)
+                
+                # Write the decoded PCM data to the audio stream
+                stream.write(pcm_data)
+
+        except socket.timeout:
+            continue
+        except Exception as e:
+            # This can happen if a packet is corrupted or invalid
+            # print(f"Opus decoding error: {e}")
+            pass
+            
+    print("UDP audio listener stopping.")
+    stream.stop_stream()
+    stream.close()
+    p.terminate()
+    sock.close()
 
 
-def create_login_request(username, password):
+def create_login_request(username):
     login_req = message_pb2.LoginRequest()
     login_req.username = username
-    login_req.password = password
+    login_req.password = "password123"
 
     echo_msg = message_pb2.EchoMsg()
     echo_msg.type = message_pb2.MT_LOGIN_REQUEST
     echo_msg.login_request.CopyFrom(login_req)
     
     serialized_msg = echo_msg.SerializeToString()
-    # Prepend message length (4 bytes, network byte order)
-    length = len(serialized_msg)
-    return struct.pack("!I", length) + serialized_msg
+    return struct.pack("!I", len(serialized_msg)) + serialized_msg
 
 def create_room_action_request(action_type, room_id, user_id):
     room_action = message_pb2.RoomAction()
@@ -50,31 +92,14 @@ def create_room_action_request(action_type, room_id, user_id):
     echo_msg.room_action.CopyFrom(room_action)
     
     serialized_msg = echo_msg.SerializeToString()
-    length = len(serialized_msg)
-    return struct.pack("!I", length) + serialized_msg
-
-def create_chat_message(user_id, room_id, content):
-    chat_msg = message_pb2.ChatMsg()
-    chat_msg.user_id = user_id
-    chat_msg.room_id = room_id
-    chat_msg.content = content
-
-    echo_msg = message_pb2.EchoMsg()
-    echo_msg.type = message_pb2.MT_CHAT_MSG
-    echo_msg.chat_msg.CopyFrom(chat_msg)
-    
-    serialized_msg = echo_msg.SerializeToString()
-    length = len(serialized_msg)
-    return struct.pack("!I", length) + serialized_msg
+    return struct.pack("!I", len(serialized_msg)) + serialized_msg
 
 def receive_message(sock):
-    # Read 4-byte length prefix
     len_bytes = sock.recv(4)
     if not len_bytes:
         return None
     length = struct.unpack("!I", len_bytes)[0]
     
-    # Read the actual protobuf message
     data = b''
     while len(data) < length:
         packet = sock.recv(length - len(data))
@@ -87,74 +112,56 @@ def receive_message(sock):
     return echo_msg
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="EchoMesh Client")
+    parser.add_argument("username", help="Your username")
+    parser.add_argument("room_id", help="The room ID to join")
+    args = parser.parse_args()
+
     HOST = 'localhost'
     PORT = 8888
 
-    udp_thread = threading.Thread(target=udp_server_thread, daemon=True)
-    udp_thread.start()
+    stop_audio_thread = threading.Event()
+    audio_thread = threading.Thread(target=udp_audio_thread, args=(stop_audio_thread,), daemon=True)
+    audio_thread.start()
 
+    user_id = 0
     try:
-        # Step 1: Login
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.connect((HOST, PORT))
             print(f"Connected to {HOST}:{PORT}")
 
-            # Send Login Request
-            login_packet = create_login_request("test_user", "password123")
+            # Step 1: Login
+            login_packet = create_login_request(args.username)
             s.sendall(login_packet)
-            print("Sent login request.")
+            print(f"Sent login request for user '{args.username}'.")
 
-            # Receive Login Response
             login_response = receive_message(s)
-            if login_response and login_response.type == message_pb2.MT_LOGIN_RESPONSE:
-                print(f"Login Response: Status={login_response.login_response.status_code}, UserID={login_response.login_response.user_id}, Message='{login_response.login_response.message}'")
+            if login_response and login_response.type == message_pb2.MT_LOGIN_RESPONSE and login_response.login_response.status_code == 0:
                 user_id = login_response.login_response.user_id
+                print(f"Login successful. UserID: {user_id}")
             else:
-                print("Failed to receive login response or invalid response.")
-                user_id = 0
+                print("Login failed.")
 
+            # Step 2: Join Room
             if user_id:
-                # Step 2: Create a room
-                create_room_packet = create_room_action_request(message_pb2.RA_CREATE, "roomA", user_id)
-                s.sendall(create_room_packet)
-                print(f"Sent create room (roomA) request for user {user_id}.")
-                # Server doesn't send a response for room actions in current implementation,
-                # you'd ideally add one.
-
-                # Step 3: Join the room (if not already joined by create)
-                join_room_packet = create_room_action_request(message_pb2.RA_JOIN, "roomA", user_id)
+                print(f"Attempting to join room '{args.room_id}'...")
+                join_room_packet = create_room_action_request(message_pb2.RA_JOIN, args.room_id, user_id)
                 s.sendall(join_room_packet)
-                print(f"Sent join room (roomA) request for user {user_id}.")
-
-                # Step 4: Send a chat message
-                chat_packet = create_chat_message(user_id, "roomA", "Hello everyone in roomA!")
-                s.sendall(chat_packet)
-                print(f"Sent chat message from user {user_id} in roomA.")
-
-                # Keep receiving for a short while to see broadcast messages
-                print("Listening for incoming messages (e.g., chat broadcasts)...")
-                s.settimeout(5) # Set a timeout for receiving
-                try:
-                    while True:
-                        msg = receive_message(s)
-                        if msg:
-                            if msg.type == message_pb2.MT_CHAT_MSG:
-                                print(f"Received Chat Message: UserID={msg.chat_msg.user_id}, RoomID='{msg.chat_msg.room_id}', Content='{msg.chat_msg.content}'")
-                            else:
-                                print(f"Received other message type: {msg.type}")
-                        else:
-                            print("No more messages or connection closed by server.")
-                            break
-                except socket.timeout:
-                    print("Socket receive timed out.")
-
-
-            s.close()
-            print("Connection closed.")
+                print(f"Sent join room request.")
+                
+                print("\nClient is running. Listening for voice chat.")
+                print("Press Ctrl+C to exit.")
+                while True:
+                    threading.Event().wait(1)
 
     except ConnectionRefusedError:
         print(f"Connection refused. Is the server running on {HOST}:{PORT}?")
-    except FileNotFoundError:
-        print("Error: 'proto/message_pb2.py' not found. Please ensure it's generated in the 'proto' subdirectory.")
+    except KeyboardInterrupt:
+        print("\nExiting client.")
     except Exception as e:
         print(f"An error occurred: {e}")
+    finally:
+        stop_audio_thread.set()
+        if 'audio_thread' in locals() and audio_thread.is_alive():
+            audio_thread.join()
+        print("Client shut down.")
