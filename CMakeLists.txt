@@ -51,6 +51,7 @@ set(SOURCE_FILES
     src/EventLoop.cpp
     src/Acceptor.cpp
     src/TcpServer.cpp
+    src/UdpServer.cpp
     src/TcpConnection.cpp
     src/MsgDispatcher.cpp
     src/UserManager.cpp
@@ -58,9 +59,7 @@ set(SOURCE_FILES
     src/BusinessLogic.cpp
     src/EventLoopThread.cpp
     src/audio/OpusWrapper.cpp
-    src/audio/UdpSender.cpp
     src/audio/JitterBuffer.cpp
-    src/audio/AudioEngine.cpp
     ${PROTO_SRCS}
 )
 

@@ -1,5 +1,6 @@
 #include "RoomManager.h"
 #include "UserManager.h"
+#include <cstring> // For memset
 
 // --- Room Implementation ---
 
@@ -11,6 +12,7 @@ void Room::addUser(UserId userId) {
 void Room::removeUser(UserId userId) {
   std::lock_guard<std::mutex> lock(mutex_);
   users_.erase(userId);
+  udp_addresses_.erase(userId); // Also remove address mapping
 }
 
 std::set<UserId> Room::getUsers() const {
@@ -37,6 +39,21 @@ void Room::broadcast(const echomesh::EchoMsg &msg) {
   }
 }
 
+void Room::updateUserAddress(UserId userId, const sockaddr_in& addr) {
+    std::lock_guard<std::mutex> lock(mutex_);
+    udp_addresses_[userId] = addr;
+}
+
+std::optional<sockaddr_in> Room::getUserAddress(UserId userId) const {
+    std::lock_guard<std::mutex> lock(mutex_);
+    auto it = udp_addresses_.find(userId);
+    if (it != udp_addresses_.end()) {
+        return it->second;
+    }
+    return std::nullopt;
+}
+
+
 // --- RoomManager Implementation ---
 
 RoomManager &RoomManager::getInstance() {
@@ -57,9 +74,12 @@ bool RoomManager::joinRoom(const RoomId &roomId, UserId userId) {
   std::lock_guard<std::mutex> lock(mutex_);
   auto it = rooms_.find(roomId);
   if (it == rooms_.end()) {
-    return false; // Room not found
+    // Room not found, let's create it
+    if (!createRoom(roomId)) return false;
+    it = rooms_.find(roomId);
   }
   it->second->addUser(userId);
+  UserManager::getInstance().joinRoom(userId, roomId);
   return true;
 }
 
@@ -69,13 +89,15 @@ void RoomManager::leaveRoom(const RoomId &roomId, UserId userId) {
   if (it != rooms_.end()) {
     it->second->removeUser(userId);
   }
+  UserManager::getInstance().leaveRoom(userId);
 }
 
 void RoomManager::userLogout(UserId userId) {
-  std::lock_guard<std::mutex> lock(mutex_);
-  for (auto &pair : rooms_) {
-    pair.second->removeUser(userId);
-  }
+    auto& userMgr = UserManager::getInstance();
+    RoomId roomId = userMgr.getRoomId(userId);
+    if (!roomId.empty()) {
+        leaveRoom(roomId, userId);
+    }
 }
 
 std::shared_ptr<Room> RoomManager::getRoom(const RoomId &roomId) {
@@ -85,4 +107,27 @@ std::shared_ptr<Room> RoomManager::getRoom(const RoomId &roomId) {
     return it->second;
   }
   return nullptr;
+}
+
+std::set<UserId> RoomManager::getUsersInRoom(const RoomId &roomId) {
+    auto room = getRoom(roomId);
+    if (room) {
+        return room->getUsers();
+    }
+    return {};
+}
+
+void RoomManager::updateUserAddress(const RoomId& roomId, UserId userId, const sockaddr_in& addr) {
+    auto room = getRoom(roomId);
+    if (room) {
+        room->updateUserAddress(userId, addr);
+    }
+}
+
+std::optional<sockaddr_in> RoomManager::getUserAddress(const RoomId& roomId, UserId userId) {
+    auto room = getRoom(roomId);
+    if (room) {
+        return room->getUserAddress(userId);
+    }
+    return std::nullopt;
 }

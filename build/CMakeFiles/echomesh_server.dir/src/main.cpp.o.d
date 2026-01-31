@@ -251,26 +251,6 @@ CMakeFiles/echomesh_server.dir/src/main.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/in.h /usr/include/c++/13/map \
  /usr/include/c++/13/bits/stl_tree.h /usr/include/c++/13/bits/stl_map.h \
  /usr/include/c++/13/bits/stl_multimap.h \
- /home/moon/桌面/code/echo/echoMesh/include/audio/AudioEngine.h \
- /home/moon/桌面/code/echo/echoMesh/include/audio/OpusWrapper.h \
- /usr/local/include/opus/opus.h /usr/local/include/opus/opus_types.h \
- /usr/local/include/opus/opus_defines.h /usr/include/c++/13/span \
- /home/moon/桌面/code/echo/echoMesh/include/audio/UdpSender.h \
- /home/moon/桌面/code/echo/echoMesh/include/audio/VoicePacket.h \
- /usr/include/arpa/inet.h \
- /home/moon/桌面/code/echo/echoMesh/include/audio/RingBuffer.h \
- /usr/include/c++/13/condition_variable /usr/include/c++/13/optional \
- /usr/include/portaudio.h /usr/include/c++/13/iostream \
- /usr/include/c++/13/istream /usr/include/c++/13/bits/istream.tcc \
- /usr/include/c++/13/chrono /usr/include/c++/13/sstream \
- /usr/include/c++/13/bits/sstream.tcc \
- /usr/include/c++/13/bits/chrono_io.h /usr/include/c++/13/iomanip \
- /usr/include/c++/13/locale \
- /usr/include/c++/13/bits/locale_facets_nonio.h \
- /usr/include/x86_64-linux-gnu/c++/13/bits/time_members.h \
- /usr/include/x86_64-linux-gnu/c++/13/bits/messages_members.h \
- /usr/include/libintl.h /usr/include/c++/13/bits/codecvt.h \
- /usr/include/c++/13/bits/locale_facets_nonio.tcc \
- /usr/include/c++/13/bits/locale_conv.h \
- /usr/include/c++/13/bits/quoted_string.h /usr/include/c++/13/format \
- /usr/include/c++/13/charconv /usr/include/c++/13/variant
+ /home/moon/桌面/code/echo/echoMesh/include/UdpServer.h \
+ /usr/include/c++/13/iostream /usr/include/c++/13/istream \
+ /usr/include/c++/13/bits/istream.tcc

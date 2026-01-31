@@ -1,35 +1,24 @@
 #include "BusinessLogic.h"
 #include "EventLoop.h"
 #include "TcpServer.h"
+#include "UdpServer.h"
 #include "ThreadPool.h"
-#include "audio/AudioEngine.h"
 #include <iostream>
-#include <chrono>
-#include <thread>
 
 int main() {
     try {
         EventLoop loop;
-        TcpServer server(&loop, 8888, 4);
+        TcpServer tcp_server(&loop, 8888, 4);
+        UdpServer udp_server(&loop, 9999);
 
         registerBusinessLogicHandlers();
 
-        server.start();
+        tcp_server.start();
+        udp_server.start();
 
-        std::thread control_thread([&]() {
-            // Start the audio engine
-            AudioEngine audio_engine("127.0.0.1", 12345);
-            audio_engine.start();
-
-            std::cout << "Server and AudioEngine running for 60 seconds..." << std::endl;
-            std::this_thread::sleep_for(std::chrono::seconds(60));
-            
-            audio_engine.stop();
-            loop.quit();
-        });
+        std::cout << "EchoMesh server running..." << std::endl;
 
         loop.loop();
-        control_thread.join();
 
     } catch (const std::exception& e) {
         std::cerr << "Exception: " << e.what() << std::endl;
