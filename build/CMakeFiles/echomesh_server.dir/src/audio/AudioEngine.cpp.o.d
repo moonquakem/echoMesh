@@ -1,8 +1,8 @@
 CMakeFiles/echomesh_server.dir/src/audio/AudioEngine.cpp.o: \
- /home/moon/桌面/code/echoMesh/src/audio/AudioEngine.cpp \
+ /home/moon/桌面/code/echo/echoMesh/src/audio/AudioEngine.cpp \
  /usr/include/stdc-predef.h \
- /home/moon/桌面/code/echoMesh/include/audio/AudioEngine.h \
- /home/moon/桌面/code/echoMesh/include/audio/OpusWrapper.h \
+ /home/moon/桌面/code/echo/echoMesh/include/audio/AudioEngine.h \
+ /home/moon/桌面/code/echo/echoMesh/include/audio/OpusWrapper.h \
  /usr/local/include/opus/opus.h /usr/local/include/opus/opus_types.h \
  /usr/local/include/opus/opus_defines.h /usr/include/c++/13/vector \
  /usr/include/c++/13/bits/requires_hosted.h \
@@ -73,8 +73,8 @@ CMakeFiles/echomesh_server.dir/src/audio/AudioEngine.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
  /usr/include/c++/13/span /usr/include/c++/13/array \
- /home/moon/桌面/code/echoMesh/include/audio/UdpSender.h \
- /home/moon/桌面/code/echoMesh/include/audio/VoicePacket.h \
+ /home/moon/桌面/code/echo/echoMesh/include/audio/UdpSender.h \
+ /home/moon/桌面/code/echo/echoMesh/include/audio/VoicePacket.h \
  /usr/include/arpa/inet.h /usr/include/netinet/in.h \
  /usr/include/x86_64-linux-gnu/sys/socket.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h \
@@ -162,7 +162,7 @@ CMakeFiles/echomesh_server.dir/src/audio/AudioEngine.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/types/error_t.h \
  /usr/include/c++/13/bits/charconv.h \
  /usr/include/c++/13/bits/basic_string.tcc \
- /home/moon/桌面/code/echoMesh/include/audio/RingBuffer.h \
+ /home/moon/桌面/code/echo/echoMesh/include/audio/RingBuffer.h \
  /usr/include/c++/13/mutex /usr/include/c++/13/exception \
  /usr/include/c++/13/bits/exception_ptr.h \
  /usr/include/c++/13/bits/cxxabi_init_exception.h \

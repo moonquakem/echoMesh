@@ -1,7 +1,7 @@
 CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.o: \
- /home/moon/桌面/code/echoMesh/src/audio/OpusWrapper.cpp \
+ /home/moon/桌面/code/echo/echoMesh/src/audio/OpusWrapper.cpp \
  /usr/include/stdc-predef.h \
- /home/moon/桌面/code/echoMesh/include/audio/OpusWrapper.h \
+ /home/moon/桌面/code/echo/echoMesh/include/audio/OpusWrapper.h \
  /usr/local/include/opus/opus.h /usr/local/include/opus/opus_types.h \
  /usr/local/include/opus/opus_defines.h /usr/include/c++/13/vector \
  /usr/include/c++/13/bits/requires_hosted.h \

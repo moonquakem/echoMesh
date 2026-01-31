@@ -1,9 +1,9 @@
 CMakeFiles/echomesh_server.dir/src/UserManager.cpp.o: \
- /home/moon/桌面/code/echoMesh/src/UserManager.cpp \
+ /home/moon/桌面/code/echo/echoMesh/src/UserManager.cpp \
  /usr/include/stdc-predef.h \
- /home/moon/桌面/code/echoMesh/include/UserManager.h \
- /home/moon/桌面/code/echoMesh/include/TcpConnection.h \
- /home/moon/桌面/code/echoMesh/include/Buffer.h \
+ /home/moon/桌面/code/echo/echoMesh/include/UserManager.h \
+ /home/moon/桌面/code/echo/echoMesh/include/TcpConnection.h \
+ /home/moon/桌面/code/echo/echoMesh/include/Buffer.h \
  /usr/include/c++/13/vector /usr/include/c++/13/bits/requires_hosted.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h \
@@ -144,7 +144,7 @@ CMakeFiles/echomesh_server.dir/src/UserManager.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/getopt_core.h \
  /usr/include/x86_64-linux-gnu/bits/unistd_ext.h \
  /usr/include/linux/close_range.h \
- /home/moon/桌面/code/echoMesh/include/Channel.h \
+ /home/moon/桌面/code/echo/echoMesh/include/Channel.h \
  /usr/include/c++/13/functional /usr/include/c++/13/bits/std_function.h \
  /usr/include/c++/13/typeinfo /usr/include/c++/13/unordered_map \
  /usr/include/c++/13/bits/unordered_map.h \

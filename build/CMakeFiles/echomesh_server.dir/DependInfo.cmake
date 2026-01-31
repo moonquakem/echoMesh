@@ -8,30 +8,30 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/moon/桌面/code/echoMesh/build/message.pb.cc" "CMakeFiles/echomesh_server.dir/message.pb.cc.o" "gcc" "CMakeFiles/echomesh_server.dir/message.pb.cc.o.d"
-  "/home/moon/桌面/code/echoMesh/src/Acceptor.cpp" "CMakeFiles/echomesh_server.dir/src/Acceptor.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/Acceptor.cpp.o.d"
-  "/home/moon/桌面/code/echoMesh/src/Buffer.cpp" "CMakeFiles/echomesh_server.dir/src/Buffer.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/Buffer.cpp.o.d"
-  "/home/moon/桌面/code/echoMesh/src/BusinessLogic.cpp" "CMakeFiles/echomesh_server.dir/src/BusinessLogic.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/BusinessLogic.cpp.o.d"
-  "/home/moon/桌面/code/echoMesh/src/Channel.cpp" "CMakeFiles/echomesh_server.dir/src/Channel.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/Channel.cpp.o.d"
-  "/home/moon/桌面/code/echoMesh/src/EpollPoller.cpp" "CMakeFiles/echomesh_server.dir/src/EpollPoller.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/EpollPoller.cpp.o.d"
-  "/home/moon/桌面/code/echoMesh/src/EventLoop.cpp" "CMakeFiles/echomesh_server.dir/src/EventLoop.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/EventLoop.cpp.o.d"
-  "/home/moon/桌面/code/echoMesh/src/EventLoopThread.cpp" "CMakeFiles/echomesh_server.dir/src/EventLoopThread.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/EventLoopThread.cpp.o.d"
-  "/home/moon/桌面/code/echoMesh/src/MsgDispatcher.cpp" "CMakeFiles/echomesh_server.dir/src/MsgDispatcher.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/MsgDispatcher.cpp.o.d"
-  "/home/moon/桌面/code/echoMesh/src/RoomManager.cpp" "CMakeFiles/echomesh_server.dir/src/RoomManager.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/RoomManager.cpp.o.d"
-  "/home/moon/桌面/code/echoMesh/src/TcpConnection.cpp" "CMakeFiles/echomesh_server.dir/src/TcpConnection.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/TcpConnection.cpp.o.d"
-  "/home/moon/桌面/code/echoMesh/src/TcpServer.cpp" "CMakeFiles/echomesh_server.dir/src/TcpServer.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/TcpServer.cpp.o.d"
-  "/home/moon/桌面/code/echoMesh/src/ThreadPool.cpp" "CMakeFiles/echomesh_server.dir/src/ThreadPool.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/ThreadPool.cpp.o.d"
-  "/home/moon/桌面/code/echoMesh/src/UserManager.cpp" "CMakeFiles/echomesh_server.dir/src/UserManager.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/UserManager.cpp.o.d"
-  "/home/moon/桌面/code/echoMesh/src/audio/AudioEngine.cpp" "CMakeFiles/echomesh_server.dir/src/audio/AudioEngine.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/audio/AudioEngine.cpp.o.d"
-  "/home/moon/桌面/code/echoMesh/src/audio/JitterBuffer.cpp" "CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.o.d"
-  "/home/moon/桌面/code/echoMesh/src/audio/OpusWrapper.cpp" "CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.o.d"
-  "/home/moon/桌面/code/echoMesh/src/audio/UdpSender.cpp" "CMakeFiles/echomesh_server.dir/src/audio/UdpSender.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/audio/UdpSender.cpp.o.d"
-  "/home/moon/桌面/code/echoMesh/src/main.cpp" "CMakeFiles/echomesh_server.dir/src/main.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/main.cpp.o.d"
+  "/home/moon/桌面/code/echo/echoMesh/build/message.pb.cc" "CMakeFiles/echomesh_server.dir/message.pb.cc.o" "gcc" "CMakeFiles/echomesh_server.dir/message.pb.cc.o.d"
+  "/home/moon/桌面/code/echo/echoMesh/src/Acceptor.cpp" "CMakeFiles/echomesh_server.dir/src/Acceptor.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/Acceptor.cpp.o.d"
+  "/home/moon/桌面/code/echo/echoMesh/src/Buffer.cpp" "CMakeFiles/echomesh_server.dir/src/Buffer.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/Buffer.cpp.o.d"
+  "/home/moon/桌面/code/echo/echoMesh/src/BusinessLogic.cpp" "CMakeFiles/echomesh_server.dir/src/BusinessLogic.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/BusinessLogic.cpp.o.d"
+  "/home/moon/桌面/code/echo/echoMesh/src/Channel.cpp" "CMakeFiles/echomesh_server.dir/src/Channel.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/Channel.cpp.o.d"
+  "/home/moon/桌面/code/echo/echoMesh/src/EpollPoller.cpp" "CMakeFiles/echomesh_server.dir/src/EpollPoller.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/EpollPoller.cpp.o.d"
+  "/home/moon/桌面/code/echo/echoMesh/src/EventLoop.cpp" "CMakeFiles/echomesh_server.dir/src/EventLoop.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/EventLoop.cpp.o.d"
+  "/home/moon/桌面/code/echo/echoMesh/src/EventLoopThread.cpp" "CMakeFiles/echomesh_server.dir/src/EventLoopThread.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/EventLoopThread.cpp.o.d"
+  "/home/moon/桌面/code/echo/echoMesh/src/MsgDispatcher.cpp" "CMakeFiles/echomesh_server.dir/src/MsgDispatcher.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/MsgDispatcher.cpp.o.d"
+  "/home/moon/桌面/code/echo/echoMesh/src/RoomManager.cpp" "CMakeFiles/echomesh_server.dir/src/RoomManager.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/RoomManager.cpp.o.d"
+  "/home/moon/桌面/code/echo/echoMesh/src/TcpConnection.cpp" "CMakeFiles/echomesh_server.dir/src/TcpConnection.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/TcpConnection.cpp.o.d"
+  "/home/moon/桌面/code/echo/echoMesh/src/TcpServer.cpp" "CMakeFiles/echomesh_server.dir/src/TcpServer.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/TcpServer.cpp.o.d"
+  "/home/moon/桌面/code/echo/echoMesh/src/ThreadPool.cpp" "CMakeFiles/echomesh_server.dir/src/ThreadPool.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/ThreadPool.cpp.o.d"
+  "/home/moon/桌面/code/echo/echoMesh/src/UserManager.cpp" "CMakeFiles/echomesh_server.dir/src/UserManager.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/UserManager.cpp.o.d"
+  "/home/moon/桌面/code/echo/echoMesh/src/audio/AudioEngine.cpp" "CMakeFiles/echomesh_server.dir/src/audio/AudioEngine.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/audio/AudioEngine.cpp.o.d"
+  "/home/moon/桌面/code/echo/echoMesh/src/audio/JitterBuffer.cpp" "CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.o.d"
+  "/home/moon/桌面/code/echo/echoMesh/src/audio/OpusWrapper.cpp" "CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.o.d"
+  "/home/moon/桌面/code/echo/echoMesh/src/audio/UdpSender.cpp" "CMakeFiles/echomesh_server.dir/src/audio/UdpSender.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/audio/UdpSender.cpp.o.d"
+  "/home/moon/桌面/code/echo/echoMesh/src/main.cpp" "CMakeFiles/echomesh_server.dir/src/main.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/main.cpp.o.d"
   )
 
 # Pairs of files generated by the same build rule.
 set(CMAKE_MULTIPLE_OUTPUT_PAIRS
-  "/home/moon/桌面/code/echoMesh/build/message.pb.cc" "/home/moon/桌面/code/echoMesh/build/message.pb.h"
+  "/home/moon/桌面/code/echo/echoMesh/build/message.pb.cc" "/home/moon/桌面/code/echo/echoMesh/build/message.pb.h"
   )
 
 

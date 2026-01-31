@@ -1,8 +1,8 @@
 CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.o: \
- /home/moon/桌面/code/echoMesh/src/audio/JitterBuffer.cpp \
+ /home/moon/桌面/code/echo/echoMesh/src/audio/JitterBuffer.cpp \
  /usr/include/stdc-predef.h \
- /home/moon/桌面/code/echoMesh/include/audio/JitterBuffer.h \
- /home/moon/桌面/code/echoMesh/include/audio/VoicePacket.h \
+ /home/moon/桌面/code/echo/echoMesh/include/audio/JitterBuffer.h \
+ /home/moon/桌面/code/echo/echoMesh/include/audio/VoicePacket.h \
  /usr/include/c++/13/cstdint \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h \

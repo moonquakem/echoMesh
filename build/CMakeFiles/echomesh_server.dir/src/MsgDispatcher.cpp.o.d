@@ -1,8 +1,8 @@
 CMakeFiles/echomesh_server.dir/src/MsgDispatcher.cpp.o: \
- /home/moon/桌面/code/echoMesh/src/MsgDispatcher.cpp \
+ /home/moon/桌面/code/echo/echoMesh/src/MsgDispatcher.cpp \
  /usr/include/stdc-predef.h \
- /home/moon/桌面/code/echoMesh/include/MsgDispatcher.h \
- /home/moon/桌面/code/echoMesh/build/message.pb.h \
+ /home/moon/桌面/code/echo/echoMesh/include/MsgDispatcher.h \
+ /home/moon/桌面/code/echo/echoMesh/build/message.pb.h \
  /usr/include/c++/13/limits \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h \
@@ -277,9 +277,9 @@ CMakeFiles/echomesh_server.dir/src/MsgDispatcher.cpp.o: \
  /usr/include/c++/13/bits/std_function.h /usr/include/c++/13/array \
  /usr/include/google/protobuf/map_type_handler.h \
  /usr/include/google/protobuf/extension_set.h /usr/include/c++/13/cassert \
- /home/moon/桌面/code/echoMesh/include/TcpConnection.h \
- /home/moon/桌面/code/echoMesh/include/Buffer.h \
- /home/moon/桌面/code/echoMesh/include/Channel.h \
+ /home/moon/桌面/code/echo/echoMesh/include/TcpConnection.h \
+ /home/moon/桌面/code/echo/echoMesh/include/Buffer.h \
+ /home/moon/桌面/code/echo/echoMesh/include/Channel.h \
  /usr/include/netinet/in.h /usr/include/x86_64-linux-gnu/sys/socket.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h \
  /usr/include/x86_64-linux-gnu/bits/socket.h \

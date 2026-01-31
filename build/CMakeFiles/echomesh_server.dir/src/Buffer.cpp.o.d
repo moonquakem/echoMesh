@@ -1,7 +1,7 @@
 CMakeFiles/echomesh_server.dir/src/Buffer.cpp.o: \
- /home/moon/桌面/code/echoMesh/src/Buffer.cpp \
+ /home/moon/桌面/code/echo/echoMesh/src/Buffer.cpp \
  /usr/include/stdc-predef.h \
- /home/moon/桌面/code/echoMesh/include/Buffer.h \
+ /home/moon/桌面/code/echo/echoMesh/include/Buffer.h \
  /usr/include/c++/13/vector /usr/include/c++/13/bits/requires_hosted.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h \

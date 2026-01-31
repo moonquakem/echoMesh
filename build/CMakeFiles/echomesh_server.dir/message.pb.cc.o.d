@@ -1,7 +1,7 @@
 CMakeFiles/echomesh_server.dir/message.pb.cc.o: \
- /home/moon/桌面/code/echoMesh/build/message.pb.cc \
+ /home/moon/桌面/code/echo/echoMesh/build/message.pb.cc \
  /usr/include/stdc-predef.h \
- /home/moon/桌面/code/echoMesh/build/message.pb.h \
+ /home/moon/桌面/code/echo/echoMesh/build/message.pb.h \
  /usr/include/c++/13/limits \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h \

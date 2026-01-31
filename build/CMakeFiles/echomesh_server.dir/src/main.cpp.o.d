@@ -1,7 +1,8 @@
 CMakeFiles/echomesh_server.dir/src/main.cpp.o: \
- /home/moon/桌面/code/echoMesh/src/main.cpp /usr/include/stdc-predef.h \
- /home/moon/桌面/code/echoMesh/include/BusinessLogic.h \
- /home/moon/桌面/code/echoMesh/include/EventLoop.h \
+ /home/moon/桌面/code/echo/echoMesh/src/main.cpp \
+ /usr/include/stdc-predef.h \
+ /home/moon/桌面/code/echo/echoMesh/include/BusinessLogic.h \
+ /home/moon/桌面/code/echo/echoMesh/include/EventLoop.h \
  /usr/include/c++/13/vector /usr/include/c++/13/bits/requires_hosted.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h \
@@ -224,13 +225,13 @@ CMakeFiles/echomesh_server.dir/src/main.cpp.o: \
  /usr/include/c++/13/bits/this_thread_sleep.h \
  /usr/include/x86_64-linux-gnu/sys/time.h /usr/include/semaphore.h \
  /usr/include/x86_64-linux-gnu/bits/semaphore.h \
- /home/moon/桌面/code/echoMesh/include/ThreadPool.h \
- /home/moon/桌面/code/echoMesh/include/TcpServer.h \
- /home/moon/桌面/code/echoMesh/include/TcpConnection.h \
- /home/moon/桌面/code/echoMesh/include/Buffer.h \
+ /home/moon/桌面/code/echo/echoMesh/include/ThreadPool.h \
+ /home/moon/桌面/code/echo/echoMesh/include/TcpServer.h \
+ /home/moon/桌面/code/echo/echoMesh/include/TcpConnection.h \
+ /home/moon/桌面/code/echo/echoMesh/include/Buffer.h \
  /usr/include/c++/13/algorithm /usr/include/c++/13/bits/ranges_algo.h \
  /usr/include/c++/13/pstl/glue_algorithm_defs.h \
- /home/moon/桌面/code/echoMesh/include/Channel.h \
+ /home/moon/桌面/code/echo/echoMesh/include/Channel.h \
  /usr/include/netinet/in.h /usr/include/x86_64-linux-gnu/sys/socket.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_iovec.h \
  /usr/include/x86_64-linux-gnu/bits/socket.h \
@@ -250,14 +251,14 @@ CMakeFiles/echomesh_server.dir/src/main.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/in.h /usr/include/c++/13/map \
  /usr/include/c++/13/bits/stl_tree.h /usr/include/c++/13/bits/stl_map.h \
  /usr/include/c++/13/bits/stl_multimap.h \
- /home/moon/桌面/code/echoMesh/include/audio/AudioEngine.h \
- /home/moon/桌面/code/echoMesh/include/audio/OpusWrapper.h \
+ /home/moon/桌面/code/echo/echoMesh/include/audio/AudioEngine.h \
+ /home/moon/桌面/code/echo/echoMesh/include/audio/OpusWrapper.h \
  /usr/local/include/opus/opus.h /usr/local/include/opus/opus_types.h \
  /usr/local/include/opus/opus_defines.h /usr/include/c++/13/span \
- /home/moon/桌面/code/echoMesh/include/audio/UdpSender.h \
- /home/moon/桌面/code/echoMesh/include/audio/VoicePacket.h \
+ /home/moon/桌面/code/echo/echoMesh/include/audio/UdpSender.h \
+ /home/moon/桌面/code/echo/echoMesh/include/audio/VoicePacket.h \
  /usr/include/arpa/inet.h \
- /home/moon/桌面/code/echoMesh/include/audio/RingBuffer.h \
+ /home/moon/桌面/code/echo/echoMesh/include/audio/RingBuffer.h \
  /usr/include/c++/13/condition_variable /usr/include/c++/13/optional \
  /usr/include/portaudio.h /usr/include/c++/13/iostream \
  /usr/include/c++/13/istream /usr/include/c++/13/bits/istream.tcc \
