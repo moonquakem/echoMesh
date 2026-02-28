@@ -6,61 +6,73 @@ UserManager &UserManager::getInstance() {
   return instance;
 }
 
-UserId UserManager::login(const std::string &username,
-                        const ConnectionPtr &conn) {
+UserId UserManager::login(const std::string &username, const Token &token) {
   std::lock_guard<std::mutex> lock(mutex_);
+  
+  // In a real app, you might check if the username is already taken.
+  // For this project, we allow multiple logins with the same username.
+  
   UserId userId = next_user_id_++;
-  online_users_[userId] = conn;
-  connections_[conn] = userId;
-  // In a real application, you'd check username/password against a database
+  
+  User newUser;
+  newUser.id = userId;
+  newUser.username = username;
+  newUser.token = token;
+  
+  users_[userId] = newUser;
+  token_to_user_[token] = userId;
+  
   return userId;
 }
 
 void UserManager::logout(UserId userId) {
   std::lock_guard<std::mutex> lock(mutex_);
-  auto it = online_users_.find(userId);
-  if (it != online_users_.end()) {
-    connections_.erase(it->second);
-    online_users_.erase(it);
+  
+  auto it = users_.find(userId);
+  if (it != users_.end()) {
+    // Remove token mapping first
+    token_to_user_.erase(it->second.token);
+    // Then remove user object
+    users_.erase(it);
+
+    // Also remove user from any room they might be in.
+    // This maintains the logic from the old implementation.
+    RoomManager::getInstance().userLogout(userId);
   }
-  // Also remove user from any room they might be in
-  RoomManager::getInstance().userLogout(userId);
-  leaveRoom(userId);
 }
 
-UserManager::ConnectionPtr UserManager::getConnection(UserId userId) {
+UserId UserManager::getUserIdByToken(const Token &token) {
   std::lock_guard<std::mutex> lock(mutex_);
-  auto it = online_users_.find(userId);
-  if (it != online_users_.end()) {
+  
+  auto it = token_to_user_.find(token);
+  if (it != token_to_user_.end()) {
     return it->second;
   }
-  return nullptr;
-}
-
-UserId UserManager::getUserId(const ConnectionPtr &conn) {
-  std::lock_guard<std::mutex> lock(mutex_);
-  auto it = connections_.find(conn);
-  if (it != connections_.end()) {
-    return it->second;
-  }
+  
   return 0; // Invalid user id
 }
 
 void UserManager::joinRoom(UserId userId, const RoomId& roomId) {
     std::lock_guard<std::mutex> lock(mutex_);
-    user_to_room_[userId] = roomId;
+    auto it = users_.find(userId);
+    if (it != users_.end()) {
+        it->second.current_room = roomId;
+    }
 }
 
 void UserManager::leaveRoom(UserId userId) {
     std::lock_guard<std::mutex> lock(mutex_);
-    user_to_room_.erase(userId);
+    auto it = users_.find(userId);
+    if (it != users_.end()) {
+        it->second.current_room.clear();
+    }
 }
 
 RoomId UserManager::getRoomId(UserId userId) {
     std::lock_guard<std::mutex> lock(mutex_);
-    auto it = user_to_room_.find(userId);
-    if (it != user_to_room_.end()) {
-        return it->second;
+    auto it = users_.find(userId);
+    if (it != users_.end()) {
+        return it->second.current_room;
     }
-    return ""; // Return empty string if not in a room
+    return ""; // Return empty string if user not found or not in a room
 }

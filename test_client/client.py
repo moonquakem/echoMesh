@@ -1,12 +1,13 @@
-import socket
-import struct
 import threading
 import argparse
 import pyaudio
 import opuslib
 import time
 import sys
+import grpc
+
 from proto import message_pb2
+from proto import message_pb2_grpc
 
 # --- Audio Constants ---
 SAMPLE_RATE = 48000
@@ -15,11 +16,19 @@ FRAMES_PER_BUFFER = 960  # For 20ms audio frames
 FORMAT = pyaudio.paInt16
 OPUS_BITRATE = 64000
 
-# --- Server Addresses ---
-TCP_HOST = 'localhost'
-TCP_PORT = 8888
-UDP_HOST = 'localhost'
-UDP_PORT = 9999
+# --- Server Address ---
+GRPC_SERVER_ADDRESS = 'localhost:8888'
+
+# Global variable to store session token and user ID after login
+# This will be used to attach metadata to subsequent RPCs
+global_session_token = None
+global_user_id = 0
+
+def _get_metadata_with_token():
+    """Returns metadata containing the global_session_token if available."""
+    if global_session_token:
+        return [('session-token', global_session_token)]
+    return []
 
 def list_audio_devices():
     """Prints all available audio devices and their information."""
@@ -36,209 +45,222 @@ def list_audio_devices():
         print("-" * 20)
     p.terminate()
 
+class EchoMeshClient:
+    def __init__(self, username, room_id, input_device_index=None):
+        self.username = username
+        self.room_id = room_id
+        self.input_device_index = input_device_index
+        
+        self.user_id = 0
+        self.session_token = None
 
-def audio_receiver_thread(sock, stop_event):
-    """
-    Listens for incoming UDP packets from the server, decodes the Opus audio,
-    and plays it back.
-    """
-    p = pyaudio.PyAudio()
-    stream = p.open(format=FORMAT,
-                    channels=CHANNELS,
-                    rate=SAMPLE_RATE,
-                    output=True,
-                    frames_per_buffer=FRAMES_PER_BUFFER)
-    
-    decoder = opuslib.Decoder(SAMPLE_RATE, CHANNELS)
-    print("Audio receiver thread started. Waiting for audio from server...")
-    received_packet_count = 0
+        self.pyaudio_instance = pyaudio.PyAudio()
+        self.audio_output_stream = None
+        self.opus_decoder = opuslib.Decoder(SAMPLE_RATE, CHANNELS)
 
-    while not stop_event.is_set():
+        self.stop_event = threading.Event()
+        self.audio_receive_thread = None
+
+        self.channel = grpc.insecure_channel(GRPC_SERVER_ADDRESS)
+        self.stub = message_pb2_grpc.EchoMeshServiceStub(self.channel)
+
+    def _init_audio_output(self):
+        """Initializes the PyAudio output stream for playback."""
+        if not self.audio_output_stream:
+            self.audio_output_stream = self.pyaudio_instance.open(
+                format=FORMAT,
+                channels=CHANNELS,
+                rate=SAMPLE_RATE,
+                output=True,
+                frames_per_buffer=FRAMES_PER_BUFFER
+            )
+
+    def _audio_receiver(self, response_iterator):
+        """Receives and plays audio packets from the server stream."""
+        self._init_audio_output()
+        print("Audio receiver thread started. Waiting for audio from server...")
+        received_packet_count = 0
         try:
-            data, addr = sock.recvfrom(2048)
-            if data:
-                received_packet_count += 1
-                if received_packet_count % 100 == 0:
-                    print("R", end="", flush=True)
-                # Unpack header
-                sequence, timestamp, userId = struct.unpack("!III", data[:12])
-                opus_data = data[12:]
+            for voice_packet in response_iterator:
+                if self.stop_event.is_set():
+                    break
                 
-                # Decode and play
-                pcm_data = decoder.decode(opus_data, FRAMES_PER_BUFFER)
-                stream.write(pcm_data)
-        except socket.timeout:
-            continue
-        except Exception:
-            # print(f"Receiver error: {e}") # Can be noisy
-            pass
-            
-    print("\nAudio receiver stopping.")
-    stream.stop_stream()
-    stream.close()
-    p.terminate()
+                received_packet_count += 1
+                if received_packet_count % 50 == 0:
+                    print("R", end="", flush=True)
+                
+                try:
+                    # Ignore packets from self
+                    if voice_packet.user_id == self.user_id:
+                        continue
 
-def audio_sender_thread(sock, user_id, server_address, stop_event, input_device_index=None):
-    """
-    Captures audio from the specified input device, encodes it with Opus, and sends it
-    to the server.
-    """
-    p = pyaudio.PyAudio()
-    try:
-        stream = p.open(format=FORMAT,
-                        channels=CHANNELS,
-                        rate=SAMPLE_RATE,
-                        input=True,
-                        frames_per_buffer=FRAMES_PER_BUFFER,
-                        input_device_index=input_device_index)
-    except Exception as e:
-        print(f"Error opening audio input stream: {e}")
-        print("Please check if the device index is correct and the microphone is available.")
-        return
-
-    encoder = opuslib.Encoder(SAMPLE_RATE, CHANNELS, opuslib.APPLICATION_VOIP)
-    encoder.bitrate = OPUS_BITRATE
-    
-    sequence = 0
-    sent_packet_count = 0
-    print(f"Audio sender thread started on device index {input_device_index or 'default'}. Capturing audio...")
-
-    while not stop_event.is_set():
-        try:
-            pcm_data = stream.read(FRAMES_PER_BUFFER)
-            opus_data = encoder.encode(pcm_data, FRAMES_PER_BUFFER)
-            
-            # Pack header and send
-            timestamp = int(time.time())
-            header = struct.pack("!III", sequence, timestamp, user_id)
-            packet = header + opus_data
-            
-            sock.sendto(packet, server_address)
-            sequence += 1
-            sent_packet_count += 1
-            if sent_packet_count % 100 == 0:
-                print("S", end="", flush=True)
+                    pcm_data = self.opus_decoder.decode(
+                        voice_packet.audio_data, FRAMES_PER_BUFFER
+                    )
+                    self.audio_output_stream.write(pcm_data)
+                except opuslib.exceptions.OpusError as e:
+                    print(f"Opus decode error: {e}", file=sys.stderr)
+                except Exception as e:
+                    print(f"Audio playback error: {e}", file=sys.stderr)
+        except grpc.RpcError as e:
+            if e.code() == grpc.StatusCode.UNAUTHENTICATED:
+                print("Audio stream unauthenticated. Session expired?", file=sys.stderr)
+            elif e.code() == grpc.StatusCode.CANCELLED:
+                print("Audio stream cancelled (server or client shutdown).", file=sys.stderr)
+            else:
+                print(f"Audio receiver RPC error: {e}", file=sys.stderr)
         except Exception as e:
-            print(f"Sender error: {e}")
-            break
-    
-    print("\nAudio sender stopping.")
-    stream.stop_stream()
-    stream.close()
-    p.terminate()
+            print(f"Unexpected error in audio receiver: {e}", file=sys.stderr)
+        finally:
+            print("\nAudio receiver stopping.")
+            if self.audio_output_stream:
+                self.audio_output_stream.stop_stream()
+                self.audio_output_stream.close()
 
-# (create_login_request, create_room_action_request, receive_message are unchanged and omitted for brevity)
-def create_login_request(username):
-    login_req = message_pb2.LoginRequest()
-    login_req.username = username
-    login_req.password = "password123"
-    echo_msg = message_pb2.EchoMsg()
-    echo_msg.type = message_pb2.MT_LOGIN_REQUEST
-    echo_msg.login_request.CopyFrom(login_req)
-    serialized_msg = echo_msg.SerializeToString()
-    return struct.pack("!I", len(serialized_msg)) + serialized_msg
-def create_room_action_request(action_type, room_id, user_id):
-    room_action = message_pb2.RoomAction()
-    room_action.action_type = action_type
-    room_action.room_id = room_id
-    room_action.user_id = user_id
-    echo_msg = message_pb2.EchoMsg()
-    echo_msg.type = message_pb2.MT_ROOM_ACTION
-    echo_msg.room_action.CopyFrom(room_action)
-    serialized_msg = echo_msg.SerializeToString()
-    return struct.pack("!I", len(serialized_msg)) + serialized_msg
-def receive_message(sock):
-    len_bytes = sock.recv(4)
-    if not len_bytes: return None
-    length = struct.unpack("!I", len_bytes)[0]
-    data = b''
-    while len(data) < length:
-        packet = sock.recv(length - len(data))
-        if not packet: return None
-        data += packet
-    echo_msg = message_pb2.EchoMsg()
-    echo_msg.ParseFromString(data)
-    return echo_msg
+    def _generate_audio_requests(self):
+        """Generator that captures audio and yields VoicePacket objects."""
+        opus_encoder = opuslib.Encoder(SAMPLE_RATE, CHANNELS, opuslib.APPLICATION_VOIP)
+        opus_encoder.bitrate = OPUS_BITRATE
+
+        try:
+            audio_input_stream = self.pyaudio_instance.open(
+                format=FORMAT,
+                channels=CHANNELS,
+                rate=SAMPLE_RATE,
+                input=True,
+                frames_per_buffer=FRAMES_PER_BUFFER,
+                input_device_index=self.input_device_index
+            )
+        except Exception as e:
+            print(f"Error opening audio input stream: {e}", file=sys.stderr)
+            print("Please check if the device index is correct and the microphone is available.", file=sys.stderr)
+            self.stop_event.set() # Stop the whole client
+            return
+
+        print(f"Audio sender started on device index {self.input_device_index or 'default'}.")
+        sent_packet_count = 0
+        while not self.stop_event.is_set():
+            try:
+                pcm_data = audio_input_stream.read(FRAMES_PER_BUFFER)
+                opus_data = opus_encoder.encode(pcm_data, FRAMES_PER_BUFFER)
+                
+                sent_packet_count += 1
+                if sent_packet_count % 50 == 0:
+                    print("S", end="", flush=True)
+                
+                yield message_pb2.VoicePacket(audio_data=opus_data, user_id=self.user_id)
+            except pyaudio.PyAudioError as e:
+                print(f"PyAudio input error: {e}", file=sys.stderr)
+                break
+            except Exception as e:
+                print(f"Audio sender error: {e}", file=sys.stderr)
+                break
+        
+        print("\nAudio sender stopping.")
+        audio_input_stream.stop_stream()
+        audio_input_stream.close()
+
+    def _stream_audio_loop(self):
+        """Manages the bidirectional audio stream RPC."""
+        try:
+            # The stub call returns a response iterator which also handles sending requests
+            response_iterator = self.stub.StreamAudio(
+                self._generate_audio_requests(),
+                metadata=_get_metadata_with_token()
+            )
+            
+            # Start a separate thread to handle receiving audio from the response_iterator
+            self.audio_receive_thread = threading.Thread(
+                target=self._audio_receiver, args=(response_iterator,)
+            )
+            self.audio_receive_thread.start()
+            
+            # The main part of this thread (or a loop) just waits for the receiver thread to finish
+            # or for the stop_event to be set. The requests are sent by the generator itself.
+            self.audio_receive_thread.join()
+
+        except grpc.RpcError as e:
+            if e.code() == grpc.StatusCode.UNAUTHENTICATED:
+                print("Audio stream RPC unauthenticated. Login required or session expired.", file=sys.stderr)
+            elif e.code() == grpc.StatusCode.CANCELLED:
+                print("Audio stream RPC cancelled (server or client shutdown).", file=sys.stderr)
+            elif e.code() == grpc.StatusCode.FAILED_PRECONDITION:
+                print(f"Audio stream RPC failed: {e.details()} (Are you in a room?)", file=sys.stderr)
+            else:
+                print(f"Audio stream RPC error: {e.details()}", file=sys.stderr)
+        except Exception as e:
+            print(f"Unexpected error in audio stream loop: {e}", file=sys.stderr)
+        finally:
+            self.stop_event.set() # Ensure all other threads stop
+            print("Audio streaming loop finished.")
+
+
+    def start(self):
+        global global_session_token, global_user_id
+        try:
+            print(f"Attempting to login as '{self.username}'...")
+            login_request = message_pb2.LoginRequest(username=self.username, password="password123")
+            login_response = self.stub.Login(login_request)
+
+            if login_response.status_code == message_pb2.SC_OK:
+                self.user_id = login_response.user_id
+                self.session_token = login_response.session_token
+                global_session_token = self.session_token # Set global for metadata helper
+                global_user_id = self.user_id
+                print(f"Login successful. UserID: {self.user_id}, Session Token: {self.session_token[:8]}...")
+            else:
+                print(f"Login failed: {login_response.message}", file=sys.stderr)
+                return
+
+            print(f"Attempting to join room '{self.room_id}'...")
+            room_action_request = message_pb2.RoomActionRequest(
+                action_type=message_pb2.RA_CREATE_OR_JOIN, 
+                room_id=self.room_id
+            )
+            room_response = self.stub.ManageRoom(room_action_request, metadata=_get_metadata_with_token())
+
+            if room_response.status_code == message_pb2.SC_OK:
+                print(f"Successfully joined room '{self.room_id}'.")
+            else:
+                print(f"Failed to join room '{self.room_id}': {room_response.message}", file=sys.stderr)
+                return
+
+            print("\nStarting audio stream. Press Ctrl+C to exit.")
+            self._stream_audio_loop() # This will block until stream ends or stop_event is set
+
+        except grpc.RpcError as e:
+            print(f"RPC error during client startup: {e.details()}", file=sys.stderr)
+        except KeyboardInterrupt:
+            print("\nExiting client gracefully.")
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}", file=sys.stderr)
+        finally:
+            self.stop_event.set() # Signal all threads to stop
+            if self.audio_receive_thread and self.audio_receive_thread.is_alive():
+                self.audio_receive_thread.join(timeout=1.0)
+            self.channel.close()
+            self.pyaudio_instance.terminate()
+            print("Client shut down.")
+
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="EchoMesh Client")
+    parser = argparse.ArgumentParser(description="EchoMesh Client (gRPC)")
     parser.add_argument("--list-devices", action="store_true", help="List available audio devices and exit.")
-    parser.add_argument("--input-device", type=int, help="The index of the audio input device to use.")
-    # Add optional positional arguments for easier use with list-devices
-    parser.add_argument("username", nargs='?', default="user", help="Your username (required unless listing devices).")
-    parser.add_argument("room_id", nargs='?', default="room", help="The room ID to join (required unless listing devices).")
-    parser.add_argument("--mode", choices=["speaker", "listener"], default="speaker",
-                        help="Run client in 'speaker' (records) or 'listener' (plays) mode.")
+    parser.add_argument("--input-device", type=int, help="The index of the audio input device to use. Defaults to system default.")
+    parser.add_argument("username", nargs='?', default="user", help="Your username.")
+    parser.add_argument("room_id", nargs='?', default="room", help="The room ID to join.")
+    # Mode argument is now obsolete as client always sends and receives
+    # parser.add_argument("--mode", choices=["speaker", "listener"], default="speaker",
+    #                     help="Run client in 'speaker' (records) or 'listener' (plays) mode.")
     args = parser.parse_args()
 
     if args.list_devices:
         list_audio_devices()
         sys.exit(0)
 
-    user_id = 0
-    stop_event = threading.Event()
-    udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    udp_socket.settimeout(1.0)
-    
-    receiver = None
-    sender = None
+    # Validate arguments for non-list-devices mode
+    if not args.username or not args.room_id:
+        parser.error("Username and Room ID are required unless --list-devices is used.")
 
-    try:
-        # (TCP connection, login, join room logic is unchanged and omitted for brevity)
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as tcp_socket:
-            tcp_socket.connect((TCP_HOST, TCP_PORT))
-            print(f"Connected to TCP server at {TCP_HOST}:{TCP_PORT}")
-            tcp_socket.sendall(create_login_request(args.username))
-            login_response = receive_message(tcp_socket)
-            if login_response and login_response.type == message_pb2.MT_LOGIN_RESPONSE and login_response.login_response.status_code == 0:
-                user_id = login_response.login_response.user_id
-                print(f"Login successful. UserID: {user_id}")
-            else:
-                raise Exception("Login failed.")
-
-            # Step 2: Join Room and wait for confirmation
-            tcp_socket.sendall(create_room_action_request(message_pb2.RA_JOIN, args.room_id, user_id))
-            print(f"Sent join room request for room '{args.room_id}'.")
-
-            join_response = receive_message(tcp_socket)
-            if join_response and join_response.type == message_pb2.MT_ROOM_ACTION_RESPONSE and join_response.room_action_response.status_code == message_pb2.SC_OK:
-                print("Successfully joined room.")
-            else:
-                error_msg = join_response.room_action_response.message if join_response else "No response"
-                raise Exception(f"Failed to join room: {error_msg}")
-
-            # Step 3: Start audio threads now that we are confirmed in the room
-            server_udp_address = (UDP_HOST, UDP_PORT)
-            
-            if args.mode == "speaker":
-                sender = threading.Thread(target=audio_sender_thread, args=(udp_socket, user_id, server_udp_address, stop_event, args.input_device))
-                sender.start()
-                print(f"Client running in SPEAKER mode. UserID: {user_id}.")
-            elif args.mode == "listener":
-                receiver = threading.Thread(target=audio_receiver_thread, args=(udp_socket, stop_event))
-                receiver.start()
-                print(f"Client running in LISTENER mode. UserID: {user_id}.")
-                
-                # Send a dummy UDP packet to register our address with the server
-                dummy_header = struct.pack("!III", 0, int(time.time()), user_id)
-                dummy_packet = dummy_header + b'' # Empty opus data
-                udp_socket.sendto(dummy_packet, server_udp_address)
-                print("Sent dummy UDP packet to server to register listener address.")
-            
-            print("\nVoice chat running. Press Ctrl+C to exit.")
-            # We no longer need to listen for TCP messages here, just keep alive
-            while True:
-                time.sleep(1)
-
-    except ConnectionRefusedError:
-        print(f"Connection refused. Is the server running on {TCP_HOST}:{TCP_PORT}?")
-    except KeyboardInterrupt:
-        print("\nExiting client.")
-    except Exception as e:
-        print(f"An error occurred: {e}")
-    finally:
-        stop_event.set()
-        if receiver and receiver.is_alive(): receiver.join()
-        if sender and sender.is_alive(): sender.join()
-        udp_socket.close()
-        print("Client shut down.")
+    client = EchoMeshClient(args.username, args.room_id, args.input_device)
+    client.start()

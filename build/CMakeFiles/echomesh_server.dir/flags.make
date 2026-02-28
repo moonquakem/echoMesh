@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/home/moon/桌面/code/echo/echoMesh/build -I/home/moon/桌面/code/echo/echoMesh/include -I/home/moon/桌面/code/echo/echoMesh/include/audio -I/usr/local/include/opus
 
-CXX_FLAGS = -std=gnu++20
+CXX_FLAGS = -std=gnu++20 -pthread
 

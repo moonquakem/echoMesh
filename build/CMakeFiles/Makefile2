@@ -71,22 +71,49 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
+clean: CMakeFiles/generate_proto.dir/clean
 clean: CMakeFiles/echomesh_server.dir/clean
 .PHONY : clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/generate_proto.dir
+
+# All Build rule for target.
+CMakeFiles/generate_proto.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/generate_proto.dir/build.make CMakeFiles/generate_proto.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/generate_proto.dir/build.make CMakeFiles/generate_proto.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles --progress-num=11 "Built target generate_proto"
+.PHONY : CMakeFiles/generate_proto.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/generate_proto.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/moon/桌面/code/echo/echoMesh/build/CMakeFiles 1
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/generate_proto.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/moon/桌面/code/echo/echoMesh/build/CMakeFiles 0
+.PHONY : CMakeFiles/generate_proto.dir/rule
+
+# Convenience name for target.
+generate_proto: CMakeFiles/generate_proto.dir/rule
+.PHONY : generate_proto
+
+# clean rule for target.
+CMakeFiles/generate_proto.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/generate_proto.dir/build.make CMakeFiles/generate_proto.dir/clean
+.PHONY : CMakeFiles/generate_proto.dir/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/echomesh_server.dir
 
 # All Build rule for target.
-CMakeFiles/echomesh_server.dir/all:
+CMakeFiles/echomesh_server.dir/all: CMakeFiles/generate_proto.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20 "Built target echomesh_server"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10 "Built target echomesh_server"
 .PHONY : CMakeFiles/echomesh_server.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/echomesh_server.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/moon/桌面/code/echo/echoMesh/build/CMakeFiles 20
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/moon/桌面/code/echo/echoMesh/build/CMakeFiles 11
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/echomesh_server.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/moon/桌面/code/echo/echoMesh/build/CMakeFiles 0
 .PHONY : CMakeFiles/echomesh_server.dir/rule

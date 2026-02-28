@@ -2,51 +2,70 @@ syntax = "proto3";
 
 package echomesh;
 
-enum MsgType {
-  MT_UNKNOWN = 0;
-  MT_LOGIN_REQUEST = 1;
-  MT_LOGIN_RESPONSE = 2;
-  MT_CHAT_MSG = 3;
-  MT_ROOM_ACTION = 4;
-  MT_VOICE_ANNOUNCE = 5;
-  MT_ROOM_ACTION_RESPONSE = 7;
+option cc_generic_services = false;
+option py_generic_services = false;
+
+// ===================================================================
+// 1. Service Definition: The core of the gRPC migration
+// ===================================================================
+
+service EchoMeshService {
+  // --- Signaling RPCs ---
+
+  // Handles user login, returns a session token for subsequent calls.
+  rpc Login(LoginRequest) returns (LoginResponse);
+
+  // Manages room actions like create, join, leave.
+  rpc ManageRoom(RoomActionRequest) returns (RoomActionResponse);
+  
+  // --- Real-time Audio Streaming RPC ---
+
+  // Bidirectional stream for sending and receiving voice data.
+  // The client continuously sends their audio, and the server continuously
+  // streams back the audio from other users in the room.
+  rpc StreamAudio(stream VoicePacket) returns (stream VoicePacket);
 }
+
+// ===================================================================
+// 2. Message Definitions: Largely the same, but adapted for RPC
+// ===================================================================
 
 enum StatusCode {
   SC_OK = 0;
   SC_ERROR = 1;
+  SC_UNAUTHENTICATED = 2;
   SC_ROOM_NOT_FOUND = 101;
   SC_USER_NOT_IN_ROOM = 102;
 }
 
+// --- Login Messages ---
+
 message LoginRequest {
   string username = 1;
-  string password = 2; // For demonstration, not secure
+  string password = 2;
 }
 
 message LoginResponse {
   StatusCode status_code = 1;
-  int64 user_id = 2;
-  string message = 3;
+  string message = 2;
+  // The session token is now the key for identifying a client.
+  string session_token = 3; 
+  int64 user_id = 4;
 }
 
-message ChatMsg {
-  int64 user_id = 1;
-  string room_id = 2;
-  string content = 3;
-}
+// --- Room Management Messages ---
 
 enum RoomActionType {
   RA_UNKNOWN = 0;
-  RA_CREATE = 1;
-  RA_JOIN = 2;
-  RA_LEAVE = 3;
+  RA_CREATE_OR_JOIN = 1; // Simplified to a single action
+  RA_LEAVE = 2;
 }
 
-message RoomAction {
-  RoomActionType action_type = 1;
-  string room_id = 2;
-  int64 user_id = 3;
+message RoomActionRequest {
+  // All RPCs (except Login) will include the token in metadata, not the payload.
+  // string session_token = 1; 
+  RoomActionType action_type = 2;
+  string room_id = 3;
 }
 
 message RoomActionResponse {
@@ -54,20 +73,13 @@ message RoomActionResponse {
   string message = 2;
 }
 
-message VoiceAnnounce {
-  string sdp = 1; // Simplified for example
-  string room_id = 2;
-  int64 user_id = 3;
-}
+// --- Audio Streaming Message ---
 
-message EchoMsg {
-  MsgType type = 1;
-  oneof payload {
-    LoginRequest login_request = 2;
-    LoginResponse login_response = 3;
-    ChatMsg chat_msg = 4;
-    RoomAction room_action = 5;
-    VoiceAnnounce voice_announce = 6;
-    RoomActionResponse room_action_response = 7;
-  }
+message VoicePacket {
+  // The server will identify the user via the stream context,
+  // but including user_id can be useful for clients.
+  int64 user_id = 1; 
+  // Opus-encoded audio data.
+  bytes audio_data = 2;
+  // We no longer need sequence numbers if we rely on HTTP/2's ordered delivery.
 }

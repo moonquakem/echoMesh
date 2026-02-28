@@ -117,6 +117,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named generate_proto
+
+# Build rule for target.
+generate_proto: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 generate_proto
+.PHONY : generate_proto
+
+# fast build rule for target.
+generate_proto/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/generate_proto.dir/build.make CMakeFiles/generate_proto.dir/build
+.PHONY : generate_proto/fast
+
+#=============================================================================
 # Target rules for targets named echomesh_server
 
 # Build rule for target.
@@ -128,6 +141,30 @@ echomesh_server: cmake_check_build_system
 echomesh_server/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/build
 .PHONY : echomesh_server/fast
+
+message.grpc.pb.o: message.grpc.pb.cc.o
+.PHONY : message.grpc.pb.o
+
+# target to build an object file
+message.grpc.pb.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/message.grpc.pb.cc.o
+.PHONY : message.grpc.pb.cc.o
+
+message.grpc.pb.i: message.grpc.pb.cc.i
+.PHONY : message.grpc.pb.i
+
+# target to preprocess a source file
+message.grpc.pb.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/message.grpc.pb.cc.i
+.PHONY : message.grpc.pb.cc.i
+
+message.grpc.pb.s: message.grpc.pb.cc.s
+.PHONY : message.grpc.pb.s
+
+# target to generate assembly for a file
+message.grpc.pb.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/message.grpc.pb.cc.s
+.PHONY : message.grpc.pb.cc.s
 
 message.pb.o: message.pb.cc.o
 .PHONY : message.pb.o
@@ -153,197 +190,29 @@ message.pb.cc.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/message.pb.cc.s
 .PHONY : message.pb.cc.s
 
-src/Acceptor.o: src/Acceptor.cpp.o
-.PHONY : src/Acceptor.o
+src/EchoMeshServiceImpl.o: src/EchoMeshServiceImpl.cpp.o
+.PHONY : src/EchoMeshServiceImpl.o
 
 # target to build an object file
-src/Acceptor.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/Acceptor.cpp.o
-.PHONY : src/Acceptor.cpp.o
+src/EchoMeshServiceImpl.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/EchoMeshServiceImpl.cpp.o
+.PHONY : src/EchoMeshServiceImpl.cpp.o
 
-src/Acceptor.i: src/Acceptor.cpp.i
-.PHONY : src/Acceptor.i
-
-# target to preprocess a source file
-src/Acceptor.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/Acceptor.cpp.i
-.PHONY : src/Acceptor.cpp.i
-
-src/Acceptor.s: src/Acceptor.cpp.s
-.PHONY : src/Acceptor.s
-
-# target to generate assembly for a file
-src/Acceptor.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/Acceptor.cpp.s
-.PHONY : src/Acceptor.cpp.s
-
-src/Buffer.o: src/Buffer.cpp.o
-.PHONY : src/Buffer.o
-
-# target to build an object file
-src/Buffer.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/Buffer.cpp.o
-.PHONY : src/Buffer.cpp.o
-
-src/Buffer.i: src/Buffer.cpp.i
-.PHONY : src/Buffer.i
+src/EchoMeshServiceImpl.i: src/EchoMeshServiceImpl.cpp.i
+.PHONY : src/EchoMeshServiceImpl.i
 
 # target to preprocess a source file
-src/Buffer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/Buffer.cpp.i
-.PHONY : src/Buffer.cpp.i
+src/EchoMeshServiceImpl.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/EchoMeshServiceImpl.cpp.i
+.PHONY : src/EchoMeshServiceImpl.cpp.i
 
-src/Buffer.s: src/Buffer.cpp.s
-.PHONY : src/Buffer.s
-
-# target to generate assembly for a file
-src/Buffer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/Buffer.cpp.s
-.PHONY : src/Buffer.cpp.s
-
-src/BusinessLogic.o: src/BusinessLogic.cpp.o
-.PHONY : src/BusinessLogic.o
-
-# target to build an object file
-src/BusinessLogic.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/BusinessLogic.cpp.o
-.PHONY : src/BusinessLogic.cpp.o
-
-src/BusinessLogic.i: src/BusinessLogic.cpp.i
-.PHONY : src/BusinessLogic.i
-
-# target to preprocess a source file
-src/BusinessLogic.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/BusinessLogic.cpp.i
-.PHONY : src/BusinessLogic.cpp.i
-
-src/BusinessLogic.s: src/BusinessLogic.cpp.s
-.PHONY : src/BusinessLogic.s
+src/EchoMeshServiceImpl.s: src/EchoMeshServiceImpl.cpp.s
+.PHONY : src/EchoMeshServiceImpl.s
 
 # target to generate assembly for a file
-src/BusinessLogic.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/BusinessLogic.cpp.s
-.PHONY : src/BusinessLogic.cpp.s
-
-src/Channel.o: src/Channel.cpp.o
-.PHONY : src/Channel.o
-
-# target to build an object file
-src/Channel.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/Channel.cpp.o
-.PHONY : src/Channel.cpp.o
-
-src/Channel.i: src/Channel.cpp.i
-.PHONY : src/Channel.i
-
-# target to preprocess a source file
-src/Channel.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/Channel.cpp.i
-.PHONY : src/Channel.cpp.i
-
-src/Channel.s: src/Channel.cpp.s
-.PHONY : src/Channel.s
-
-# target to generate assembly for a file
-src/Channel.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/Channel.cpp.s
-.PHONY : src/Channel.cpp.s
-
-src/EpollPoller.o: src/EpollPoller.cpp.o
-.PHONY : src/EpollPoller.o
-
-# target to build an object file
-src/EpollPoller.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/EpollPoller.cpp.o
-.PHONY : src/EpollPoller.cpp.o
-
-src/EpollPoller.i: src/EpollPoller.cpp.i
-.PHONY : src/EpollPoller.i
-
-# target to preprocess a source file
-src/EpollPoller.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/EpollPoller.cpp.i
-.PHONY : src/EpollPoller.cpp.i
-
-src/EpollPoller.s: src/EpollPoller.cpp.s
-.PHONY : src/EpollPoller.s
-
-# target to generate assembly for a file
-src/EpollPoller.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/EpollPoller.cpp.s
-.PHONY : src/EpollPoller.cpp.s
-
-src/EventLoop.o: src/EventLoop.cpp.o
-.PHONY : src/EventLoop.o
-
-# target to build an object file
-src/EventLoop.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/EventLoop.cpp.o
-.PHONY : src/EventLoop.cpp.o
-
-src/EventLoop.i: src/EventLoop.cpp.i
-.PHONY : src/EventLoop.i
-
-# target to preprocess a source file
-src/EventLoop.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/EventLoop.cpp.i
-.PHONY : src/EventLoop.cpp.i
-
-src/EventLoop.s: src/EventLoop.cpp.s
-.PHONY : src/EventLoop.s
-
-# target to generate assembly for a file
-src/EventLoop.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/EventLoop.cpp.s
-.PHONY : src/EventLoop.cpp.s
-
-src/EventLoopThread.o: src/EventLoopThread.cpp.o
-.PHONY : src/EventLoopThread.o
-
-# target to build an object file
-src/EventLoopThread.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/EventLoopThread.cpp.o
-.PHONY : src/EventLoopThread.cpp.o
-
-src/EventLoopThread.i: src/EventLoopThread.cpp.i
-.PHONY : src/EventLoopThread.i
-
-# target to preprocess a source file
-src/EventLoopThread.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/EventLoopThread.cpp.i
-.PHONY : src/EventLoopThread.cpp.i
-
-src/EventLoopThread.s: src/EventLoopThread.cpp.s
-.PHONY : src/EventLoopThread.s
-
-# target to generate assembly for a file
-src/EventLoopThread.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/EventLoopThread.cpp.s
-.PHONY : src/EventLoopThread.cpp.s
-
-src/MsgDispatcher.o: src/MsgDispatcher.cpp.o
-.PHONY : src/MsgDispatcher.o
-
-# target to build an object file
-src/MsgDispatcher.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/MsgDispatcher.cpp.o
-.PHONY : src/MsgDispatcher.cpp.o
-
-src/MsgDispatcher.i: src/MsgDispatcher.cpp.i
-.PHONY : src/MsgDispatcher.i
-
-# target to preprocess a source file
-src/MsgDispatcher.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/MsgDispatcher.cpp.i
-.PHONY : src/MsgDispatcher.cpp.i
-
-src/MsgDispatcher.s: src/MsgDispatcher.cpp.s
-.PHONY : src/MsgDispatcher.s
-
-# target to generate assembly for a file
-src/MsgDispatcher.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/MsgDispatcher.cpp.s
-.PHONY : src/MsgDispatcher.cpp.s
+src/EchoMeshServiceImpl.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/EchoMeshServiceImpl.cpp.s
+.PHONY : src/EchoMeshServiceImpl.cpp.s
 
 src/RoomManager.o: src/RoomManager.cpp.o
 .PHONY : src/RoomManager.o
@@ -368,102 +237,6 @@ src/RoomManager.s: src/RoomManager.cpp.s
 src/RoomManager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/RoomManager.cpp.s
 .PHONY : src/RoomManager.cpp.s
-
-src/TcpConnection.o: src/TcpConnection.cpp.o
-.PHONY : src/TcpConnection.o
-
-# target to build an object file
-src/TcpConnection.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/TcpConnection.cpp.o
-.PHONY : src/TcpConnection.cpp.o
-
-src/TcpConnection.i: src/TcpConnection.cpp.i
-.PHONY : src/TcpConnection.i
-
-# target to preprocess a source file
-src/TcpConnection.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/TcpConnection.cpp.i
-.PHONY : src/TcpConnection.cpp.i
-
-src/TcpConnection.s: src/TcpConnection.cpp.s
-.PHONY : src/TcpConnection.s
-
-# target to generate assembly for a file
-src/TcpConnection.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/TcpConnection.cpp.s
-.PHONY : src/TcpConnection.cpp.s
-
-src/TcpServer.o: src/TcpServer.cpp.o
-.PHONY : src/TcpServer.o
-
-# target to build an object file
-src/TcpServer.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/TcpServer.cpp.o
-.PHONY : src/TcpServer.cpp.o
-
-src/TcpServer.i: src/TcpServer.cpp.i
-.PHONY : src/TcpServer.i
-
-# target to preprocess a source file
-src/TcpServer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/TcpServer.cpp.i
-.PHONY : src/TcpServer.cpp.i
-
-src/TcpServer.s: src/TcpServer.cpp.s
-.PHONY : src/TcpServer.s
-
-# target to generate assembly for a file
-src/TcpServer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/TcpServer.cpp.s
-.PHONY : src/TcpServer.cpp.s
-
-src/ThreadPool.o: src/ThreadPool.cpp.o
-.PHONY : src/ThreadPool.o
-
-# target to build an object file
-src/ThreadPool.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/ThreadPool.cpp.o
-.PHONY : src/ThreadPool.cpp.o
-
-src/ThreadPool.i: src/ThreadPool.cpp.i
-.PHONY : src/ThreadPool.i
-
-# target to preprocess a source file
-src/ThreadPool.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/ThreadPool.cpp.i
-.PHONY : src/ThreadPool.cpp.i
-
-src/ThreadPool.s: src/ThreadPool.cpp.s
-.PHONY : src/ThreadPool.s
-
-# target to generate assembly for a file
-src/ThreadPool.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/ThreadPool.cpp.s
-.PHONY : src/ThreadPool.cpp.s
-
-src/UdpServer.o: src/UdpServer.cpp.o
-.PHONY : src/UdpServer.o
-
-# target to build an object file
-src/UdpServer.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/UdpServer.cpp.o
-.PHONY : src/UdpServer.cpp.o
-
-src/UdpServer.i: src/UdpServer.cpp.i
-.PHONY : src/UdpServer.i
-
-# target to preprocess a source file
-src/UdpServer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/UdpServer.cpp.i
-.PHONY : src/UdpServer.cpp.i
-
-src/UdpServer.s: src/UdpServer.cpp.s
-.PHONY : src/UdpServer.s
-
-# target to generate assembly for a file
-src/UdpServer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/UdpServer.cpp.s
-.PHONY : src/UdpServer.cpp.s
 
 src/UserManager.o: src/UserManager.cpp.o
 .PHONY : src/UserManager.o
@@ -569,49 +342,20 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... generate_proto"
 	@echo "... echomesh_server"
+	@echo "... message.grpc.pb.o"
+	@echo "... message.grpc.pb.i"
+	@echo "... message.grpc.pb.s"
 	@echo "... message.pb.o"
 	@echo "... message.pb.i"
 	@echo "... message.pb.s"
-	@echo "... src/Acceptor.o"
-	@echo "... src/Acceptor.i"
-	@echo "... src/Acceptor.s"
-	@echo "... src/Buffer.o"
-	@echo "... src/Buffer.i"
-	@echo "... src/Buffer.s"
-	@echo "... src/BusinessLogic.o"
-	@echo "... src/BusinessLogic.i"
-	@echo "... src/BusinessLogic.s"
-	@echo "... src/Channel.o"
-	@echo "... src/Channel.i"
-	@echo "... src/Channel.s"
-	@echo "... src/EpollPoller.o"
-	@echo "... src/EpollPoller.i"
-	@echo "... src/EpollPoller.s"
-	@echo "... src/EventLoop.o"
-	@echo "... src/EventLoop.i"
-	@echo "... src/EventLoop.s"
-	@echo "... src/EventLoopThread.o"
-	@echo "... src/EventLoopThread.i"
-	@echo "... src/EventLoopThread.s"
-	@echo "... src/MsgDispatcher.o"
-	@echo "... src/MsgDispatcher.i"
-	@echo "... src/MsgDispatcher.s"
+	@echo "... src/EchoMeshServiceImpl.o"
+	@echo "... src/EchoMeshServiceImpl.i"
+	@echo "... src/EchoMeshServiceImpl.s"
 	@echo "... src/RoomManager.o"
 	@echo "... src/RoomManager.i"
 	@echo "... src/RoomManager.s"
-	@echo "... src/TcpConnection.o"
-	@echo "... src/TcpConnection.i"
-	@echo "... src/TcpConnection.s"
-	@echo "... src/TcpServer.o"
-	@echo "... src/TcpServer.i"
-	@echo "... src/TcpServer.s"
-	@echo "... src/ThreadPool.o"
-	@echo "... src/ThreadPool.i"
-	@echo "... src/ThreadPool.s"
-	@echo "... src/UdpServer.o"
-	@echo "... src/UdpServer.i"
-	@echo "... src/UdpServer.s"
 	@echo "... src/UserManager.o"
 	@echo "... src/UserManager.i"
 	@echo "... src/UserManager.s"

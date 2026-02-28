@@ -85,3 +85,79 @@
     2.  这个包唯一的作用就是让服务端记录下它的地址，从而完成通信链路的最后一块拼图。
 
 经过以上所有步骤，项目最终达到了预期的功能。
+---
+<br>
+
+## 第四阶段：gRPC 架构升级
+
+在项目功能完善后，为了提升其健壮性、可维护性并采用业界标准，我们决定将其从自定义的 TCP/UDP 网络栈 + 手动 Protobuf 序列化，全面升级为基于 gRPC 的 RPC 架构。
+
+### 实现思路与策略
+
+本次重构的目标是用 gRPC 替换掉所有底层的网络代码 (`TcpServer`, `UdpServer`, `EventLoop`, `TcpConnection` 等)，同时保留核心业务逻辑 (`UserManager`, `RoomManager`)。
+
+**1. 重新定义服务契约 (`.proto` 文件)**
+-   **从“消息”到“服务”**: 彻底抛弃了通过 `MsgType` 来区分业务的“消息复用”模式。
+-   **定义 RPC 方法**: 为信令操作（如登录、房间管理）定义了明确的 `rpc` 方法 (`Login`, `ManageRoom`)。
+-   **定义音频流**: 使用 `rpc StreamAudio(stream VoicePacket) returns (stream VoicePacket)` 这样一个 gRPC **双向流**，来完全取代之前独立的 UDP 音频通道。这统一了通信协议，并简化了网络穿透。
+-   **引入 Token 认证**: 在 `LoginResponse` 中增加 `session_token` 字段，作为后续所有 RPC 调用的身份凭证，取代了之前与 TCP 连接绑定的认证方式。
+
+**2. C++ 服务端重构**
+-   **移除网络层**: 删除了所有与自定义 Reactor 网络模型相关的代码（`EventLoop`, `Channel`, `TcpServer`, `UdpServer`, `TcpConnection` 等约10个文件）。
+-   **实现 gRPC 服务**: 创建了新的 `EchoMeshServiceImpl` 类，它继承自 gRPC 生成的服务基类，并实现了 `.proto` 文件中定义的所有 `rpc` 方法。
+-   **迁移业务逻辑**: 将 `BusinessLogic.cpp` 中的核心逻辑（如判断登录、加入/离开房间）平移到 `EchoMeshServiceImpl` 的对应方法中。
+-   **改造状态管理**:
+    -   `UserManager`: 重构为基于 `token` 的会话管理。移除了所有与 `TcpConnection` 的耦合，改为存储 `token -> UserId` 的映射。
+    -   `RoomManager`: 重构为支持 gRPC 流。不再存储用户的 `sockaddr_in` (UDP 地址)，而是存储一个指向每个用户 `grpc::ServerReaderWriter*` (音频流) 的指针，并通过这个指针来转发音频。
+-   **更新主函数**: `main.cpp` 被极大简化，现在它只负责构建并启动 `grpc::Server`。
+
+**3. Python 客户端重构**
+-   **生成 gRPC 代码**: 使用 `grpcio-tools` 重新生成了 `_pb2.py` 和 `_pb2_grpc.py` 文件。
+-   **替换网络代码**: 移除了所有手写的 `socket` 和 `struct` 封包/解包代码。
+-   **使用 Stub 调用**: 客户端现在通过 `EchoMeshServiceStub` 来调用服务端的 RPC 方法，例如 `stub.Login(...)`。
+-   **实现 Token 传递**: 客户端在登录后保存 `session_token`，并通过 `metadata` 参数将其附加到后续的每次 RPC 调用中，用于服务端认证。
+-   **统一音频流**: 不再区分“说话者”/“收听者”模式。客户端现在通过调用 `stub.StreamAudio()` 启动一个双向流，并创建两个线程：一个“发送线程”通过生成器 (`yield`) 不断向流中写入麦克风数据；一个“接收线程”通过 `for` 循环不断从流中读取并播放其他人的音频。
+
+### Bug 纠错过程
+
+在升级过程中，我们遇到了大量棘手的环境、编译和逻辑 Bug。
+
+**Bug 1: CMake 找不到 gRPC (`find_package`)**
+*   **现象**: `CMakeLists.txt` 中添加 `find_package(gRPC REQUIRED)` 后，CMake 报错 `Could not find a package configuration file provided by "gRPC"`。
+*   **原因**: 系统中未安装 gRPC 的 C++ 开发库。
+*   **解决**: 指导用户执行 `sudo apt-get install libgrpc-dev libgrpc++-dev protobuf-compiler-grpc` 安装缺失的依赖。
+
+**Bug 2: `uuid/uuid.h` 头文件找不到**
+*   **现象**: 编译 `EchoMeshServiceImpl.cpp` 时报错 `fatal error: uuid/uuid.h: 没有那个文件或目录`。
+*   **原因**: 与 Bug 1 类似，系统中缺少 `uuid` 库的开发包 `uuid-dev`。
+*   **解决**: 指导用户执行 `sudo apt-get install uuid-dev`。
+
+**Bug 3: CMake 编译依赖顺序错误**
+*   **现象**: 即使所有库都已安装，编译时依然报错 `message.grpc.pb.h: 没有那个文件或目录`。
+*   **原因**: `CMakeLists.txt` 的处理顺序有问题。`make` 在编译 `main.cpp` 时，`protoc` 生成 `message.grpc.pb.h` 的命令还没有执行或完成。多次尝试使用现代 CMake 的 `protobuf_generate` 函数（无论是 `TARGET` 关键字还是 `OUT_VAR` 变量）都未能正确建立依赖关系。
+*   **解决**: 放弃“自动”依赖方案，改用最手动但最稳妥的方式：
+    1.  使用 `add_custom_command` 明确定义一个用于执行 `protoc` 的命令。
+    2.  使用 `add_custom_target` 创建一个依赖于生成文件的 `generate_proto` 目标。
+    3.  使用 `add_dependencies(echomesh_server generate_proto)` 强制声明主程序依赖于代码生成目标，从而保证了正确的编译顺序。
+
+**Bug 4: `protoc` 插件执行失败**
+*   **现象**: 解决了编译顺序问题后，构建在 `protoc` 步骤失败，报错 `protoc-gen-grpc: program not found`。
+*   **原因**: 这是一个非常隐蔽的 `protoc` 参数错误。`CMakeLists.txt` 中使用了 `--grpc_out` 参数，但我们为 C++ 指定的插件名称是 `grpc_cpp_plugin`，它对应的参数应该是 `--grpc_cpp_out`。由于参数不匹配，`protoc` 忽略了我们指定的插件路径，去 `PATH` 中查找一个默认的、但不存在的插件，导致失败。
+*   **解决**: 将 `add_custom_command` 中的参数从 `--grpc_out` 修正为 `--grpc_cpp_out`。
+
+**Bug 5: `EventLoopThread` 链接错误**
+*   **现象**: 所有代码编译通过后，在最终的链接阶段报错 `undefined reference to EventLoopThread::...`。
+*   **原因**: `ThreadPool` 模块是旧架构的残留物，它依赖于 `EventLoopThread`。在重构中，我正确地移除了 `EventLoopThread.cpp`，但忘记了 `ThreadPool.cpp` 也应一并移除，因为新的 gRPC 架构完全不再需要它。
+*   **解决**: 从 `CMakeLists.txt` 中移除 `ThreadPool.cpp`，并删除 `ThreadPool.cpp` 和 `ThreadPool.h` 文件。
+
+**Bug 6: Python 客户端 `ModuleNotFoundError`**
+*   **现象**: 运行 `client.py` 时报错 `ModuleNotFoundError: No module named 'message_pb2'`。
+*   **原因**: `protoc` 生成的 `message_pb2_grpc.py` 默认使用绝对导入 `import message_pb2`。当 `client.py` 通过 `from proto import ...` 将其作为包的一部分导入时，Python 无法在 `message_pb2_grpc.py` 自己的目录中找到 `message_pb2.py`。
+*   **解决**: 将 `message_pb2_grpc.py` 中的 `import message_pb2` 修改为相对导入 `from . import message_pb2`。
+
+**Bug 7: gRPC FAILED_PRECONDITION 错误 (最终 Bug)**
+*   **现象**: 客户端能成功登录和加入房间，但发起 `StreamAudio` RPC 时立即失败，服务端返回 "User is not in a room."。
+*   **原因**: 服务端存在状态同步 Bug。`ManageRoom` 方法在处理加入房间请求时，只更新了 `RoomManager` 的状态，忘记了同步更新 `UserManager` 的状态。而 `StreamAudio` 方法恰好是通过查询 `UserManager` 来验证用户是否在房间内的。
+*   **解决**: 在 `EchoMeshServiceImpl.cpp` 的 `ManageRoom` 方法中，在成功加入房间后，补上了对 `m_userManager.joinRoom(...)` 的调用。
+
+至此，整个 gRPC 升级和调试工作全部完成。

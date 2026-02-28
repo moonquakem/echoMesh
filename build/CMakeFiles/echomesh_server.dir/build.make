@@ -69,13 +69,18 @@ include CMakeFiles/echomesh_server.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/echomesh_server.dir/flags.make
 
-message.pb.h: /home/moon/桌面/code/echo/echoMesh/proto/message.proto
-message.pb.h: /usr/bin/protoc
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Running cpp protocol buffer compiler on /home/moon/桌面/code/echo/echoMesh/proto/message.proto"
-	/usr/bin/protoc --cpp_out :/home/moon/桌面/code/echo/echoMesh/build -I /home/moon/桌面/code/echo/echoMesh/proto /home/moon/桌面/code/echo/echoMesh/proto/message.proto
+message.pb.cc: /home/moon/桌面/code/echo/echoMesh/proto/message.proto
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Manually running protoc/grpc compiler on /home/moon/桌面/code/echo/echoMesh/proto/message.proto"
+	/usr/bin/protoc --cpp_out=/home/moon/桌面/code/echo/echoMesh/build --grpc_cpp_out=/home/moon/桌面/code/echo/echoMesh/build --plugin=protoc-gen-grpc_cpp=/usr/bin/grpc_cpp_plugin -I/home/moon/桌面/code/echo/echoMesh/proto /home/moon/桌面/code/echo/echoMesh/proto/message.proto
 
-message.pb.cc: message.pb.h
-	@$(CMAKE_COMMAND) -E touch_nocreate message.pb.cc
+message.pb.h: message.pb.cc
+	@$(CMAKE_COMMAND) -E touch_nocreate message.pb.h
+
+message.grpc.pb.cc: message.pb.cc
+	@$(CMAKE_COMMAND) -E touch_nocreate message.grpc.pb.cc
+
+message.grpc.pb.h: message.pb.cc
+	@$(CMAKE_COMMAND) -E touch_nocreate message.grpc.pb.h
 
 CMakeFiles/echomesh_server.dir/src/main.cpp.o: CMakeFiles/echomesh_server.dir/flags.make
 CMakeFiles/echomesh_server.dir/src/main.cpp.o: /home/moon/桌面/code/echo/echoMesh/src/main.cpp
@@ -91,150 +96,10 @@ CMakeFiles/echomesh_server.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/echomesh_server.dir/src/main.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/moon/桌面/code/echo/echoMesh/src/main.cpp -o CMakeFiles/echomesh_server.dir/src/main.cpp.s
 
-CMakeFiles/echomesh_server.dir/src/Buffer.cpp.o: CMakeFiles/echomesh_server.dir/flags.make
-CMakeFiles/echomesh_server.dir/src/Buffer.cpp.o: /home/moon/桌面/code/echo/echoMesh/src/Buffer.cpp
-CMakeFiles/echomesh_server.dir/src/Buffer.cpp.o: CMakeFiles/echomesh_server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/echomesh_server.dir/src/Buffer.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/echomesh_server.dir/src/Buffer.cpp.o -MF CMakeFiles/echomesh_server.dir/src/Buffer.cpp.o.d -o CMakeFiles/echomesh_server.dir/src/Buffer.cpp.o -c /home/moon/桌面/code/echo/echoMesh/src/Buffer.cpp
-
-CMakeFiles/echomesh_server.dir/src/Buffer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/echomesh_server.dir/src/Buffer.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/moon/桌面/code/echo/echoMesh/src/Buffer.cpp > CMakeFiles/echomesh_server.dir/src/Buffer.cpp.i
-
-CMakeFiles/echomesh_server.dir/src/Buffer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/echomesh_server.dir/src/Buffer.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/moon/桌面/code/echo/echoMesh/src/Buffer.cpp -o CMakeFiles/echomesh_server.dir/src/Buffer.cpp.s
-
-CMakeFiles/echomesh_server.dir/src/ThreadPool.cpp.o: CMakeFiles/echomesh_server.dir/flags.make
-CMakeFiles/echomesh_server.dir/src/ThreadPool.cpp.o: /home/moon/桌面/code/echo/echoMesh/src/ThreadPool.cpp
-CMakeFiles/echomesh_server.dir/src/ThreadPool.cpp.o: CMakeFiles/echomesh_server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/echomesh_server.dir/src/ThreadPool.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/echomesh_server.dir/src/ThreadPool.cpp.o -MF CMakeFiles/echomesh_server.dir/src/ThreadPool.cpp.o.d -o CMakeFiles/echomesh_server.dir/src/ThreadPool.cpp.o -c /home/moon/桌面/code/echo/echoMesh/src/ThreadPool.cpp
-
-CMakeFiles/echomesh_server.dir/src/ThreadPool.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/echomesh_server.dir/src/ThreadPool.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/moon/桌面/code/echo/echoMesh/src/ThreadPool.cpp > CMakeFiles/echomesh_server.dir/src/ThreadPool.cpp.i
-
-CMakeFiles/echomesh_server.dir/src/ThreadPool.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/echomesh_server.dir/src/ThreadPool.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/moon/桌面/code/echo/echoMesh/src/ThreadPool.cpp -o CMakeFiles/echomesh_server.dir/src/ThreadPool.cpp.s
-
-CMakeFiles/echomesh_server.dir/src/EpollPoller.cpp.o: CMakeFiles/echomesh_server.dir/flags.make
-CMakeFiles/echomesh_server.dir/src/EpollPoller.cpp.o: /home/moon/桌面/code/echo/echoMesh/src/EpollPoller.cpp
-CMakeFiles/echomesh_server.dir/src/EpollPoller.cpp.o: CMakeFiles/echomesh_server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/echomesh_server.dir/src/EpollPoller.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/echomesh_server.dir/src/EpollPoller.cpp.o -MF CMakeFiles/echomesh_server.dir/src/EpollPoller.cpp.o.d -o CMakeFiles/echomesh_server.dir/src/EpollPoller.cpp.o -c /home/moon/桌面/code/echo/echoMesh/src/EpollPoller.cpp
-
-CMakeFiles/echomesh_server.dir/src/EpollPoller.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/echomesh_server.dir/src/EpollPoller.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/moon/桌面/code/echo/echoMesh/src/EpollPoller.cpp > CMakeFiles/echomesh_server.dir/src/EpollPoller.cpp.i
-
-CMakeFiles/echomesh_server.dir/src/EpollPoller.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/echomesh_server.dir/src/EpollPoller.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/moon/桌面/code/echo/echoMesh/src/EpollPoller.cpp -o CMakeFiles/echomesh_server.dir/src/EpollPoller.cpp.s
-
-CMakeFiles/echomesh_server.dir/src/Channel.cpp.o: CMakeFiles/echomesh_server.dir/flags.make
-CMakeFiles/echomesh_server.dir/src/Channel.cpp.o: /home/moon/桌面/code/echo/echoMesh/src/Channel.cpp
-CMakeFiles/echomesh_server.dir/src/Channel.cpp.o: CMakeFiles/echomesh_server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/echomesh_server.dir/src/Channel.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/echomesh_server.dir/src/Channel.cpp.o -MF CMakeFiles/echomesh_server.dir/src/Channel.cpp.o.d -o CMakeFiles/echomesh_server.dir/src/Channel.cpp.o -c /home/moon/桌面/code/echo/echoMesh/src/Channel.cpp
-
-CMakeFiles/echomesh_server.dir/src/Channel.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/echomesh_server.dir/src/Channel.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/moon/桌面/code/echo/echoMesh/src/Channel.cpp > CMakeFiles/echomesh_server.dir/src/Channel.cpp.i
-
-CMakeFiles/echomesh_server.dir/src/Channel.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/echomesh_server.dir/src/Channel.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/moon/桌面/code/echo/echoMesh/src/Channel.cpp -o CMakeFiles/echomesh_server.dir/src/Channel.cpp.s
-
-CMakeFiles/echomesh_server.dir/src/EventLoop.cpp.o: CMakeFiles/echomesh_server.dir/flags.make
-CMakeFiles/echomesh_server.dir/src/EventLoop.cpp.o: /home/moon/桌面/code/echo/echoMesh/src/EventLoop.cpp
-CMakeFiles/echomesh_server.dir/src/EventLoop.cpp.o: CMakeFiles/echomesh_server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/echomesh_server.dir/src/EventLoop.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/echomesh_server.dir/src/EventLoop.cpp.o -MF CMakeFiles/echomesh_server.dir/src/EventLoop.cpp.o.d -o CMakeFiles/echomesh_server.dir/src/EventLoop.cpp.o -c /home/moon/桌面/code/echo/echoMesh/src/EventLoop.cpp
-
-CMakeFiles/echomesh_server.dir/src/EventLoop.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/echomesh_server.dir/src/EventLoop.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/moon/桌面/code/echo/echoMesh/src/EventLoop.cpp > CMakeFiles/echomesh_server.dir/src/EventLoop.cpp.i
-
-CMakeFiles/echomesh_server.dir/src/EventLoop.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/echomesh_server.dir/src/EventLoop.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/moon/桌面/code/echo/echoMesh/src/EventLoop.cpp -o CMakeFiles/echomesh_server.dir/src/EventLoop.cpp.s
-
-CMakeFiles/echomesh_server.dir/src/Acceptor.cpp.o: CMakeFiles/echomesh_server.dir/flags.make
-CMakeFiles/echomesh_server.dir/src/Acceptor.cpp.o: /home/moon/桌面/code/echo/echoMesh/src/Acceptor.cpp
-CMakeFiles/echomesh_server.dir/src/Acceptor.cpp.o: CMakeFiles/echomesh_server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/echomesh_server.dir/src/Acceptor.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/echomesh_server.dir/src/Acceptor.cpp.o -MF CMakeFiles/echomesh_server.dir/src/Acceptor.cpp.o.d -o CMakeFiles/echomesh_server.dir/src/Acceptor.cpp.o -c /home/moon/桌面/code/echo/echoMesh/src/Acceptor.cpp
-
-CMakeFiles/echomesh_server.dir/src/Acceptor.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/echomesh_server.dir/src/Acceptor.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/moon/桌面/code/echo/echoMesh/src/Acceptor.cpp > CMakeFiles/echomesh_server.dir/src/Acceptor.cpp.i
-
-CMakeFiles/echomesh_server.dir/src/Acceptor.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/echomesh_server.dir/src/Acceptor.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/moon/桌面/code/echo/echoMesh/src/Acceptor.cpp -o CMakeFiles/echomesh_server.dir/src/Acceptor.cpp.s
-
-CMakeFiles/echomesh_server.dir/src/TcpServer.cpp.o: CMakeFiles/echomesh_server.dir/flags.make
-CMakeFiles/echomesh_server.dir/src/TcpServer.cpp.o: /home/moon/桌面/code/echo/echoMesh/src/TcpServer.cpp
-CMakeFiles/echomesh_server.dir/src/TcpServer.cpp.o: CMakeFiles/echomesh_server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/echomesh_server.dir/src/TcpServer.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/echomesh_server.dir/src/TcpServer.cpp.o -MF CMakeFiles/echomesh_server.dir/src/TcpServer.cpp.o.d -o CMakeFiles/echomesh_server.dir/src/TcpServer.cpp.o -c /home/moon/桌面/code/echo/echoMesh/src/TcpServer.cpp
-
-CMakeFiles/echomesh_server.dir/src/TcpServer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/echomesh_server.dir/src/TcpServer.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/moon/桌面/code/echo/echoMesh/src/TcpServer.cpp > CMakeFiles/echomesh_server.dir/src/TcpServer.cpp.i
-
-CMakeFiles/echomesh_server.dir/src/TcpServer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/echomesh_server.dir/src/TcpServer.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/moon/桌面/code/echo/echoMesh/src/TcpServer.cpp -o CMakeFiles/echomesh_server.dir/src/TcpServer.cpp.s
-
-CMakeFiles/echomesh_server.dir/src/UdpServer.cpp.o: CMakeFiles/echomesh_server.dir/flags.make
-CMakeFiles/echomesh_server.dir/src/UdpServer.cpp.o: /home/moon/桌面/code/echo/echoMesh/src/UdpServer.cpp
-CMakeFiles/echomesh_server.dir/src/UdpServer.cpp.o: CMakeFiles/echomesh_server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/echomesh_server.dir/src/UdpServer.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/echomesh_server.dir/src/UdpServer.cpp.o -MF CMakeFiles/echomesh_server.dir/src/UdpServer.cpp.o.d -o CMakeFiles/echomesh_server.dir/src/UdpServer.cpp.o -c /home/moon/桌面/code/echo/echoMesh/src/UdpServer.cpp
-
-CMakeFiles/echomesh_server.dir/src/UdpServer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/echomesh_server.dir/src/UdpServer.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/moon/桌面/code/echo/echoMesh/src/UdpServer.cpp > CMakeFiles/echomesh_server.dir/src/UdpServer.cpp.i
-
-CMakeFiles/echomesh_server.dir/src/UdpServer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/echomesh_server.dir/src/UdpServer.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/moon/桌面/code/echo/echoMesh/src/UdpServer.cpp -o CMakeFiles/echomesh_server.dir/src/UdpServer.cpp.s
-
-CMakeFiles/echomesh_server.dir/src/TcpConnection.cpp.o: CMakeFiles/echomesh_server.dir/flags.make
-CMakeFiles/echomesh_server.dir/src/TcpConnection.cpp.o: /home/moon/桌面/code/echo/echoMesh/src/TcpConnection.cpp
-CMakeFiles/echomesh_server.dir/src/TcpConnection.cpp.o: CMakeFiles/echomesh_server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/echomesh_server.dir/src/TcpConnection.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/echomesh_server.dir/src/TcpConnection.cpp.o -MF CMakeFiles/echomesh_server.dir/src/TcpConnection.cpp.o.d -o CMakeFiles/echomesh_server.dir/src/TcpConnection.cpp.o -c /home/moon/桌面/code/echo/echoMesh/src/TcpConnection.cpp
-
-CMakeFiles/echomesh_server.dir/src/TcpConnection.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/echomesh_server.dir/src/TcpConnection.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/moon/桌面/code/echo/echoMesh/src/TcpConnection.cpp > CMakeFiles/echomesh_server.dir/src/TcpConnection.cpp.i
-
-CMakeFiles/echomesh_server.dir/src/TcpConnection.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/echomesh_server.dir/src/TcpConnection.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/moon/桌面/code/echo/echoMesh/src/TcpConnection.cpp -o CMakeFiles/echomesh_server.dir/src/TcpConnection.cpp.s
-
-CMakeFiles/echomesh_server.dir/src/MsgDispatcher.cpp.o: CMakeFiles/echomesh_server.dir/flags.make
-CMakeFiles/echomesh_server.dir/src/MsgDispatcher.cpp.o: /home/moon/桌面/code/echo/echoMesh/src/MsgDispatcher.cpp
-CMakeFiles/echomesh_server.dir/src/MsgDispatcher.cpp.o: CMakeFiles/echomesh_server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/echomesh_server.dir/src/MsgDispatcher.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/echomesh_server.dir/src/MsgDispatcher.cpp.o -MF CMakeFiles/echomesh_server.dir/src/MsgDispatcher.cpp.o.d -o CMakeFiles/echomesh_server.dir/src/MsgDispatcher.cpp.o -c /home/moon/桌面/code/echo/echoMesh/src/MsgDispatcher.cpp
-
-CMakeFiles/echomesh_server.dir/src/MsgDispatcher.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/echomesh_server.dir/src/MsgDispatcher.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/moon/桌面/code/echo/echoMesh/src/MsgDispatcher.cpp > CMakeFiles/echomesh_server.dir/src/MsgDispatcher.cpp.i
-
-CMakeFiles/echomesh_server.dir/src/MsgDispatcher.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/echomesh_server.dir/src/MsgDispatcher.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/moon/桌面/code/echo/echoMesh/src/MsgDispatcher.cpp -o CMakeFiles/echomesh_server.dir/src/MsgDispatcher.cpp.s
-
 CMakeFiles/echomesh_server.dir/src/UserManager.cpp.o: CMakeFiles/echomesh_server.dir/flags.make
 CMakeFiles/echomesh_server.dir/src/UserManager.cpp.o: /home/moon/桌面/code/echo/echoMesh/src/UserManager.cpp
 CMakeFiles/echomesh_server.dir/src/UserManager.cpp.o: CMakeFiles/echomesh_server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/echomesh_server.dir/src/UserManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/echomesh_server.dir/src/UserManager.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/echomesh_server.dir/src/UserManager.cpp.o -MF CMakeFiles/echomesh_server.dir/src/UserManager.cpp.o.d -o CMakeFiles/echomesh_server.dir/src/UserManager.cpp.o -c /home/moon/桌面/code/echo/echoMesh/src/UserManager.cpp
 
 CMakeFiles/echomesh_server.dir/src/UserManager.cpp.i: cmake_force
@@ -248,7 +113,7 @@ CMakeFiles/echomesh_server.dir/src/UserManager.cpp.s: cmake_force
 CMakeFiles/echomesh_server.dir/src/RoomManager.cpp.o: CMakeFiles/echomesh_server.dir/flags.make
 CMakeFiles/echomesh_server.dir/src/RoomManager.cpp.o: /home/moon/桌面/code/echo/echoMesh/src/RoomManager.cpp
 CMakeFiles/echomesh_server.dir/src/RoomManager.cpp.o: CMakeFiles/echomesh_server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/echomesh_server.dir/src/RoomManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/echomesh_server.dir/src/RoomManager.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/echomesh_server.dir/src/RoomManager.cpp.o -MF CMakeFiles/echomesh_server.dir/src/RoomManager.cpp.o.d -o CMakeFiles/echomesh_server.dir/src/RoomManager.cpp.o -c /home/moon/桌面/code/echo/echoMesh/src/RoomManager.cpp
 
 CMakeFiles/echomesh_server.dir/src/RoomManager.cpp.i: cmake_force
@@ -259,38 +124,24 @@ CMakeFiles/echomesh_server.dir/src/RoomManager.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/echomesh_server.dir/src/RoomManager.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/moon/桌面/code/echo/echoMesh/src/RoomManager.cpp -o CMakeFiles/echomesh_server.dir/src/RoomManager.cpp.s
 
-CMakeFiles/echomesh_server.dir/src/BusinessLogic.cpp.o: CMakeFiles/echomesh_server.dir/flags.make
-CMakeFiles/echomesh_server.dir/src/BusinessLogic.cpp.o: /home/moon/桌面/code/echo/echoMesh/src/BusinessLogic.cpp
-CMakeFiles/echomesh_server.dir/src/BusinessLogic.cpp.o: CMakeFiles/echomesh_server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/echomesh_server.dir/src/BusinessLogic.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/echomesh_server.dir/src/BusinessLogic.cpp.o -MF CMakeFiles/echomesh_server.dir/src/BusinessLogic.cpp.o.d -o CMakeFiles/echomesh_server.dir/src/BusinessLogic.cpp.o -c /home/moon/桌面/code/echo/echoMesh/src/BusinessLogic.cpp
+CMakeFiles/echomesh_server.dir/src/EchoMeshServiceImpl.cpp.o: CMakeFiles/echomesh_server.dir/flags.make
+CMakeFiles/echomesh_server.dir/src/EchoMeshServiceImpl.cpp.o: /home/moon/桌面/code/echo/echoMesh/src/EchoMeshServiceImpl.cpp
+CMakeFiles/echomesh_server.dir/src/EchoMeshServiceImpl.cpp.o: CMakeFiles/echomesh_server.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/echomesh_server.dir/src/EchoMeshServiceImpl.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/echomesh_server.dir/src/EchoMeshServiceImpl.cpp.o -MF CMakeFiles/echomesh_server.dir/src/EchoMeshServiceImpl.cpp.o.d -o CMakeFiles/echomesh_server.dir/src/EchoMeshServiceImpl.cpp.o -c /home/moon/桌面/code/echo/echoMesh/src/EchoMeshServiceImpl.cpp
 
-CMakeFiles/echomesh_server.dir/src/BusinessLogic.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/echomesh_server.dir/src/BusinessLogic.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/moon/桌面/code/echo/echoMesh/src/BusinessLogic.cpp > CMakeFiles/echomesh_server.dir/src/BusinessLogic.cpp.i
+CMakeFiles/echomesh_server.dir/src/EchoMeshServiceImpl.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/echomesh_server.dir/src/EchoMeshServiceImpl.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/moon/桌面/code/echo/echoMesh/src/EchoMeshServiceImpl.cpp > CMakeFiles/echomesh_server.dir/src/EchoMeshServiceImpl.cpp.i
 
-CMakeFiles/echomesh_server.dir/src/BusinessLogic.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/echomesh_server.dir/src/BusinessLogic.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/moon/桌面/code/echo/echoMesh/src/BusinessLogic.cpp -o CMakeFiles/echomesh_server.dir/src/BusinessLogic.cpp.s
-
-CMakeFiles/echomesh_server.dir/src/EventLoopThread.cpp.o: CMakeFiles/echomesh_server.dir/flags.make
-CMakeFiles/echomesh_server.dir/src/EventLoopThread.cpp.o: /home/moon/桌面/code/echo/echoMesh/src/EventLoopThread.cpp
-CMakeFiles/echomesh_server.dir/src/EventLoopThread.cpp.o: CMakeFiles/echomesh_server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/echomesh_server.dir/src/EventLoopThread.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/echomesh_server.dir/src/EventLoopThread.cpp.o -MF CMakeFiles/echomesh_server.dir/src/EventLoopThread.cpp.o.d -o CMakeFiles/echomesh_server.dir/src/EventLoopThread.cpp.o -c /home/moon/桌面/code/echo/echoMesh/src/EventLoopThread.cpp
-
-CMakeFiles/echomesh_server.dir/src/EventLoopThread.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/echomesh_server.dir/src/EventLoopThread.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/moon/桌面/code/echo/echoMesh/src/EventLoopThread.cpp > CMakeFiles/echomesh_server.dir/src/EventLoopThread.cpp.i
-
-CMakeFiles/echomesh_server.dir/src/EventLoopThread.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/echomesh_server.dir/src/EventLoopThread.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/moon/桌面/code/echo/echoMesh/src/EventLoopThread.cpp -o CMakeFiles/echomesh_server.dir/src/EventLoopThread.cpp.s
+CMakeFiles/echomesh_server.dir/src/EchoMeshServiceImpl.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/echomesh_server.dir/src/EchoMeshServiceImpl.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/moon/桌面/code/echo/echoMesh/src/EchoMeshServiceImpl.cpp -o CMakeFiles/echomesh_server.dir/src/EchoMeshServiceImpl.cpp.s
 
 CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.o: CMakeFiles/echomesh_server.dir/flags.make
 CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.o: /home/moon/桌面/code/echo/echoMesh/src/audio/OpusWrapper.cpp
 CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.o: CMakeFiles/echomesh_server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.o -MF CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.o.d -o CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.o -c /home/moon/桌面/code/echo/echoMesh/src/audio/OpusWrapper.cpp
 
 CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.i: cmake_force
@@ -304,7 +155,7 @@ CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.s: cmake_force
 CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.o: CMakeFiles/echomesh_server.dir/flags.make
 CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.o: /home/moon/桌面/code/echo/echoMesh/src/audio/JitterBuffer.cpp
 CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.o: CMakeFiles/echomesh_server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.o -MF CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.o.d -o CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.o -c /home/moon/桌面/code/echo/echoMesh/src/audio/JitterBuffer.cpp
 
 CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.i: cmake_force
@@ -318,7 +169,7 @@ CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.s: cmake_force
 CMakeFiles/echomesh_server.dir/message.pb.cc.o: CMakeFiles/echomesh_server.dir/flags.make
 CMakeFiles/echomesh_server.dir/message.pb.cc.o: message.pb.cc
 CMakeFiles/echomesh_server.dir/message.pb.cc.o: CMakeFiles/echomesh_server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/echomesh_server.dir/message.pb.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/echomesh_server.dir/message.pb.cc.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/echomesh_server.dir/message.pb.cc.o -MF CMakeFiles/echomesh_server.dir/message.pb.cc.o.d -o CMakeFiles/echomesh_server.dir/message.pb.cc.o -c /home/moon/桌面/code/echo/echoMesh/build/message.pb.cc
 
 CMakeFiles/echomesh_server.dir/message.pb.cc.i: cmake_force
@@ -329,53 +180,101 @@ CMakeFiles/echomesh_server.dir/message.pb.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/echomesh_server.dir/message.pb.cc.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/moon/桌面/code/echo/echoMesh/build/message.pb.cc -o CMakeFiles/echomesh_server.dir/message.pb.cc.s
 
+CMakeFiles/echomesh_server.dir/message.grpc.pb.cc.o: CMakeFiles/echomesh_server.dir/flags.make
+CMakeFiles/echomesh_server.dir/message.grpc.pb.cc.o: message.grpc.pb.cc
+CMakeFiles/echomesh_server.dir/message.grpc.pb.cc.o: CMakeFiles/echomesh_server.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/echomesh_server.dir/message.grpc.pb.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/echomesh_server.dir/message.grpc.pb.cc.o -MF CMakeFiles/echomesh_server.dir/message.grpc.pb.cc.o.d -o CMakeFiles/echomesh_server.dir/message.grpc.pb.cc.o -c /home/moon/桌面/code/echo/echoMesh/build/message.grpc.pb.cc
+
+CMakeFiles/echomesh_server.dir/message.grpc.pb.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/echomesh_server.dir/message.grpc.pb.cc.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/moon/桌面/code/echo/echoMesh/build/message.grpc.pb.cc > CMakeFiles/echomesh_server.dir/message.grpc.pb.cc.i
+
+CMakeFiles/echomesh_server.dir/message.grpc.pb.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/echomesh_server.dir/message.grpc.pb.cc.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/moon/桌面/code/echo/echoMesh/build/message.grpc.pb.cc -o CMakeFiles/echomesh_server.dir/message.grpc.pb.cc.s
+
 # Object files for target echomesh_server
 echomesh_server_OBJECTS = \
 "CMakeFiles/echomesh_server.dir/src/main.cpp.o" \
-"CMakeFiles/echomesh_server.dir/src/Buffer.cpp.o" \
-"CMakeFiles/echomesh_server.dir/src/ThreadPool.cpp.o" \
-"CMakeFiles/echomesh_server.dir/src/EpollPoller.cpp.o" \
-"CMakeFiles/echomesh_server.dir/src/Channel.cpp.o" \
-"CMakeFiles/echomesh_server.dir/src/EventLoop.cpp.o" \
-"CMakeFiles/echomesh_server.dir/src/Acceptor.cpp.o" \
-"CMakeFiles/echomesh_server.dir/src/TcpServer.cpp.o" \
-"CMakeFiles/echomesh_server.dir/src/UdpServer.cpp.o" \
-"CMakeFiles/echomesh_server.dir/src/TcpConnection.cpp.o" \
-"CMakeFiles/echomesh_server.dir/src/MsgDispatcher.cpp.o" \
 "CMakeFiles/echomesh_server.dir/src/UserManager.cpp.o" \
 "CMakeFiles/echomesh_server.dir/src/RoomManager.cpp.o" \
-"CMakeFiles/echomesh_server.dir/src/BusinessLogic.cpp.o" \
-"CMakeFiles/echomesh_server.dir/src/EventLoopThread.cpp.o" \
+"CMakeFiles/echomesh_server.dir/src/EchoMeshServiceImpl.cpp.o" \
 "CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.o" \
 "CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.o" \
-"CMakeFiles/echomesh_server.dir/message.pb.cc.o"
+"CMakeFiles/echomesh_server.dir/message.pb.cc.o" \
+"CMakeFiles/echomesh_server.dir/message.grpc.pb.cc.o"
 
 # External object files for target echomesh_server
 echomesh_server_EXTERNAL_OBJECTS =
 
 echomesh_server: CMakeFiles/echomesh_server.dir/src/main.cpp.o
-echomesh_server: CMakeFiles/echomesh_server.dir/src/Buffer.cpp.o
-echomesh_server: CMakeFiles/echomesh_server.dir/src/ThreadPool.cpp.o
-echomesh_server: CMakeFiles/echomesh_server.dir/src/EpollPoller.cpp.o
-echomesh_server: CMakeFiles/echomesh_server.dir/src/Channel.cpp.o
-echomesh_server: CMakeFiles/echomesh_server.dir/src/EventLoop.cpp.o
-echomesh_server: CMakeFiles/echomesh_server.dir/src/Acceptor.cpp.o
-echomesh_server: CMakeFiles/echomesh_server.dir/src/TcpServer.cpp.o
-echomesh_server: CMakeFiles/echomesh_server.dir/src/UdpServer.cpp.o
-echomesh_server: CMakeFiles/echomesh_server.dir/src/TcpConnection.cpp.o
-echomesh_server: CMakeFiles/echomesh_server.dir/src/MsgDispatcher.cpp.o
 echomesh_server: CMakeFiles/echomesh_server.dir/src/UserManager.cpp.o
 echomesh_server: CMakeFiles/echomesh_server.dir/src/RoomManager.cpp.o
-echomesh_server: CMakeFiles/echomesh_server.dir/src/BusinessLogic.cpp.o
-echomesh_server: CMakeFiles/echomesh_server.dir/src/EventLoopThread.cpp.o
+echomesh_server: CMakeFiles/echomesh_server.dir/src/EchoMeshServiceImpl.cpp.o
 echomesh_server: CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.o
 echomesh_server: CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.o
 echomesh_server: CMakeFiles/echomesh_server.dir/message.pb.cc.o
+echomesh_server: CMakeFiles/echomesh_server.dir/message.grpc.pb.cc.o
 echomesh_server: CMakeFiles/echomesh_server.dir/build.make
+echomesh_server: /usr/lib/x86_64-linux-gnu/libgrpc++.so.1.51.1
 echomesh_server: /usr/lib/x86_64-linux-gnu/libprotobuf.so
 echomesh_server: /usr/lib/x86_64-linux-gnu/libprotobuf.so
+echomesh_server: /usr/lib/x86_64-linux-gnu/libgrpc.so.29.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libz.so
+echomesh_server: /usr/lib/x86_64-linux-gnu/libcares.so.2.12.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libaddress_sorting.so.29.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libupb.so.29.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_raw_hash_set.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_hashtablez_sampler.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_hash.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_city.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_low_level_hash.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_statusor.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libgpr.so.29.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_bad_variant_access.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_status.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_strerror.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_random_distributions.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_random_seed_sequences.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_random_internal_pool_urbg.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_random_internal_randen.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_random_internal_randen_hwaes.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_random_internal_randen_hwaes_impl.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_random_internal_randen_slow.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_random_internal_platform.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_random_internal_seed_material.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_random_seed_gen_exception.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_cord.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_bad_optional_access.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_cordz_info.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_cord_internal.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_cordz_functions.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_exponential_biased.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_cordz_handle.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_str_format_internal.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_synchronization.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_stacktrace.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_symbolize.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_debugging_internal.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_demangle_internal.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_graphcycles_internal.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_malloc_internal.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_time.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_strings.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_throw_delegate.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_int128.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_strings_internal.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_base.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_spinlock_wait.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_raw_logging_internal.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_log_severity.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_civil_time.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libabsl_time_zone.so.20220623.0.0
+echomesh_server: /usr/lib/x86_64-linux-gnu/libssl.so
+echomesh_server: /usr/lib/x86_64-linux-gnu/libcrypto.so
 echomesh_server: CMakeFiles/echomesh_server.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Linking CXX executable echomesh_server"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable echomesh_server"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/echomesh_server.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -386,6 +285,8 @@ CMakeFiles/echomesh_server.dir/clean:
 	$(CMAKE_COMMAND) -P CMakeFiles/echomesh_server.dir/cmake_clean.cmake
 .PHONY : CMakeFiles/echomesh_server.dir/clean
 
+CMakeFiles/echomesh_server.dir/depend: message.grpc.pb.cc
+CMakeFiles/echomesh_server.dir/depend: message.grpc.pb.h
 CMakeFiles/echomesh_server.dir/depend: message.pb.cc
 CMakeFiles/echomesh_server.dir/depend: message.pb.h
 	cd /home/moon/桌面/code/echo/echoMesh/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/moon/桌面/code/echo/echoMesh /home/moon/桌面/code/echo/echoMesh /home/moon/桌面/code/echo/echoMesh/build /home/moon/桌面/code/echo/echoMesh/build /home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/echomesh_server.dir/DependInfo.cmake "--color=$(COLOR)"

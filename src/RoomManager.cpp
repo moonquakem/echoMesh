@@ -1,6 +1,7 @@
 #include "RoomManager.h"
 #include "UserManager.h"
-#include <cstring> // For memset
+#include <iostream>
+#include <vector>
 
 // --- Room Implementation ---
 
@@ -12,7 +13,7 @@ void Room::addUser(UserId userId) {
 void Room::removeUser(UserId userId) {
   std::lock_guard<std::mutex> lock(mutex_);
   users_.erase(userId);
-  udp_addresses_.erase(userId); // Also remove address mapping
+  audio_streams_.erase(userId); // Also remove stream mapping
 }
 
 std::set<UserId> Room::getUsers() const {
@@ -20,53 +21,55 @@ std::set<UserId> Room::getUsers() const {
   return users_;
 }
 
-void Room::broadcast(const echomesh::EchoMsg &msg) {
-  std::string serialized_msg;
-  msg.SerializeToString(&serialized_msg);
-
-  std::set<UserId> users_copy;
-  {
+void Room::addAudioStream(UserId userId, AudioStream* stream) {
     std::lock_guard<std::mutex> lock(mutex_);
-    users_copy = users_;
-  }
-
-  auto &userManager = UserManager::getInstance();
-  for (UserId userId : users_copy) {
-    auto conn = userManager.getConnection(userId);
-    if (conn && conn->connected()) {
-      conn->send(msg);
-    }
-  }
+    audio_streams_[userId] = stream;
 }
 
-void Room::updateUserAddress(UserId userId, const sockaddr_in& addr) {
+void Room::removeAudioStream(UserId userId) {
     std::lock_guard<std::mutex> lock(mutex_);
-    udp_addresses_[userId] = addr;
+    audio_streams_.erase(userId);
 }
 
-std::optional<sockaddr_in> Room::getUserAddress(UserId userId) const {
-    std::lock_guard<std::mutex> lock(mutex_);
-    auto it = udp_addresses_.find(userId);
-    if (it != udp_addresses_.end()) {
-        return it->second;
+void Room::broadcastAudio(UserId senderId, const echomesh::VoicePacket& packet) {
+    //
+    // IMPORTANT: The gRPC Write() operation can be blocking.
+    // To prevent a single slow client from deadlocking the entire room,
+    // we copy the list of streams under the lock, and then release the lock
+    // before performing the writes.
+    //
+    std::vector<AudioStream*> streams_to_write;
+    {
+        std::lock_guard<std::mutex> lock(mutex_);
+        for (const auto& pair : audio_streams_) {
+            if (pair.first != senderId) {
+                streams_to_write.push_back(pair.second);
+            }
+        }
     }
-    return std::nullopt;
+
+    for (auto* stream : streams_to_write) {
+        // This is a blocking write. A more advanced implementation might use
+        // a work queue and a thread pool to handle writes asynchronously.
+        stream->Write(packet);
+    }
 }
 
 
 // --- RoomManager Implementation ---
+
+RoomManager &RoomManager::getInstance() {
+  static RoomManager instance;
+  return instance;
+}
 
 bool RoomManager::createRoom_nl(const RoomId &roomId) {
     if (rooms_.count(roomId)) {
         return false; // Room already exists
     }
     rooms_[roomId] = std::make_shared<Room>();
+    std::cout << "Room '" << roomId << "' created." << std::endl;
     return true;
-}
-
-RoomManager &RoomManager::getInstance() {
-  static RoomManager instance;
-  return instance;
 }
 
 bool RoomManager::createRoom(const RoomId &roomId) {
@@ -83,7 +86,8 @@ bool RoomManager::joinRoom(const RoomId &roomId, UserId userId) {
     it = rooms_.find(roomId);
   }
   it->second->addUser(userId);
-  UserManager::getInstance().joinRoom(userId, roomId);
+  user_to_room_map_[userId] = roomId; // Update reverse map
+  // Note: We don't call UserManager::joinRoom anymore, that's handled in UserManager directly
   return true;
 }
 
@@ -92,14 +96,17 @@ void RoomManager::leaveRoom(const RoomId &roomId, UserId userId) {
   auto it = rooms_.find(roomId);
   if (it != rooms_.end()) {
     it->second->removeUser(userId);
+    std::cout << "User " << userId << " removed from room '" << roomId << "'." << std::endl;
   }
-  UserManager::getInstance().leaveRoom(userId);
+  user_to_room_map_.erase(userId); // Update reverse map
 }
 
 void RoomManager::userLogout(UserId userId) {
-    auto& userMgr = UserManager::getInstance();
-    RoomId roomId = userMgr.getRoomId(userId);
-    if (!roomId.empty()) {
+    std::unique_lock<std::mutex> lock(mutex_);
+    auto it = user_to_room_map_.find(userId);
+    if (it != user_to_room_map_.end()) {
+        RoomId roomId = it->second;
+        lock.unlock(); // Unlock before calling leaveRoom which locks again
         leaveRoom(roomId, userId);
     }
 }
@@ -121,17 +128,23 @@ std::set<UserId> RoomManager::getUsersInRoom(const RoomId &roomId) {
     return {};
 }
 
-void RoomManager::updateUserAddress(const RoomId& roomId, UserId userId, const sockaddr_in& addr) {
+void RoomManager::addAudioStream(const RoomId& roomId, UserId userId, AudioStream* stream) {
     auto room = getRoom(roomId);
     if (room) {
-        room->updateUserAddress(userId, addr);
+        room->addAudioStream(userId, stream);
     }
 }
 
-std::optional<sockaddr_in> RoomManager::getUserAddress(const RoomId& roomId, UserId userId) {
+void RoomManager::removeAudioStream(const RoomId& roomId, UserId userId) {
     auto room = getRoom(roomId);
     if (room) {
-        return room->getUserAddress(userId);
+        room->removeAudioStream(userId);
     }
-    return std::nullopt;
+}
+
+void RoomManager::broadcastAudio(const RoomId& roomId, UserId senderId, const echomesh::VoicePacket& packet) {
+    auto room = getRoom(roomId);
+    if (room) {
+        room->broadcastAudio(senderId, packet);
+    }
 }

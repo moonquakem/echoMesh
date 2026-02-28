@@ -38,6 +38,7 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORIT
 PROTOBUF_CONSTEXPR LoginResponse::LoginResponse(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.message_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.session_token_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.user_id_)*/int64_t{0}
   , /*decltype(_impl_.status_code_)*/0
   , /*decltype(_impl_._cached_size_)*/{}} {}
@@ -50,36 +51,20 @@ struct LoginResponseDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 LoginResponseDefaultTypeInternal _LoginResponse_default_instance_;
-PROTOBUF_CONSTEXPR ChatMsg::ChatMsg(
+PROTOBUF_CONSTEXPR RoomActionRequest::RoomActionRequest(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.room_id_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.content_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.user_id_)*/int64_t{0}
-  , /*decltype(_impl_._cached_size_)*/{}} {}
-struct ChatMsgDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR ChatMsgDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
-  ~ChatMsgDefaultTypeInternal() {}
-  union {
-    ChatMsg _instance;
-  };
-};
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ChatMsgDefaultTypeInternal _ChatMsg_default_instance_;
-PROTOBUF_CONSTEXPR RoomAction::RoomAction(
-    ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.room_id_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.user_id_)*/int64_t{0}
   , /*decltype(_impl_.action_type_)*/0
   , /*decltype(_impl_._cached_size_)*/{}} {}
-struct RoomActionDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR RoomActionDefaultTypeInternal()
+struct RoomActionRequestDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR RoomActionRequestDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
-  ~RoomActionDefaultTypeInternal() {}
+  ~RoomActionRequestDefaultTypeInternal() {}
   union {
-    RoomAction _instance;
+    RoomActionRequest _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RoomActionDefaultTypeInternal _RoomAction_default_instance_;
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RoomActionRequestDefaultTypeInternal _RoomActionRequest_default_instance_;
 PROTOBUF_CONSTEXPR RoomActionResponse::RoomActionResponse(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.message_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
@@ -94,39 +79,23 @@ struct RoomActionResponseDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RoomActionResponseDefaultTypeInternal _RoomActionResponse_default_instance_;
-PROTOBUF_CONSTEXPR VoiceAnnounce::VoiceAnnounce(
+PROTOBUF_CONSTEXPR VoicePacket::VoicePacket(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.sdp_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.room_id_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+    /*decltype(_impl_.audio_data_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.user_id_)*/int64_t{0}
   , /*decltype(_impl_._cached_size_)*/{}} {}
-struct VoiceAnnounceDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR VoiceAnnounceDefaultTypeInternal()
+struct VoicePacketDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR VoicePacketDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
-  ~VoiceAnnounceDefaultTypeInternal() {}
+  ~VoicePacketDefaultTypeInternal() {}
   union {
-    VoiceAnnounce _instance;
+    VoicePacket _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 VoiceAnnounceDefaultTypeInternal _VoiceAnnounce_default_instance_;
-PROTOBUF_CONSTEXPR EchoMsg::EchoMsg(
-    ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.type_)*/0
-  , /*decltype(_impl_.payload_)*/{}
-  , /*decltype(_impl_._cached_size_)*/{}
-  , /*decltype(_impl_._oneof_case_)*/{}} {}
-struct EchoMsgDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR EchoMsgDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
-  ~EchoMsgDefaultTypeInternal() {}
-  union {
-    EchoMsg _instance;
-  };
-};
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 EchoMsgDefaultTypeInternal _EchoMsg_default_instance_;
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 VoicePacketDefaultTypeInternal _VoicePacket_default_instance_;
 }  // namespace echomesh
-static ::_pb::Metadata file_level_metadata_message_2eproto[7];
-static const ::_pb::EnumDescriptor* file_level_enum_descriptors_message_2eproto[3];
+static ::_pb::Metadata file_level_metadata_message_2eproto[5];
+static const ::_pb::EnumDescriptor* file_level_enum_descriptors_message_2eproto[2];
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_message_2eproto = nullptr;
 
 const uint32_t TableStruct_message_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
@@ -145,26 +114,17 @@ const uint32_t TableStruct_message_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::echomesh::LoginResponse, _impl_.status_code_),
-  PROTOBUF_FIELD_OFFSET(::echomesh::LoginResponse, _impl_.user_id_),
   PROTOBUF_FIELD_OFFSET(::echomesh::LoginResponse, _impl_.message_),
+  PROTOBUF_FIELD_OFFSET(::echomesh::LoginResponse, _impl_.session_token_),
+  PROTOBUF_FIELD_OFFSET(::echomesh::LoginResponse, _impl_.user_id_),
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::echomesh::ChatMsg, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::echomesh::RoomActionRequest, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::echomesh::ChatMsg, _impl_.user_id_),
-  PROTOBUF_FIELD_OFFSET(::echomesh::ChatMsg, _impl_.room_id_),
-  PROTOBUF_FIELD_OFFSET(::echomesh::ChatMsg, _impl_.content_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::echomesh::RoomAction, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::echomesh::RoomAction, _impl_.action_type_),
-  PROTOBUF_FIELD_OFFSET(::echomesh::RoomAction, _impl_.room_id_),
-  PROTOBUF_FIELD_OFFSET(::echomesh::RoomAction, _impl_.user_id_),
+  PROTOBUF_FIELD_OFFSET(::echomesh::RoomActionRequest, _impl_.action_type_),
+  PROTOBUF_FIELD_OFFSET(::echomesh::RoomActionRequest, _impl_.room_id_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::echomesh::RoomActionResponse, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -174,85 +134,58 @@ const uint32_t TableStruct_message_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
   PROTOBUF_FIELD_OFFSET(::echomesh::RoomActionResponse, _impl_.status_code_),
   PROTOBUF_FIELD_OFFSET(::echomesh::RoomActionResponse, _impl_.message_),
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::echomesh::VoiceAnnounce, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::echomesh::VoicePacket, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::echomesh::VoiceAnnounce, _impl_.sdp_),
-  PROTOBUF_FIELD_OFFSET(::echomesh::VoiceAnnounce, _impl_.room_id_),
-  PROTOBUF_FIELD_OFFSET(::echomesh::VoiceAnnounce, _impl_.user_id_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::echomesh::EchoMsg, _internal_metadata_),
-  ~0u,  // no _extensions_
-  PROTOBUF_FIELD_OFFSET(::echomesh::EchoMsg, _impl_._oneof_case_[0]),
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::echomesh::EchoMsg, _impl_.type_),
-  ::_pbi::kInvalidFieldOffsetTag,
-  ::_pbi::kInvalidFieldOffsetTag,
-  ::_pbi::kInvalidFieldOffsetTag,
-  ::_pbi::kInvalidFieldOffsetTag,
-  ::_pbi::kInvalidFieldOffsetTag,
-  ::_pbi::kInvalidFieldOffsetTag,
-  PROTOBUF_FIELD_OFFSET(::echomesh::EchoMsg, _impl_.payload_),
+  PROTOBUF_FIELD_OFFSET(::echomesh::VoicePacket, _impl_.user_id_),
+  PROTOBUF_FIELD_OFFSET(::echomesh::VoicePacket, _impl_.audio_data_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::echomesh::LoginRequest)},
   { 8, -1, -1, sizeof(::echomesh::LoginResponse)},
-  { 17, -1, -1, sizeof(::echomesh::ChatMsg)},
-  { 26, -1, -1, sizeof(::echomesh::RoomAction)},
-  { 35, -1, -1, sizeof(::echomesh::RoomActionResponse)},
-  { 43, -1, -1, sizeof(::echomesh::VoiceAnnounce)},
-  { 52, -1, -1, sizeof(::echomesh::EchoMsg)},
+  { 18, -1, -1, sizeof(::echomesh::RoomActionRequest)},
+  { 26, -1, -1, sizeof(::echomesh::RoomActionResponse)},
+  { 34, -1, -1, sizeof(::echomesh::VoicePacket)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
   &::echomesh::_LoginRequest_default_instance_._instance,
   &::echomesh::_LoginResponse_default_instance_._instance,
-  &::echomesh::_ChatMsg_default_instance_._instance,
-  &::echomesh::_RoomAction_default_instance_._instance,
+  &::echomesh::_RoomActionRequest_default_instance_._instance,
   &::echomesh::_RoomActionResponse_default_instance_._instance,
-  &::echomesh::_VoiceAnnounce_default_instance_._instance,
-  &::echomesh::_EchoMsg_default_instance_._instance,
+  &::echomesh::_VoicePacket_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_message_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\rmessage.proto\022\010echomesh\"2\n\014LoginReques"
-  "t\022\020\n\010username\030\001 \001(\t\022\020\n\010password\030\002 \001(\t\"\\\n"
+  "t\022\020\n\010username\030\001 \001(\t\022\020\n\010password\030\002 \001(\t\"s\n"
   "\rLoginResponse\022)\n\013status_code\030\001 \001(\0162\024.ec"
-  "homesh.StatusCode\022\017\n\007user_id\030\002 \001(\003\022\017\n\007me"
-  "ssage\030\003 \001(\t\"<\n\007ChatMsg\022\017\n\007user_id\030\001 \001(\003\022"
-  "\017\n\007room_id\030\002 \001(\t\022\017\n\007content\030\003 \001(\t\"]\n\nRoo"
-  "mAction\022-\n\013action_type\030\001 \001(\0162\030.echomesh."
-  "RoomActionType\022\017\n\007room_id\030\002 \001(\t\022\017\n\007user_"
-  "id\030\003 \001(\003\"P\n\022RoomActionResponse\022)\n\013status"
-  "_code\030\001 \001(\0162\024.echomesh.StatusCode\022\017\n\007mes"
-  "sage\030\002 \001(\t\">\n\rVoiceAnnounce\022\013\n\003sdp\030\001 \001(\t"
-  "\022\017\n\007room_id\030\002 \001(\t\022\017\n\007user_id\030\003 \001(\003\"\336\002\n\007E"
-  "choMsg\022\037\n\004type\030\001 \001(\0162\021.echomesh.MsgType\022"
-  "/\n\rlogin_request\030\002 \001(\0132\026.echomesh.LoginR"
-  "equestH\000\0221\n\016login_response\030\003 \001(\0132\027.echom"
-  "esh.LoginResponseH\000\022%\n\010chat_msg\030\004 \001(\0132\021."
-  "echomesh.ChatMsgH\000\022+\n\013room_action\030\005 \001(\0132"
-  "\024.echomesh.RoomActionH\000\0221\n\016voice_announc"
-  "e\030\006 \001(\0132\027.echomesh.VoiceAnnounceH\000\022<\n\024ro"
-  "om_action_response\030\007 \001(\0132\034.echomesh.Room"
-  "ActionResponseH\000B\t\n\007payload*\237\001\n\007MsgType\022"
-  "\016\n\nMT_UNKNOWN\020\000\022\024\n\020MT_LOGIN_REQUEST\020\001\022\025\n"
-  "\021MT_LOGIN_RESPONSE\020\002\022\017\n\013MT_CHAT_MSG\020\003\022\022\n"
-  "\016MT_ROOM_ACTION\020\004\022\025\n\021MT_VOICE_ANNOUNCE\020\005"
-  "\022\033\n\027MT_ROOM_ACTION_RESPONSE\020\007*U\n\nStatusC"
-  "ode\022\t\n\005SC_OK\020\000\022\014\n\010SC_ERROR\020\001\022\025\n\021SC_ROOM_"
-  "NOT_FOUND\020e\022\027\n\023SC_USER_NOT_IN_ROOM\020f*J\n\016"
-  "RoomActionType\022\016\n\nRA_UNKNOWN\020\000\022\r\n\tRA_CRE"
-  "ATE\020\001\022\013\n\007RA_JOIN\020\002\022\014\n\010RA_LEAVE\020\003b\006proto3"
+  "homesh.StatusCode\022\017\n\007message\030\002 \001(\t\022\025\n\rse"
+  "ssion_token\030\003 \001(\t\022\017\n\007user_id\030\004 \001(\003\"S\n\021Ro"
+  "omActionRequest\022-\n\013action_type\030\002 \001(\0162\030.e"
+  "chomesh.RoomActionType\022\017\n\007room_id\030\003 \001(\t\""
+  "P\n\022RoomActionResponse\022)\n\013status_code\030\001 \001"
+  "(\0162\024.echomesh.StatusCode\022\017\n\007message\030\002 \001("
+  "\t\"2\n\013VoicePacket\022\017\n\007user_id\030\001 \001(\003\022\022\n\naud"
+  "io_data\030\002 \001(\014*m\n\nStatusCode\022\t\n\005SC_OK\020\000\022\014"
+  "\n\010SC_ERROR\020\001\022\026\n\022SC_UNAUTHENTICATED\020\002\022\025\n\021"
+  "SC_ROOM_NOT_FOUND\020e\022\027\n\023SC_USER_NOT_IN_RO"
+  "OM\020f*E\n\016RoomActionType\022\016\n\nRA_UNKNOWN\020\000\022\025"
+  "\n\021RA_CREATE_OR_JOIN\020\001\022\014\n\010RA_LEAVE\020\0022\325\001\n\017"
+  "EchoMeshService\0228\n\005Login\022\026.echomesh.Logi"
+  "nRequest\032\027.echomesh.LoginResponse\022G\n\nMan"
+  "ageRoom\022\033.echomesh.RoomActionRequest\032\034.e"
+  "chomesh.RoomActionResponse\022\?\n\013StreamAudi"
+  "o\022\025.echomesh.VoicePacket\032\025.echomesh.Voic"
+  "ePacket(\0010\001B\006\200\001\000\220\001\000b\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_message_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_message_2eproto = {
-    false, false, 1160, descriptor_table_protodef_message_2eproto,
+    false, false, 827, descriptor_table_protodef_message_2eproto,
     "message.proto",
-    &descriptor_table_message_2eproto_once, nullptr, 0, 7,
+    &descriptor_table_message_2eproto_once, nullptr, 0, 5,
     schemas, file_default_instances, TableStruct_message_2eproto::offsets,
     file_level_metadata_message_2eproto, file_level_enum_descriptors_message_2eproto,
     file_level_service_descriptors_message_2eproto,
@@ -264,33 +197,15 @@ PROTOBUF_ATTRIBUTE_WEAK const ::_pbi::DescriptorTable* descriptor_table_message_
 // Force running AddDescriptors() at dynamic initialization time.
 PROTOBUF_ATTRIBUTE_INIT_PRIORITY2 static ::_pbi::AddDescriptorsRunner dynamic_init_dummy_message_2eproto(&descriptor_table_message_2eproto);
 namespace echomesh {
-const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* MsgType_descriptor() {
-  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_message_2eproto);
-  return file_level_enum_descriptors_message_2eproto[0];
-}
-bool MsgType_IsValid(int value) {
-  switch (value) {
-    case 0:
-    case 1:
-    case 2:
-    case 3:
-    case 4:
-    case 5:
-    case 7:
-      return true;
-    default:
-      return false;
-  }
-}
-
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* StatusCode_descriptor() {
   ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_message_2eproto);
-  return file_level_enum_descriptors_message_2eproto[1];
+  return file_level_enum_descriptors_message_2eproto[0];
 }
 bool StatusCode_IsValid(int value) {
   switch (value) {
     case 0:
     case 1:
+    case 2:
     case 101:
     case 102:
       return true;
@@ -301,14 +216,13 @@ bool StatusCode_IsValid(int value) {
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* RoomActionType_descriptor() {
   ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_message_2eproto);
-  return file_level_enum_descriptors_message_2eproto[2];
+  return file_level_enum_descriptors_message_2eproto[1];
 }
 bool RoomActionType_IsValid(int value) {
   switch (value) {
     case 0:
     case 1:
     case 2:
-    case 3:
       return true;
     default:
       return false;
@@ -586,6 +500,7 @@ LoginResponse::LoginResponse(const LoginResponse& from)
   LoginResponse* const _this = this; (void)_this;
   new (&_impl_) Impl_{
       decltype(_impl_.message_){}
+    , decltype(_impl_.session_token_){}
     , decltype(_impl_.user_id_){}
     , decltype(_impl_.status_code_){}
     , /*decltype(_impl_._cached_size_)*/{}};
@@ -597,6 +512,14 @@ LoginResponse::LoginResponse(const LoginResponse& from)
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_message().empty()) {
     _this->_impl_.message_.Set(from._internal_message(), 
+      _this->GetArenaForAllocation());
+  }
+  _impl_.session_token_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.session_token_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_session_token().empty()) {
+    _this->_impl_.session_token_.Set(from._internal_session_token(), 
       _this->GetArenaForAllocation());
   }
   ::memcpy(&_impl_.user_id_, &from._impl_.user_id_,
@@ -611,6 +534,7 @@ inline void LoginResponse::SharedCtor(
   (void)is_message_owned;
   new (&_impl_) Impl_{
       decltype(_impl_.message_){}
+    , decltype(_impl_.session_token_){}
     , decltype(_impl_.user_id_){int64_t{0}}
     , decltype(_impl_.status_code_){0}
     , /*decltype(_impl_._cached_size_)*/{}
@@ -618,6 +542,10 @@ inline void LoginResponse::SharedCtor(
   _impl_.message_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
     _impl_.message_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.session_token_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.session_token_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
@@ -633,6 +561,7 @@ LoginResponse::~LoginResponse() {
 inline void LoginResponse::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   _impl_.message_.Destroy();
+  _impl_.session_token_.Destroy();
 }
 
 void LoginResponse::SetCachedSize(int size) const {
@@ -646,6 +575,7 @@ void LoginResponse::Clear() {
   (void) cached_has_bits;
 
   _impl_.message_.ClearToEmpty();
+  _impl_.session_token_.ClearToEmpty();
   ::memset(&_impl_.user_id_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&_impl_.status_code_) -
       reinterpret_cast<char*>(&_impl_.user_id_)) + sizeof(_impl_.status_code_));
@@ -667,21 +597,31 @@ const char* LoginResponse::_InternalParse(const char* ptr, ::_pbi::ParseContext*
         } else
           goto handle_unusual;
         continue;
-      // int64 user_id = 2;
+      // string message = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
-          _impl_.user_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // string message = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
           auto str = _internal_mutable_message();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
           CHK_(::_pbi::VerifyUTF8(str, "echomesh.LoginResponse.message"));
+        } else
+          goto handle_unusual;
+        continue;
+      // string session_token = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
+          auto str = _internal_mutable_session_token();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "echomesh.LoginResponse.session_token"));
+        } else
+          goto handle_unusual;
+        continue;
+      // int64 user_id = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
+          _impl_.user_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
         } else
           goto handle_unusual;
         continue;
@@ -721,20 +661,30 @@ uint8_t* LoginResponse::_InternalSerialize(
       1, this->_internal_status_code(), target);
   }
 
-  // int64 user_id = 2;
-  if (this->_internal_user_id() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt64ToArray(2, this->_internal_user_id(), target);
-  }
-
-  // string message = 3;
+  // string message = 2;
   if (!this->_internal_message().empty()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_message().data(), static_cast<int>(this->_internal_message().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
       "echomesh.LoginResponse.message");
     target = stream->WriteStringMaybeAliased(
-        3, this->_internal_message(), target);
+        2, this->_internal_message(), target);
+  }
+
+  // string session_token = 3;
+  if (!this->_internal_session_token().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_session_token().data(), static_cast<int>(this->_internal_session_token().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "echomesh.LoginResponse.session_token");
+    target = stream->WriteStringMaybeAliased(
+        3, this->_internal_session_token(), target);
+  }
+
+  // int64 user_id = 4;
+  if (this->_internal_user_id() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt64ToArray(4, this->_internal_user_id(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -753,14 +703,21 @@ size_t LoginResponse::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // string message = 3;
+  // string message = 2;
   if (!this->_internal_message().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_message());
   }
 
-  // int64 user_id = 2;
+  // string session_token = 3;
+  if (!this->_internal_session_token().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_session_token());
+  }
+
+  // int64 user_id = 4;
   if (this->_internal_user_id() != 0) {
     total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(this->_internal_user_id());
   }
@@ -792,6 +749,9 @@ void LoginResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::
   if (!from._internal_message().empty()) {
     _this->_internal_set_message(from._internal_message());
   }
+  if (!from._internal_session_token().empty()) {
+    _this->_internal_set_session_token(from._internal_session_token());
+  }
   if (from._internal_user_id() != 0) {
     _this->_internal_set_user_id(from._internal_user_id());
   }
@@ -821,6 +781,10 @@ void LoginResponse::InternalSwap(LoginResponse* other) {
       &_impl_.message_, lhs_arena,
       &other->_impl_.message_, rhs_arena
   );
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.session_token_, lhs_arena,
+      &other->_impl_.session_token_, rhs_arena
+  );
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(LoginResponse, _impl_.status_code_)
       + sizeof(LoginResponse::_impl_.status_code_)
@@ -837,302 +801,21 @@ void LoginResponse::InternalSwap(LoginResponse* other) {
 
 // ===================================================================
 
-class ChatMsg::_Internal {
+class RoomActionRequest::_Internal {
  public:
 };
 
-ChatMsg::ChatMsg(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+RoomActionRequest::RoomActionRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
   SharedCtor(arena, is_message_owned);
-  // @@protoc_insertion_point(arena_constructor:echomesh.ChatMsg)
+  // @@protoc_insertion_point(arena_constructor:echomesh.RoomActionRequest)
 }
-ChatMsg::ChatMsg(const ChatMsg& from)
+RoomActionRequest::RoomActionRequest(const RoomActionRequest& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
-  ChatMsg* const _this = this; (void)_this;
+  RoomActionRequest* const _this = this; (void)_this;
   new (&_impl_) Impl_{
       decltype(_impl_.room_id_){}
-    , decltype(_impl_.content_){}
-    , decltype(_impl_.user_id_){}
-    , /*decltype(_impl_._cached_size_)*/{}};
-
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  _impl_.room_id_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.room_id_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_room_id().empty()) {
-    _this->_impl_.room_id_.Set(from._internal_room_id(), 
-      _this->GetArenaForAllocation());
-  }
-  _impl_.content_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.content_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_content().empty()) {
-    _this->_impl_.content_.Set(from._internal_content(), 
-      _this->GetArenaForAllocation());
-  }
-  _this->_impl_.user_id_ = from._impl_.user_id_;
-  // @@protoc_insertion_point(copy_constructor:echomesh.ChatMsg)
-}
-
-inline void ChatMsg::SharedCtor(
-    ::_pb::Arena* arena, bool is_message_owned) {
-  (void)arena;
-  (void)is_message_owned;
-  new (&_impl_) Impl_{
-      decltype(_impl_.room_id_){}
-    , decltype(_impl_.content_){}
-    , decltype(_impl_.user_id_){int64_t{0}}
-    , /*decltype(_impl_._cached_size_)*/{}
-  };
-  _impl_.room_id_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.room_id_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  _impl_.content_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.content_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-}
-
-ChatMsg::~ChatMsg() {
-  // @@protoc_insertion_point(destructor:echomesh.ChatMsg)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
-  SharedDtor();
-}
-
-inline void ChatMsg::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  _impl_.room_id_.Destroy();
-  _impl_.content_.Destroy();
-}
-
-void ChatMsg::SetCachedSize(int size) const {
-  _impl_._cached_size_.Set(size);
-}
-
-void ChatMsg::Clear() {
-// @@protoc_insertion_point(message_clear_start:echomesh.ChatMsg)
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  _impl_.room_id_.ClearToEmpty();
-  _impl_.content_.ClearToEmpty();
-  _impl_.user_id_ = int64_t{0};
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
-}
-
-const char* ChatMsg::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // int64 user_id = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
-          _impl_.user_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // string room_id = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
-          auto str = _internal_mutable_room_id();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "echomesh.ChatMsg.room_id"));
-        } else
-          goto handle_unusual;
-        continue;
-      // string content = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
-          auto str = _internal_mutable_content();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "echomesh.ChatMsg.content"));
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
-  return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
-}
-
-uint8_t* ChatMsg::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:echomesh.ChatMsg)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  // int64 user_id = 1;
-  if (this->_internal_user_id() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt64ToArray(1, this->_internal_user_id(), target);
-  }
-
-  // string room_id = 2;
-  if (!this->_internal_room_id().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_room_id().data(), static_cast<int>(this->_internal_room_id().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "echomesh.ChatMsg.room_id");
-    target = stream->WriteStringMaybeAliased(
-        2, this->_internal_room_id(), target);
-  }
-
-  // string content = 3;
-  if (!this->_internal_content().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_content().data(), static_cast<int>(this->_internal_content().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "echomesh.ChatMsg.content");
-    target = stream->WriteStringMaybeAliased(
-        3, this->_internal_content(), target);
-  }
-
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:echomesh.ChatMsg)
-  return target;
-}
-
-size_t ChatMsg::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:echomesh.ChatMsg)
-  size_t total_size = 0;
-
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  // string room_id = 2;
-  if (!this->_internal_room_id().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_room_id());
-  }
-
-  // string content = 3;
-  if (!this->_internal_content().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_content());
-  }
-
-  // int64 user_id = 1;
-  if (this->_internal_user_id() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(this->_internal_user_id());
-  }
-
-  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
-}
-
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData ChatMsg::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
-    ChatMsg::MergeImpl
-};
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*ChatMsg::GetClassData() const { return &_class_data_; }
-
-
-void ChatMsg::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
-  auto* const _this = static_cast<ChatMsg*>(&to_msg);
-  auto& from = static_cast<const ChatMsg&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:echomesh.ChatMsg)
-  GOOGLE_DCHECK_NE(&from, _this);
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  if (!from._internal_room_id().empty()) {
-    _this->_internal_set_room_id(from._internal_room_id());
-  }
-  if (!from._internal_content().empty()) {
-    _this->_internal_set_content(from._internal_content());
-  }
-  if (from._internal_user_id() != 0) {
-    _this->_internal_set_user_id(from._internal_user_id());
-  }
-  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-}
-
-void ChatMsg::CopyFrom(const ChatMsg& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:echomesh.ChatMsg)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool ChatMsg::IsInitialized() const {
-  return true;
-}
-
-void ChatMsg::InternalSwap(ChatMsg* other) {
-  using std::swap;
-  auto* lhs_arena = GetArenaForAllocation();
-  auto* rhs_arena = other->GetArenaForAllocation();
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.room_id_, lhs_arena,
-      &other->_impl_.room_id_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.content_, lhs_arena,
-      &other->_impl_.content_, rhs_arena
-  );
-  swap(_impl_.user_id_, other->_impl_.user_id_);
-}
-
-::PROTOBUF_NAMESPACE_ID::Metadata ChatMsg::GetMetadata() const {
-  return ::_pbi::AssignDescriptors(
-      &descriptor_table_message_2eproto_getter, &descriptor_table_message_2eproto_once,
-      file_level_metadata_message_2eproto[2]);
-}
-
-// ===================================================================
-
-class RoomAction::_Internal {
- public:
-};
-
-RoomAction::RoomAction(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor(arena, is_message_owned);
-  // @@protoc_insertion_point(arena_constructor:echomesh.RoomAction)
-}
-RoomAction::RoomAction(const RoomAction& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  RoomAction* const _this = this; (void)_this;
-  new (&_impl_) Impl_{
-      decltype(_impl_.room_id_){}
-    , decltype(_impl_.user_id_){}
     , decltype(_impl_.action_type_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
@@ -1145,19 +828,16 @@ RoomAction::RoomAction(const RoomAction& from)
     _this->_impl_.room_id_.Set(from._internal_room_id(), 
       _this->GetArenaForAllocation());
   }
-  ::memcpy(&_impl_.user_id_, &from._impl_.user_id_,
-    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.action_type_) -
-    reinterpret_cast<char*>(&_impl_.user_id_)) + sizeof(_impl_.action_type_));
-  // @@protoc_insertion_point(copy_constructor:echomesh.RoomAction)
+  _this->_impl_.action_type_ = from._impl_.action_type_;
+  // @@protoc_insertion_point(copy_constructor:echomesh.RoomActionRequest)
 }
 
-inline void RoomAction::SharedCtor(
+inline void RoomActionRequest::SharedCtor(
     ::_pb::Arena* arena, bool is_message_owned) {
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
       decltype(_impl_.room_id_){}
-    , decltype(_impl_.user_id_){int64_t{0}}
     , decltype(_impl_.action_type_){0}
     , /*decltype(_impl_._cached_size_)*/{}
   };
@@ -1167,8 +847,8 @@ inline void RoomAction::SharedCtor(
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
-RoomAction::~RoomAction() {
-  // @@protoc_insertion_point(destructor:echomesh.RoomAction)
+RoomActionRequest::~RoomActionRequest() {
+  // @@protoc_insertion_point(destructor:echomesh.RoomActionRequest)
   if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
   (void)arena;
     return;
@@ -1176,58 +856,48 @@ RoomAction::~RoomAction() {
   SharedDtor();
 }
 
-inline void RoomAction::SharedDtor() {
+inline void RoomActionRequest::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   _impl_.room_id_.Destroy();
 }
 
-void RoomAction::SetCachedSize(int size) const {
+void RoomActionRequest::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
 }
 
-void RoomAction::Clear() {
-// @@protoc_insertion_point(message_clear_start:echomesh.RoomAction)
+void RoomActionRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:echomesh.RoomActionRequest)
   uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   _impl_.room_id_.ClearToEmpty();
-  ::memset(&_impl_.user_id_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&_impl_.action_type_) -
-      reinterpret_cast<char*>(&_impl_.user_id_)) + sizeof(_impl_.action_type_));
+  _impl_.action_type_ = 0;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* RoomAction::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+const char* RoomActionRequest::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // .echomesh.RoomActionType action_type = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+      // .echomesh.RoomActionType action_type = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
           uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
           _internal_set_action_type(static_cast<::echomesh::RoomActionType>(val));
         } else
           goto handle_unusual;
         continue;
-      // string room_id = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+      // string room_id = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
           auto str = _internal_mutable_room_id();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "echomesh.RoomAction.room_id"));
-        } else
-          goto handle_unusual;
-        continue;
-      // int64 user_id = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
-          _impl_.user_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
-          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "echomesh.RoomActionRequest.room_id"));
         } else
           goto handle_unusual;
         continue;
@@ -1254,64 +924,53 @@ failure:
 #undef CHK_
 }
 
-uint8_t* RoomAction::_InternalSerialize(
+uint8_t* RoomActionRequest::_InternalSerialize(
     uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:echomesh.RoomAction)
+  // @@protoc_insertion_point(serialize_to_array_start:echomesh.RoomActionRequest)
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // .echomesh.RoomActionType action_type = 1;
+  // .echomesh.RoomActionType action_type = 2;
   if (this->_internal_action_type() != 0) {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteEnumToArray(
-      1, this->_internal_action_type(), target);
+      2, this->_internal_action_type(), target);
   }
 
-  // string room_id = 2;
+  // string room_id = 3;
   if (!this->_internal_room_id().empty()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_room_id().data(), static_cast<int>(this->_internal_room_id().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "echomesh.RoomAction.room_id");
+      "echomesh.RoomActionRequest.room_id");
     target = stream->WriteStringMaybeAliased(
-        2, this->_internal_room_id(), target);
-  }
-
-  // int64 user_id = 3;
-  if (this->_internal_user_id() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt64ToArray(3, this->_internal_user_id(), target);
+        3, this->_internal_room_id(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:echomesh.RoomAction)
+  // @@protoc_insertion_point(serialize_to_array_end:echomesh.RoomActionRequest)
   return target;
 }
 
-size_t RoomAction::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:echomesh.RoomAction)
+size_t RoomActionRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:echomesh.RoomActionRequest)
   size_t total_size = 0;
 
   uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // string room_id = 2;
+  // string room_id = 3;
   if (!this->_internal_room_id().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_room_id());
   }
 
-  // int64 user_id = 3;
-  if (this->_internal_user_id() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(this->_internal_user_id());
-  }
-
-  // .echomesh.RoomActionType action_type = 1;
+  // .echomesh.RoomActionType action_type = 2;
   if (this->_internal_action_type() != 0) {
     total_size += 1 +
       ::_pbi::WireFormatLite::EnumSize(this->_internal_action_type());
@@ -1320,17 +979,17 @@ size_t RoomAction::ByteSizeLong() const {
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData RoomAction::_class_data_ = {
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData RoomActionRequest::_class_data_ = {
     ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
-    RoomAction::MergeImpl
+    RoomActionRequest::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*RoomAction::GetClassData() const { return &_class_data_; }
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*RoomActionRequest::GetClassData() const { return &_class_data_; }
 
 
-void RoomAction::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
-  auto* const _this = static_cast<RoomAction*>(&to_msg);
-  auto& from = static_cast<const RoomAction&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:echomesh.RoomAction)
+void RoomActionRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<RoomActionRequest*>(&to_msg);
+  auto& from = static_cast<const RoomActionRequest&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:echomesh.RoomActionRequest)
   GOOGLE_DCHECK_NE(&from, _this);
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -1338,27 +997,24 @@ void RoomAction::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PRO
   if (!from._internal_room_id().empty()) {
     _this->_internal_set_room_id(from._internal_room_id());
   }
-  if (from._internal_user_id() != 0) {
-    _this->_internal_set_user_id(from._internal_user_id());
-  }
   if (from._internal_action_type() != 0) {
     _this->_internal_set_action_type(from._internal_action_type());
   }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
-void RoomAction::CopyFrom(const RoomAction& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:echomesh.RoomAction)
+void RoomActionRequest::CopyFrom(const RoomActionRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:echomesh.RoomActionRequest)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool RoomAction::IsInitialized() const {
+bool RoomActionRequest::IsInitialized() const {
   return true;
 }
 
-void RoomAction::InternalSwap(RoomAction* other) {
+void RoomActionRequest::InternalSwap(RoomActionRequest* other) {
   using std::swap;
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
@@ -1367,18 +1023,13 @@ void RoomAction::InternalSwap(RoomAction* other) {
       &_impl_.room_id_, lhs_arena,
       &other->_impl_.room_id_, rhs_arena
   );
-  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(RoomAction, _impl_.action_type_)
-      + sizeof(RoomAction::_impl_.action_type_)
-      - PROTOBUF_FIELD_OFFSET(RoomAction, _impl_.user_id_)>(
-          reinterpret_cast<char*>(&_impl_.user_id_),
-          reinterpret_cast<char*>(&other->_impl_.user_id_));
+  swap(_impl_.action_type_, other->_impl_.action_type_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata RoomAction::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata RoomActionRequest::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_message_2eproto_getter, &descriptor_table_message_2eproto_once,
-      file_level_metadata_message_2eproto[3]);
+      file_level_metadata_message_2eproto[2]);
 }
 
 // ===================================================================
@@ -1611,73 +1262,59 @@ void RoomActionResponse::InternalSwap(RoomActionResponse* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata RoomActionResponse::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_message_2eproto_getter, &descriptor_table_message_2eproto_once,
-      file_level_metadata_message_2eproto[4]);
+      file_level_metadata_message_2eproto[3]);
 }
 
 // ===================================================================
 
-class VoiceAnnounce::_Internal {
+class VoicePacket::_Internal {
  public:
 };
 
-VoiceAnnounce::VoiceAnnounce(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+VoicePacket::VoicePacket(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
   SharedCtor(arena, is_message_owned);
-  // @@protoc_insertion_point(arena_constructor:echomesh.VoiceAnnounce)
+  // @@protoc_insertion_point(arena_constructor:echomesh.VoicePacket)
 }
-VoiceAnnounce::VoiceAnnounce(const VoiceAnnounce& from)
+VoicePacket::VoicePacket(const VoicePacket& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
-  VoiceAnnounce* const _this = this; (void)_this;
+  VoicePacket* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.sdp_){}
-    , decltype(_impl_.room_id_){}
+      decltype(_impl_.audio_data_){}
     , decltype(_impl_.user_id_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  _impl_.sdp_.InitDefault();
+  _impl_.audio_data_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.sdp_.Set("", GetArenaForAllocation());
+    _impl_.audio_data_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_sdp().empty()) {
-    _this->_impl_.sdp_.Set(from._internal_sdp(), 
-      _this->GetArenaForAllocation());
-  }
-  _impl_.room_id_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.room_id_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_room_id().empty()) {
-    _this->_impl_.room_id_.Set(from._internal_room_id(), 
+  if (!from._internal_audio_data().empty()) {
+    _this->_impl_.audio_data_.Set(from._internal_audio_data(), 
       _this->GetArenaForAllocation());
   }
   _this->_impl_.user_id_ = from._impl_.user_id_;
-  // @@protoc_insertion_point(copy_constructor:echomesh.VoiceAnnounce)
+  // @@protoc_insertion_point(copy_constructor:echomesh.VoicePacket)
 }
 
-inline void VoiceAnnounce::SharedCtor(
+inline void VoicePacket::SharedCtor(
     ::_pb::Arena* arena, bool is_message_owned) {
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.sdp_){}
-    , decltype(_impl_.room_id_){}
+      decltype(_impl_.audio_data_){}
     , decltype(_impl_.user_id_){int64_t{0}}
     , /*decltype(_impl_._cached_size_)*/{}
   };
-  _impl_.sdp_.InitDefault();
+  _impl_.audio_data_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.sdp_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  _impl_.room_id_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.room_id_.Set("", GetArenaForAllocation());
+    _impl_.audio_data_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
-VoiceAnnounce::~VoiceAnnounce() {
-  // @@protoc_insertion_point(destructor:echomesh.VoiceAnnounce)
+VoicePacket::~VoicePacket() {
+  // @@protoc_insertion_point(destructor:echomesh.VoicePacket)
   if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
   (void)arena;
     return;
@@ -1685,58 +1322,45 @@ VoiceAnnounce::~VoiceAnnounce() {
   SharedDtor();
 }
 
-inline void VoiceAnnounce::SharedDtor() {
+inline void VoicePacket::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  _impl_.sdp_.Destroy();
-  _impl_.room_id_.Destroy();
+  _impl_.audio_data_.Destroy();
 }
 
-void VoiceAnnounce::SetCachedSize(int size) const {
+void VoicePacket::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
 }
 
-void VoiceAnnounce::Clear() {
-// @@protoc_insertion_point(message_clear_start:echomesh.VoiceAnnounce)
+void VoicePacket::Clear() {
+// @@protoc_insertion_point(message_clear_start:echomesh.VoicePacket)
   uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.sdp_.ClearToEmpty();
-  _impl_.room_id_.ClearToEmpty();
+  _impl_.audio_data_.ClearToEmpty();
   _impl_.user_id_ = int64_t{0};
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* VoiceAnnounce::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+const char* VoicePacket::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // string sdp = 1;
+      // int64 user_id = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_sdp();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.user_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "echomesh.VoiceAnnounce.sdp"));
         } else
           goto handle_unusual;
         continue;
-      // string room_id = 2;
+      // bytes audio_data = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
-          auto str = _internal_mutable_room_id();
+          auto str = _internal_mutable_audio_data();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "echomesh.VoiceAnnounce.room_id"));
-        } else
-          goto handle_unusual;
-        continue;
-      // int64 user_id = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
-          _impl_.user_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -1764,69 +1388,48 @@ failure:
 #undef CHK_
 }
 
-uint8_t* VoiceAnnounce::_InternalSerialize(
+uint8_t* VoicePacket::_InternalSerialize(
     uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:echomesh.VoiceAnnounce)
+  // @@protoc_insertion_point(serialize_to_array_start:echomesh.VoicePacket)
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // string sdp = 1;
-  if (!this->_internal_sdp().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_sdp().data(), static_cast<int>(this->_internal_sdp().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "echomesh.VoiceAnnounce.sdp");
-    target = stream->WriteStringMaybeAliased(
-        1, this->_internal_sdp(), target);
-  }
-
-  // string room_id = 2;
-  if (!this->_internal_room_id().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_room_id().data(), static_cast<int>(this->_internal_room_id().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "echomesh.VoiceAnnounce.room_id");
-    target = stream->WriteStringMaybeAliased(
-        2, this->_internal_room_id(), target);
-  }
-
-  // int64 user_id = 3;
+  // int64 user_id = 1;
   if (this->_internal_user_id() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt64ToArray(3, this->_internal_user_id(), target);
+    target = ::_pbi::WireFormatLite::WriteInt64ToArray(1, this->_internal_user_id(), target);
+  }
+
+  // bytes audio_data = 2;
+  if (!this->_internal_audio_data().empty()) {
+    target = stream->WriteBytesMaybeAliased(
+        2, this->_internal_audio_data(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:echomesh.VoiceAnnounce)
+  // @@protoc_insertion_point(serialize_to_array_end:echomesh.VoicePacket)
   return target;
 }
 
-size_t VoiceAnnounce::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:echomesh.VoiceAnnounce)
+size_t VoicePacket::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:echomesh.VoicePacket)
   size_t total_size = 0;
 
   uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // string sdp = 1;
-  if (!this->_internal_sdp().empty()) {
+  // bytes audio_data = 2;
+  if (!this->_internal_audio_data().empty()) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_sdp());
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+        this->_internal_audio_data());
   }
 
-  // string room_id = 2;
-  if (!this->_internal_room_id().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_room_id());
-  }
-
-  // int64 user_id = 3;
+  // int64 user_id = 1;
   if (this->_internal_user_id() != 0) {
     total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(this->_internal_user_id());
   }
@@ -1834,26 +1437,23 @@ size_t VoiceAnnounce::ByteSizeLong() const {
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData VoiceAnnounce::_class_data_ = {
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData VoicePacket::_class_data_ = {
     ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
-    VoiceAnnounce::MergeImpl
+    VoicePacket::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*VoiceAnnounce::GetClassData() const { return &_class_data_; }
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*VoicePacket::GetClassData() const { return &_class_data_; }
 
 
-void VoiceAnnounce::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
-  auto* const _this = static_cast<VoiceAnnounce*>(&to_msg);
-  auto& from = static_cast<const VoiceAnnounce&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:echomesh.VoiceAnnounce)
+void VoicePacket::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<VoicePacket*>(&to_msg);
+  auto& from = static_cast<const VoicePacket&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:echomesh.VoicePacket)
   GOOGLE_DCHECK_NE(&from, _this);
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (!from._internal_sdp().empty()) {
-    _this->_internal_set_sdp(from._internal_sdp());
-  }
-  if (!from._internal_room_id().empty()) {
-    _this->_internal_set_room_id(from._internal_room_id());
+  if (!from._internal_audio_data().empty()) {
+    _this->_internal_set_audio_data(from._internal_audio_data());
   }
   if (from._internal_user_id() != 0) {
     _this->_internal_set_user_id(from._internal_user_id());
@@ -1861,604 +1461,33 @@ void VoiceAnnounce::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
-void VoiceAnnounce::CopyFrom(const VoiceAnnounce& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:echomesh.VoiceAnnounce)
+void VoicePacket::CopyFrom(const VoicePacket& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:echomesh.VoicePacket)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool VoiceAnnounce::IsInitialized() const {
+bool VoicePacket::IsInitialized() const {
   return true;
 }
 
-void VoiceAnnounce::InternalSwap(VoiceAnnounce* other) {
+void VoicePacket::InternalSwap(VoicePacket* other) {
   using std::swap;
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.sdp_, lhs_arena,
-      &other->_impl_.sdp_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.room_id_, lhs_arena,
-      &other->_impl_.room_id_, rhs_arena
+      &_impl_.audio_data_, lhs_arena,
+      &other->_impl_.audio_data_, rhs_arena
   );
   swap(_impl_.user_id_, other->_impl_.user_id_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata VoiceAnnounce::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata VoicePacket::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_message_2eproto_getter, &descriptor_table_message_2eproto_once,
-      file_level_metadata_message_2eproto[5]);
-}
-
-// ===================================================================
-
-class EchoMsg::_Internal {
- public:
-  static const ::echomesh::LoginRequest& login_request(const EchoMsg* msg);
-  static const ::echomesh::LoginResponse& login_response(const EchoMsg* msg);
-  static const ::echomesh::ChatMsg& chat_msg(const EchoMsg* msg);
-  static const ::echomesh::RoomAction& room_action(const EchoMsg* msg);
-  static const ::echomesh::VoiceAnnounce& voice_announce(const EchoMsg* msg);
-  static const ::echomesh::RoomActionResponse& room_action_response(const EchoMsg* msg);
-};
-
-const ::echomesh::LoginRequest&
-EchoMsg::_Internal::login_request(const EchoMsg* msg) {
-  return *msg->_impl_.payload_.login_request_;
-}
-const ::echomesh::LoginResponse&
-EchoMsg::_Internal::login_response(const EchoMsg* msg) {
-  return *msg->_impl_.payload_.login_response_;
-}
-const ::echomesh::ChatMsg&
-EchoMsg::_Internal::chat_msg(const EchoMsg* msg) {
-  return *msg->_impl_.payload_.chat_msg_;
-}
-const ::echomesh::RoomAction&
-EchoMsg::_Internal::room_action(const EchoMsg* msg) {
-  return *msg->_impl_.payload_.room_action_;
-}
-const ::echomesh::VoiceAnnounce&
-EchoMsg::_Internal::voice_announce(const EchoMsg* msg) {
-  return *msg->_impl_.payload_.voice_announce_;
-}
-const ::echomesh::RoomActionResponse&
-EchoMsg::_Internal::room_action_response(const EchoMsg* msg) {
-  return *msg->_impl_.payload_.room_action_response_;
-}
-void EchoMsg::set_allocated_login_request(::echomesh::LoginRequest* login_request) {
-  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
-  clear_payload();
-  if (login_request) {
-    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-      ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(login_request);
-    if (message_arena != submessage_arena) {
-      login_request = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, login_request, submessage_arena);
-    }
-    set_has_login_request();
-    _impl_.payload_.login_request_ = login_request;
-  }
-  // @@protoc_insertion_point(field_set_allocated:echomesh.EchoMsg.login_request)
-}
-void EchoMsg::set_allocated_login_response(::echomesh::LoginResponse* login_response) {
-  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
-  clear_payload();
-  if (login_response) {
-    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-      ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(login_response);
-    if (message_arena != submessage_arena) {
-      login_response = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, login_response, submessage_arena);
-    }
-    set_has_login_response();
-    _impl_.payload_.login_response_ = login_response;
-  }
-  // @@protoc_insertion_point(field_set_allocated:echomesh.EchoMsg.login_response)
-}
-void EchoMsg::set_allocated_chat_msg(::echomesh::ChatMsg* chat_msg) {
-  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
-  clear_payload();
-  if (chat_msg) {
-    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-      ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(chat_msg);
-    if (message_arena != submessage_arena) {
-      chat_msg = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, chat_msg, submessage_arena);
-    }
-    set_has_chat_msg();
-    _impl_.payload_.chat_msg_ = chat_msg;
-  }
-  // @@protoc_insertion_point(field_set_allocated:echomesh.EchoMsg.chat_msg)
-}
-void EchoMsg::set_allocated_room_action(::echomesh::RoomAction* room_action) {
-  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
-  clear_payload();
-  if (room_action) {
-    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-      ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(room_action);
-    if (message_arena != submessage_arena) {
-      room_action = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, room_action, submessage_arena);
-    }
-    set_has_room_action();
-    _impl_.payload_.room_action_ = room_action;
-  }
-  // @@protoc_insertion_point(field_set_allocated:echomesh.EchoMsg.room_action)
-}
-void EchoMsg::set_allocated_voice_announce(::echomesh::VoiceAnnounce* voice_announce) {
-  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
-  clear_payload();
-  if (voice_announce) {
-    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-      ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(voice_announce);
-    if (message_arena != submessage_arena) {
-      voice_announce = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, voice_announce, submessage_arena);
-    }
-    set_has_voice_announce();
-    _impl_.payload_.voice_announce_ = voice_announce;
-  }
-  // @@protoc_insertion_point(field_set_allocated:echomesh.EchoMsg.voice_announce)
-}
-void EchoMsg::set_allocated_room_action_response(::echomesh::RoomActionResponse* room_action_response) {
-  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
-  clear_payload();
-  if (room_action_response) {
-    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-      ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(room_action_response);
-    if (message_arena != submessage_arena) {
-      room_action_response = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, room_action_response, submessage_arena);
-    }
-    set_has_room_action_response();
-    _impl_.payload_.room_action_response_ = room_action_response;
-  }
-  // @@protoc_insertion_point(field_set_allocated:echomesh.EchoMsg.room_action_response)
-}
-EchoMsg::EchoMsg(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor(arena, is_message_owned);
-  // @@protoc_insertion_point(arena_constructor:echomesh.EchoMsg)
-}
-EchoMsg::EchoMsg(const EchoMsg& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  EchoMsg* const _this = this; (void)_this;
-  new (&_impl_) Impl_{
-      decltype(_impl_.type_){}
-    , decltype(_impl_.payload_){}
-    , /*decltype(_impl_._cached_size_)*/{}
-    , /*decltype(_impl_._oneof_case_)*/{}};
-
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  _this->_impl_.type_ = from._impl_.type_;
-  clear_has_payload();
-  switch (from.payload_case()) {
-    case kLoginRequest: {
-      _this->_internal_mutable_login_request()->::echomesh::LoginRequest::MergeFrom(
-          from._internal_login_request());
-      break;
-    }
-    case kLoginResponse: {
-      _this->_internal_mutable_login_response()->::echomesh::LoginResponse::MergeFrom(
-          from._internal_login_response());
-      break;
-    }
-    case kChatMsg: {
-      _this->_internal_mutable_chat_msg()->::echomesh::ChatMsg::MergeFrom(
-          from._internal_chat_msg());
-      break;
-    }
-    case kRoomAction: {
-      _this->_internal_mutable_room_action()->::echomesh::RoomAction::MergeFrom(
-          from._internal_room_action());
-      break;
-    }
-    case kVoiceAnnounce: {
-      _this->_internal_mutable_voice_announce()->::echomesh::VoiceAnnounce::MergeFrom(
-          from._internal_voice_announce());
-      break;
-    }
-    case kRoomActionResponse: {
-      _this->_internal_mutable_room_action_response()->::echomesh::RoomActionResponse::MergeFrom(
-          from._internal_room_action_response());
-      break;
-    }
-    case PAYLOAD_NOT_SET: {
-      break;
-    }
-  }
-  // @@protoc_insertion_point(copy_constructor:echomesh.EchoMsg)
-}
-
-inline void EchoMsg::SharedCtor(
-    ::_pb::Arena* arena, bool is_message_owned) {
-  (void)arena;
-  (void)is_message_owned;
-  new (&_impl_) Impl_{
-      decltype(_impl_.type_){0}
-    , decltype(_impl_.payload_){}
-    , /*decltype(_impl_._cached_size_)*/{}
-    , /*decltype(_impl_._oneof_case_)*/{}
-  };
-  clear_has_payload();
-}
-
-EchoMsg::~EchoMsg() {
-  // @@protoc_insertion_point(destructor:echomesh.EchoMsg)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
-  SharedDtor();
-}
-
-inline void EchoMsg::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  if (has_payload()) {
-    clear_payload();
-  }
-}
-
-void EchoMsg::SetCachedSize(int size) const {
-  _impl_._cached_size_.Set(size);
-}
-
-void EchoMsg::clear_payload() {
-// @@protoc_insertion_point(one_of_clear_start:echomesh.EchoMsg)
-  switch (payload_case()) {
-    case kLoginRequest: {
-      if (GetArenaForAllocation() == nullptr) {
-        delete _impl_.payload_.login_request_;
-      }
-      break;
-    }
-    case kLoginResponse: {
-      if (GetArenaForAllocation() == nullptr) {
-        delete _impl_.payload_.login_response_;
-      }
-      break;
-    }
-    case kChatMsg: {
-      if (GetArenaForAllocation() == nullptr) {
-        delete _impl_.payload_.chat_msg_;
-      }
-      break;
-    }
-    case kRoomAction: {
-      if (GetArenaForAllocation() == nullptr) {
-        delete _impl_.payload_.room_action_;
-      }
-      break;
-    }
-    case kVoiceAnnounce: {
-      if (GetArenaForAllocation() == nullptr) {
-        delete _impl_.payload_.voice_announce_;
-      }
-      break;
-    }
-    case kRoomActionResponse: {
-      if (GetArenaForAllocation() == nullptr) {
-        delete _impl_.payload_.room_action_response_;
-      }
-      break;
-    }
-    case PAYLOAD_NOT_SET: {
-      break;
-    }
-  }
-  _impl_._oneof_case_[0] = PAYLOAD_NOT_SET;
-}
-
-
-void EchoMsg::Clear() {
-// @@protoc_insertion_point(message_clear_start:echomesh.EchoMsg)
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  _impl_.type_ = 0;
-  clear_payload();
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
-}
-
-const char* EchoMsg::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // .echomesh.MsgType type = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
-          uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
-          CHK_(ptr);
-          _internal_set_type(static_cast<::echomesh::MsgType>(val));
-        } else
-          goto handle_unusual;
-        continue;
-      // .echomesh.LoginRequest login_request = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
-          ptr = ctx->ParseMessage(_internal_mutable_login_request(), ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // .echomesh.LoginResponse login_response = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
-          ptr = ctx->ParseMessage(_internal_mutable_login_response(), ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // .echomesh.ChatMsg chat_msg = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
-          ptr = ctx->ParseMessage(_internal_mutable_chat_msg(), ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // .echomesh.RoomAction room_action = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 42)) {
-          ptr = ctx->ParseMessage(_internal_mutable_room_action(), ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // .echomesh.VoiceAnnounce voice_announce = 6;
-      case 6:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 50)) {
-          ptr = ctx->ParseMessage(_internal_mutable_voice_announce(), ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // .echomesh.RoomActionResponse room_action_response = 7;
-      case 7:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 58)) {
-          ptr = ctx->ParseMessage(_internal_mutable_room_action_response(), ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
-  return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
-}
-
-uint8_t* EchoMsg::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:echomesh.EchoMsg)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  // .echomesh.MsgType type = 1;
-  if (this->_internal_type() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteEnumToArray(
-      1, this->_internal_type(), target);
-  }
-
-  // .echomesh.LoginRequest login_request = 2;
-  if (_internal_has_login_request()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(2, _Internal::login_request(this),
-        _Internal::login_request(this).GetCachedSize(), target, stream);
-  }
-
-  // .echomesh.LoginResponse login_response = 3;
-  if (_internal_has_login_response()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(3, _Internal::login_response(this),
-        _Internal::login_response(this).GetCachedSize(), target, stream);
-  }
-
-  // .echomesh.ChatMsg chat_msg = 4;
-  if (_internal_has_chat_msg()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(4, _Internal::chat_msg(this),
-        _Internal::chat_msg(this).GetCachedSize(), target, stream);
-  }
-
-  // .echomesh.RoomAction room_action = 5;
-  if (_internal_has_room_action()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(5, _Internal::room_action(this),
-        _Internal::room_action(this).GetCachedSize(), target, stream);
-  }
-
-  // .echomesh.VoiceAnnounce voice_announce = 6;
-  if (_internal_has_voice_announce()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(6, _Internal::voice_announce(this),
-        _Internal::voice_announce(this).GetCachedSize(), target, stream);
-  }
-
-  // .echomesh.RoomActionResponse room_action_response = 7;
-  if (_internal_has_room_action_response()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(7, _Internal::room_action_response(this),
-        _Internal::room_action_response(this).GetCachedSize(), target, stream);
-  }
-
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:echomesh.EchoMsg)
-  return target;
-}
-
-size_t EchoMsg::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:echomesh.EchoMsg)
-  size_t total_size = 0;
-
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  // .echomesh.MsgType type = 1;
-  if (this->_internal_type() != 0) {
-    total_size += 1 +
-      ::_pbi::WireFormatLite::EnumSize(this->_internal_type());
-  }
-
-  switch (payload_case()) {
-    // .echomesh.LoginRequest login_request = 2;
-    case kLoginRequest: {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-          *_impl_.payload_.login_request_);
-      break;
-    }
-    // .echomesh.LoginResponse login_response = 3;
-    case kLoginResponse: {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-          *_impl_.payload_.login_response_);
-      break;
-    }
-    // .echomesh.ChatMsg chat_msg = 4;
-    case kChatMsg: {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-          *_impl_.payload_.chat_msg_);
-      break;
-    }
-    // .echomesh.RoomAction room_action = 5;
-    case kRoomAction: {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-          *_impl_.payload_.room_action_);
-      break;
-    }
-    // .echomesh.VoiceAnnounce voice_announce = 6;
-    case kVoiceAnnounce: {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-          *_impl_.payload_.voice_announce_);
-      break;
-    }
-    // .echomesh.RoomActionResponse room_action_response = 7;
-    case kRoomActionResponse: {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-          *_impl_.payload_.room_action_response_);
-      break;
-    }
-    case PAYLOAD_NOT_SET: {
-      break;
-    }
-  }
-  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
-}
-
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData EchoMsg::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
-    EchoMsg::MergeImpl
-};
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*EchoMsg::GetClassData() const { return &_class_data_; }
-
-
-void EchoMsg::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
-  auto* const _this = static_cast<EchoMsg*>(&to_msg);
-  auto& from = static_cast<const EchoMsg&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:echomesh.EchoMsg)
-  GOOGLE_DCHECK_NE(&from, _this);
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  if (from._internal_type() != 0) {
-    _this->_internal_set_type(from._internal_type());
-  }
-  switch (from.payload_case()) {
-    case kLoginRequest: {
-      _this->_internal_mutable_login_request()->::echomesh::LoginRequest::MergeFrom(
-          from._internal_login_request());
-      break;
-    }
-    case kLoginResponse: {
-      _this->_internal_mutable_login_response()->::echomesh::LoginResponse::MergeFrom(
-          from._internal_login_response());
-      break;
-    }
-    case kChatMsg: {
-      _this->_internal_mutable_chat_msg()->::echomesh::ChatMsg::MergeFrom(
-          from._internal_chat_msg());
-      break;
-    }
-    case kRoomAction: {
-      _this->_internal_mutable_room_action()->::echomesh::RoomAction::MergeFrom(
-          from._internal_room_action());
-      break;
-    }
-    case kVoiceAnnounce: {
-      _this->_internal_mutable_voice_announce()->::echomesh::VoiceAnnounce::MergeFrom(
-          from._internal_voice_announce());
-      break;
-    }
-    case kRoomActionResponse: {
-      _this->_internal_mutable_room_action_response()->::echomesh::RoomActionResponse::MergeFrom(
-          from._internal_room_action_response());
-      break;
-    }
-    case PAYLOAD_NOT_SET: {
-      break;
-    }
-  }
-  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-}
-
-void EchoMsg::CopyFrom(const EchoMsg& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:echomesh.EchoMsg)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool EchoMsg::IsInitialized() const {
-  return true;
-}
-
-void EchoMsg::InternalSwap(EchoMsg* other) {
-  using std::swap;
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  swap(_impl_.type_, other->_impl_.type_);
-  swap(_impl_.payload_, other->_impl_.payload_);
-  swap(_impl_._oneof_case_[0], other->_impl_._oneof_case_[0]);
-}
-
-::PROTOBUF_NAMESPACE_ID::Metadata EchoMsg::GetMetadata() const {
-  return ::_pbi::AssignDescriptors(
-      &descriptor_table_message_2eproto_getter, &descriptor_table_message_2eproto_once,
-      file_level_metadata_message_2eproto[6]);
+      file_level_metadata_message_2eproto[4]);
 }
 
 // @@protoc_insertion_point(namespace_scope)
@@ -2472,25 +1501,17 @@ template<> PROTOBUF_NOINLINE ::echomesh::LoginResponse*
 Arena::CreateMaybeMessage< ::echomesh::LoginResponse >(Arena* arena) {
   return Arena::CreateMessageInternal< ::echomesh::LoginResponse >(arena);
 }
-template<> PROTOBUF_NOINLINE ::echomesh::ChatMsg*
-Arena::CreateMaybeMessage< ::echomesh::ChatMsg >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::echomesh::ChatMsg >(arena);
-}
-template<> PROTOBUF_NOINLINE ::echomesh::RoomAction*
-Arena::CreateMaybeMessage< ::echomesh::RoomAction >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::echomesh::RoomAction >(arena);
+template<> PROTOBUF_NOINLINE ::echomesh::RoomActionRequest*
+Arena::CreateMaybeMessage< ::echomesh::RoomActionRequest >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::echomesh::RoomActionRequest >(arena);
 }
 template<> PROTOBUF_NOINLINE ::echomesh::RoomActionResponse*
 Arena::CreateMaybeMessage< ::echomesh::RoomActionResponse >(Arena* arena) {
   return Arena::CreateMessageInternal< ::echomesh::RoomActionResponse >(arena);
 }
-template<> PROTOBUF_NOINLINE ::echomesh::VoiceAnnounce*
-Arena::CreateMaybeMessage< ::echomesh::VoiceAnnounce >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::echomesh::VoiceAnnounce >(arena);
-}
-template<> PROTOBUF_NOINLINE ::echomesh::EchoMsg*
-Arena::CreateMaybeMessage< ::echomesh::EchoMsg >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::echomesh::EchoMsg >(arena);
+template<> PROTOBUF_NOINLINE ::echomesh::VoicePacket*
+Arena::CreateMaybeMessage< ::echomesh::VoicePacket >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::echomesh::VoicePacket >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

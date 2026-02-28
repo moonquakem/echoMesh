@@ -215,6 +215,15 @@ CMAKE_TAPI:FILEPATH=CMAKE_TAPI-NOTFOUND
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
+//Path to a library.
+OPENSSL_CRYPTO_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libcrypto.so
+
+//Path to a file.
+OPENSSL_INCLUDE_DIR:PATH=/usr/include
+
+//Path to a library.
+OPENSSL_SSL_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libssl.so
+
 //Arguments to supply to pkg-config
 PKG_CONFIG_ARGN:STRING=
 
@@ -245,6 +254,21 @@ Protobuf_PROTOC_LIBRARY_DEBUG:FILEPATH=Protobuf_PROTOC_LIBRARY_DEBUG-NOTFOUND
 //Path to a library.
 Protobuf_PROTOC_LIBRARY_RELEASE:FILEPATH=Protobuf_PROTOC_LIBRARY_RELEASE-NOTFOUND
 
+//Path to a file.
+ZLIB_INCLUDE_DIR:PATH=/usr/include
+
+//Path to a library.
+ZLIB_LIBRARY_DEBUG:FILEPATH=ZLIB_LIBRARY_DEBUG-NOTFOUND
+
+//Path to a library.
+ZLIB_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libz.so
+
+//The directory containing a CMake configuration file for absl.
+absl_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/absl
+
+//The directory containing a CMake configuration file for c-ares.
+c-ares_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/c-ares
+
 //Value Computed by CMake
 echomesh_server_BINARY_DIR:STATIC=/home/moon/桌面/code/echo/echoMesh/build
 
@@ -254,20 +278,23 @@ echomesh_server_IS_TOP_LEVEL:STATIC=ON
 //Value Computed by CMake
 echomesh_server_SOURCE_DIR:STATIC=/home/moon/桌面/code/echo/echoMesh
 
+//The directory containing a CMake configuration file for gRPC.
+gRPC_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/grpc
+
 //Path to a library.
 pkgcfg_lib_OPUS_opus:FILEPATH=/usr/local/lib/libopus.so
 
 //Path to a library.
-pkgcfg_lib_PORTAUDIO_asound:FILEPATH=/usr/lib/x86_64-linux-gnu/libasound.so
+pkgcfg_lib_RE2_re2:FILEPATH=/usr/lib/x86_64-linux-gnu/libre2.so
 
 //Path to a library.
-pkgcfg_lib_PORTAUDIO_m:FILEPATH=/usr/lib/x86_64-linux-gnu/libm.so
+pkgcfg_lib__OPENSSL_crypto:FILEPATH=/usr/lib/x86_64-linux-gnu/libcrypto.so
 
 //Path to a library.
-pkgcfg_lib_PORTAUDIO_portaudio:FILEPATH=/usr/lib/x86_64-linux-gnu/libportaudio.so
+pkgcfg_lib__OPENSSL_ssl:FILEPATH=/usr/lib/x86_64-linux-gnu/libssl.so
 
-//Path to a library.
-pkgcfg_lib_PORTAUDIO_pthread:FILEPATH=/usr/lib/x86_64-linux-gnu/libpthread.a
+//The directory containing a CMake configuration file for re2.
+re2_DIR:PATH=re2_DIR-NOTFOUND
 
 
 ########################
@@ -421,10 +448,24 @@ CMAKE_TAPI-ADVANCED:INTERNAL=1
 CMAKE_UNAME:INTERNAL=/usr/bin/uname
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
+//Details about finding OpenSSL
+FIND_PACKAGE_MESSAGE_DETAILS_OpenSSL:INTERNAL=[/usr/lib/x86_64-linux-gnu/libcrypto.so][/usr/include][c ][v3.0.13()]
 //Details about finding PkgConfig
 FIND_PACKAGE_MESSAGE_DETAILS_PkgConfig:INTERNAL=[/usr/bin/pkg-config][v1.8.1()]
 //Details about finding Protobuf
 FIND_PACKAGE_MESSAGE_DETAILS_Protobuf:INTERNAL=[/usr/lib/x86_64-linux-gnu/libprotobuf.so][/usr/include][v3.21.12()]
+//Details about finding Threads
+FIND_PACKAGE_MESSAGE_DETAILS_Threads:INTERNAL=[TRUE][v()]
+//Details about finding ZLIB
+FIND_PACKAGE_MESSAGE_DETAILS_ZLIB:INTERNAL=[/usr/lib/x86_64-linux-gnu/libz.so][/usr/include][c ][v1.3()]
+//Details about finding c-ares
+FIND_PACKAGE_MESSAGE_DETAILS_c-ares:INTERNAL=[/usr/lib/x86_64-linux-gnu/cmake/c-ares/c-ares-config.cmake][v1.27.0()]
+//ADVANCED property for variable: OPENSSL_CRYPTO_LIBRARY
+OPENSSL_CRYPTO_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENSSL_INCLUDE_DIR
+OPENSSL_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENSSL_SSL_LIBRARY
+OPENSSL_SSL_LIBRARY-ADVANCED:INTERNAL=1
 OPUS_CFLAGS:INTERNAL=-I/usr/local/include/opus
 OPUS_CFLAGS_I:INTERNAL=
 OPUS_CFLAGS_OTHER:INTERNAL=
@@ -464,41 +505,6 @@ OPUS_opus_VERSION:INTERNAL=
 PKG_CONFIG_ARGN-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: PKG_CONFIG_EXECUTABLE
 PKG_CONFIG_EXECUTABLE-ADVANCED:INTERNAL=1
-PORTAUDIO_CFLAGS:INTERNAL=-I/usr/include;-pthread
-PORTAUDIO_CFLAGS_I:INTERNAL=
-PORTAUDIO_CFLAGS_OTHER:INTERNAL=-pthread
-PORTAUDIO_FOUND:INTERNAL=1
-PORTAUDIO_INCLUDEDIR:INTERNAL=/usr/include
-PORTAUDIO_INCLUDE_DIRS:INTERNAL=/usr/include
-PORTAUDIO_LDFLAGS:INTERNAL=-L/usr/lib/x86_64-linux-gnu;-lportaudio;-lasound;-lm;-lpthread
-PORTAUDIO_LDFLAGS_OTHER:INTERNAL=
-PORTAUDIO_LIBDIR:INTERNAL=/usr/lib/x86_64-linux-gnu
-PORTAUDIO_LIBRARIES:INTERNAL=portaudio;asound;m;pthread
-PORTAUDIO_LIBRARY_DIRS:INTERNAL=/usr/lib/x86_64-linux-gnu
-PORTAUDIO_LIBS:INTERNAL=
-PORTAUDIO_LIBS_L:INTERNAL=
-PORTAUDIO_LIBS_OTHER:INTERNAL=
-PORTAUDIO_LIBS_PATHS:INTERNAL=
-PORTAUDIO_MODULE_NAME:INTERNAL=portaudio-2.0
-PORTAUDIO_PREFIX:INTERNAL=/usr
-PORTAUDIO_STATIC_CFLAGS:INTERNAL=-I/usr/include;-pthread
-PORTAUDIO_STATIC_CFLAGS_I:INTERNAL=
-PORTAUDIO_STATIC_CFLAGS_OTHER:INTERNAL=-pthread
-PORTAUDIO_STATIC_INCLUDE_DIRS:INTERNAL=/usr/include
-PORTAUDIO_STATIC_LDFLAGS:INTERNAL=-L/usr/lib/x86_64-linux-gnu;-lportaudio;-lasound;-lm;-lpthread
-PORTAUDIO_STATIC_LDFLAGS_OTHER:INTERNAL=
-PORTAUDIO_STATIC_LIBDIR:INTERNAL=
-PORTAUDIO_STATIC_LIBRARIES:INTERNAL=portaudio;asound;m;pthread
-PORTAUDIO_STATIC_LIBRARY_DIRS:INTERNAL=/usr/lib/x86_64-linux-gnu
-PORTAUDIO_STATIC_LIBS:INTERNAL=
-PORTAUDIO_STATIC_LIBS_L:INTERNAL=
-PORTAUDIO_STATIC_LIBS_OTHER:INTERNAL=
-PORTAUDIO_STATIC_LIBS_PATHS:INTERNAL=
-PORTAUDIO_VERSION:INTERNAL=19
-PORTAUDIO_portaudio-2.0_INCLUDEDIR:INTERNAL=
-PORTAUDIO_portaudio-2.0_LIBDIR:INTERNAL=
-PORTAUDIO_portaudio-2.0_PREFIX:INTERNAL=
-PORTAUDIO_portaudio-2.0_VERSION:INTERNAL=
 //ADVANCED property for variable: Protobuf_INCLUDE_DIR
 Protobuf_INCLUDE_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: Protobuf_LIBRARY_DEBUG
@@ -515,21 +521,97 @@ Protobuf_PROTOC_EXECUTABLE-ADVANCED:INTERNAL=1
 Protobuf_PROTOC_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: Protobuf_PROTOC_LIBRARY_RELEASE
 Protobuf_PROTOC_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+RE2_CFLAGS:INTERNAL=-pthread;-I/usr/include
+RE2_CFLAGS_I:INTERNAL=
+RE2_CFLAGS_OTHER:INTERNAL=-pthread
+RE2_FOUND:INTERNAL=1
+RE2_INCLUDEDIR:INTERNAL=/usr/include
+RE2_INCLUDE_DIRS:INTERNAL=/usr/include
+RE2_LDFLAGS:INTERNAL=-pthread;-L/usr/lib/x86_64-linux-gnu;-lre2
+RE2_LDFLAGS_OTHER:INTERNAL=-pthread
+RE2_LIBDIR:INTERNAL=/usr/lib/x86_64-linux-gnu
+RE2_LIBRARIES:INTERNAL=re2
+RE2_LIBRARY_DIRS:INTERNAL=/usr/lib/x86_64-linux-gnu
+RE2_LIBS:INTERNAL=
+RE2_LIBS_L:INTERNAL=
+RE2_LIBS_OTHER:INTERNAL=
+RE2_LIBS_PATHS:INTERNAL=
+RE2_MODULE_NAME:INTERNAL=re2
+RE2_PREFIX:INTERNAL=
+RE2_STATIC_CFLAGS:INTERNAL=-pthread;-I/usr/include
+RE2_STATIC_CFLAGS_I:INTERNAL=
+RE2_STATIC_CFLAGS_OTHER:INTERNAL=-pthread
+RE2_STATIC_INCLUDE_DIRS:INTERNAL=/usr/include
+RE2_STATIC_LDFLAGS:INTERNAL=-pthread;-L/usr/lib/x86_64-linux-gnu;-lre2
+RE2_STATIC_LDFLAGS_OTHER:INTERNAL=-pthread
+RE2_STATIC_LIBDIR:INTERNAL=
+RE2_STATIC_LIBRARIES:INTERNAL=re2
+RE2_STATIC_LIBRARY_DIRS:INTERNAL=/usr/lib/x86_64-linux-gnu
+RE2_STATIC_LIBS:INTERNAL=
+RE2_STATIC_LIBS_L:INTERNAL=
+RE2_STATIC_LIBS_OTHER:INTERNAL=
+RE2_STATIC_LIBS_PATHS:INTERNAL=
+RE2_VERSION:INTERNAL=10.0.0
+RE2_re2_INCLUDEDIR:INTERNAL=
+RE2_re2_LIBDIR:INTERNAL=
+RE2_re2_PREFIX:INTERNAL=
+RE2_re2_VERSION:INTERNAL=
+//ADVANCED property for variable: ZLIB_INCLUDE_DIR
+ZLIB_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: ZLIB_LIBRARY_DEBUG
+ZLIB_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: ZLIB_LIBRARY_RELEASE
+ZLIB_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
 //linker supports push/pop state
 _CMAKE_LINKER_PUSHPOP_STATE_SUPPORTED:INTERNAL=TRUE
+_OPENSSL_CFLAGS:INTERNAL=-I/usr/include
+_OPENSSL_CFLAGS_I:INTERNAL=
+_OPENSSL_CFLAGS_OTHER:INTERNAL=
+_OPENSSL_FOUND:INTERNAL=1
+_OPENSSL_INCLUDEDIR:INTERNAL=/usr/include
+_OPENSSL_INCLUDE_DIRS:INTERNAL=/usr/include
+_OPENSSL_LDFLAGS:INTERNAL=-L/usr/lib/x86_64-linux-gnu;-lssl;-lcrypto
+_OPENSSL_LDFLAGS_OTHER:INTERNAL=
+_OPENSSL_LIBDIR:INTERNAL=/usr/lib/x86_64-linux-gnu
+_OPENSSL_LIBRARIES:INTERNAL=ssl;crypto
+_OPENSSL_LIBRARY_DIRS:INTERNAL=/usr/lib/x86_64-linux-gnu
+_OPENSSL_LIBS:INTERNAL=
+_OPENSSL_LIBS_L:INTERNAL=
+_OPENSSL_LIBS_OTHER:INTERNAL=
+_OPENSSL_LIBS_PATHS:INTERNAL=
+_OPENSSL_MODULE_NAME:INTERNAL=openssl
+_OPENSSL_PREFIX:INTERNAL=/usr
+_OPENSSL_STATIC_CFLAGS:INTERNAL=-I/usr/include
+_OPENSSL_STATIC_CFLAGS_I:INTERNAL=
+_OPENSSL_STATIC_CFLAGS_OTHER:INTERNAL=
+_OPENSSL_STATIC_INCLUDE_DIRS:INTERNAL=/usr/include
+_OPENSSL_STATIC_LDFLAGS:INTERNAL=-L/usr/lib/x86_64-linux-gnu;-lssl;-L/usr/lib/x86_64-linux-gnu;-ldl;-pthread;-lcrypto;-ldl;-pthread
+_OPENSSL_STATIC_LDFLAGS_OTHER:INTERNAL=-pthread;-pthread
+_OPENSSL_STATIC_LIBDIR:INTERNAL=
+_OPENSSL_STATIC_LIBRARIES:INTERNAL=ssl;dl;crypto;dl
+_OPENSSL_STATIC_LIBRARY_DIRS:INTERNAL=/usr/lib/x86_64-linux-gnu;/usr/lib/x86_64-linux-gnu
+_OPENSSL_STATIC_LIBS:INTERNAL=
+_OPENSSL_STATIC_LIBS_L:INTERNAL=
+_OPENSSL_STATIC_LIBS_OTHER:INTERNAL=
+_OPENSSL_STATIC_LIBS_PATHS:INTERNAL=
+_OPENSSL_VERSION:INTERNAL=3.0.13
+_OPENSSL_openssl_INCLUDEDIR:INTERNAL=
+_OPENSSL_openssl_LIBDIR:INTERNAL=
+_OPENSSL_openssl_PREFIX:INTERNAL=
+_OPENSSL_openssl_VERSION:INTERNAL=
 __pkg_config_arguments_OPUS:INTERNAL=REQUIRED;opus
-__pkg_config_arguments_PORTAUDIO:INTERNAL=REQUIRED;portaudio-2.0
+__pkg_config_arguments_RE2:INTERNAL=QUIET;re2
+__pkg_config_arguments__OPENSSL:INTERNAL=QUIET;openssl
 __pkg_config_checked_OPUS:INTERNAL=1
-__pkg_config_checked_PORTAUDIO:INTERNAL=1
+__pkg_config_checked_RE2:INTERNAL=1
+__pkg_config_checked__OPENSSL:INTERNAL=1
 //ADVANCED property for variable: pkgcfg_lib_OPUS_opus
 pkgcfg_lib_OPUS_opus-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: pkgcfg_lib_PORTAUDIO_asound
-pkgcfg_lib_PORTAUDIO_asound-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: pkgcfg_lib_PORTAUDIO_m
-pkgcfg_lib_PORTAUDIO_m-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: pkgcfg_lib_PORTAUDIO_portaudio
-pkgcfg_lib_PORTAUDIO_portaudio-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: pkgcfg_lib_PORTAUDIO_pthread
-pkgcfg_lib_PORTAUDIO_pthread-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_RE2_re2
+pkgcfg_lib_RE2_re2-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib__OPENSSL_crypto
+pkgcfg_lib__OPENSSL_crypto-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib__OPENSSL_ssl
+pkgcfg_lib__OPENSSL_ssl-ADVANCED:INTERNAL=1
 prefix_result:INTERNAL=/usr/lib/x86_64-linux-gnu
 
