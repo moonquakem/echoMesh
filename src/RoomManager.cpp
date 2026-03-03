@@ -2,6 +2,10 @@
 #include "UserManager.h"
 #include <iostream>
 #include <vector>
+#include <atomic>
+
+// Global atomic to track pending broadcast tasks
+std::atomic<int> g_pending_broadcasts(0);
 
 // --- Room Implementation ---
 
@@ -39,7 +43,16 @@ void Room::removeAudioStream(UserId userId) {
     }
 }
 
-void Room::broadcastAudio(UserId senderId, const echomesh::VoicePacket& packet) {
+void Room::broadcastAudio(UserId senderId, const echomesh::VoicePacket& packet, ThreadPool& pool) {
+    // If we have too many pending broadcasts, drop this one to avoid death spiral
+    if (g_pending_broadcasts.load() > 1000) {
+        static int drop_count = 0;
+        if (++drop_count % 100 == 0) {
+            std::cerr << "Performance Warning: Dropping broadcast due to congestion (" << g_pending_broadcasts.load() << " pending)" << std::endl;
+        }
+        return;
+    }
+
     std::vector<std::shared_ptr<StreamWrapper>> streams_to_write;
     {
         std::lock_guard<std::mutex> lock(mutex_);
@@ -50,14 +63,24 @@ void Room::broadcastAudio(UserId senderId, const echomesh::VoicePacket& packet) 
         }
     }
 
-    for (auto& stream_wrapper : streams_to_write) {
-        // StreamWrapper::write is thread-safe and checks for closure
-        stream_wrapper->write(packet);
-    }
+    if (streams_to_write.empty()) return;
+
+    g_pending_broadcasts++;
+    pool.enqueue([streams_to_write, packet] {
+        for (auto& stream_wrapper : streams_to_write) {
+            stream_wrapper->write(packet);
+        }
+        g_pending_broadcasts--;
+    });
 }
 
 
 // --- RoomManager Implementation ---
+
+RoomManager::RoomManager() {
+    // Increased thread pool size for massive concurrency
+    m_threadPool = std::make_unique<ThreadPool>(64);
+}
 
 RoomManager &RoomManager::getInstance() {
   static RoomManager instance;
@@ -88,7 +111,6 @@ bool RoomManager::joinRoom(const RoomId &roomId, UserId userId) {
   }
   it->second->addUser(userId);
   user_to_room_map_[userId] = roomId; // Update reverse map
-  // Note: We don't call UserManager::joinRoom anymore, that's handled in UserManager directly
   return true;
 }
 
@@ -145,7 +167,7 @@ void RoomManager::removeAudioStream(const RoomId& roomId, UserId userId) {
 
 void RoomManager::broadcastAudio(const RoomId& roomId, UserId senderId, const echomesh::VoicePacket& packet) {
     auto room = getRoom(roomId);
-    if (room) {
-        room->broadcastAudio(senderId, packet);
+    if (room && m_threadPool) {
+        room->broadcastAudio(senderId, packet, *m_threadPool);
     }
 }
