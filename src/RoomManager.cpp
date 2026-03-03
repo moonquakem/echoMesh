@@ -13,7 +13,11 @@ void Room::addUser(UserId userId) {
 void Room::removeUser(UserId userId) {
   std::lock_guard<std::mutex> lock(mutex_);
   users_.erase(userId);
-  audio_streams_.erase(userId); // Also remove stream mapping
+  auto it = audio_streams_.find(userId);
+  if (it != audio_streams_.end()) {
+      it->second->close();
+      audio_streams_.erase(it);
+  }
 }
 
 std::set<UserId> Room::getUsers() const {
@@ -23,22 +27,20 @@ std::set<UserId> Room::getUsers() const {
 
 void Room::addAudioStream(UserId userId, AudioStream* stream) {
     std::lock_guard<std::mutex> lock(mutex_);
-    audio_streams_[userId] = stream;
+    audio_streams_[userId] = std::make_shared<StreamWrapper>(stream);
 }
 
 void Room::removeAudioStream(UserId userId) {
     std::lock_guard<std::mutex> lock(mutex_);
-    audio_streams_.erase(userId);
+    auto it = audio_streams_.find(userId);
+    if (it != audio_streams_.end()) {
+        it->second->close();
+        audio_streams_.erase(it);
+    }
 }
 
 void Room::broadcastAudio(UserId senderId, const echomesh::VoicePacket& packet) {
-    //
-    // IMPORTANT: The gRPC Write() operation can be blocking.
-    // To prevent a single slow client from deadlocking the entire room,
-    // we copy the list of streams under the lock, and then release the lock
-    // before performing the writes.
-    //
-    std::vector<AudioStream*> streams_to_write;
+    std::vector<std::shared_ptr<StreamWrapper>> streams_to_write;
     {
         std::lock_guard<std::mutex> lock(mutex_);
         for (const auto& pair : audio_streams_) {
@@ -48,10 +50,9 @@ void Room::broadcastAudio(UserId senderId, const echomesh::VoicePacket& packet) 
         }
     }
 
-    for (auto* stream : streams_to_write) {
-        // This is a blocking write. A more advanced implementation might use
-        // a work queue and a thread pool to handle writes asynchronously.
-        stream->Write(packet);
+    for (auto& stream_wrapper : streams_to_write) {
+        // StreamWrapper::write is thread-safe and checks for closure
+        stream_wrapper->write(packet);
     }
 }
 

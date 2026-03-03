@@ -1,0 +1,17 @@
+Server listening on 0.0.0.0:8888
+RPC: Login for user 'user_2'
+RPC: Login for user 'user_0'
+RPC: Login for user 'user_1'
+RPC: ManageRoom for user 2 in room 'perf_test'
+Room 'perf_test' created.
+User 2 joined room perf_test
+RPC: ManageRoom for user 3 in room 'perf_test'
+User 3 joined room perf_test
+RPC: StreamAudio started for user 2 in room perf_test
+RPC: ManageRoom for user 1 in room 'perf_test'
+User 1 joined room perf_test
+RPC: StreamAudio started for user 3 in room perf_test
+RPC: StreamAudio started for user 1 in room perf_test
+RPC: StreamAudio ended for user 1
+RPC: StreamAudio ended for user 3
+RPC: StreamAudio ended for user 2

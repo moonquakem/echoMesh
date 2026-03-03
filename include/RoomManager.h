@@ -16,6 +16,29 @@ using RoomId = std::string;
 // A type alias for the bidirectional audio stream
 using AudioStream = grpc::ServerReaderWriter<echomesh::VoicePacket, echomesh::VoicePacket>;
 
+// Safe wrapper for AudioStream to prevent concurrent writes and use-after-free
+class StreamWrapper {
+public:
+    StreamWrapper(AudioStream* stream) : stream_(stream), closed_(false) {}
+    
+    bool write(const echomesh::VoicePacket& packet) {
+        std::lock_guard<std::mutex> lock(mutex_);
+        if (closed_ || !stream_) return false;
+        return stream_->Write(packet);
+    }
+    
+    void close() {
+        std::lock_guard<std::mutex> lock(mutex_);
+        closed_ = true;
+        stream_ = nullptr;
+    }
+
+private:
+    AudioStream* stream_;
+    bool closed_;
+    std::mutex mutex_;
+};
+
 class Room {
 public:
   void addUser(UserId userId);
@@ -30,8 +53,8 @@ public:
 private:
   mutable std::mutex mutex_;
   std::set<UserId> users_;
-  // This is the core change: mapping users to their audio streams
-  std::unordered_map<UserId, AudioStream*> audio_streams_;
+  // Use shared_ptr to StreamWrapper for safe lifetime management
+  std::unordered_map<UserId, std::shared_ptr<StreamWrapper>> audio_streams_;
 };
 
 class RoomManager {
