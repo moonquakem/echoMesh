@@ -15,6 +15,7 @@
 #include <functional>
 #include <future>
 #include <vector>
+#include <atomic>
 
 using UserId = int64_t;
 using RoomId = std::string;
@@ -22,29 +23,38 @@ using RoomId = std::string;
 // A type alias for the bidirectional audio stream
 using AudioStream = grpc::ServerReaderWriter<echomesh::VoicePacket, echomesh::VoicePacket>;
 
+class ThreadPool;
+
 // Safe wrapper for AudioStream to prevent concurrent writes and use-after-free.
-class StreamWrapper {
+class StreamWrapper : public std::enable_shared_from_this<StreamWrapper> {
 public:
-    StreamWrapper(AudioStream* stream) : stream_(stream), closed_(false) {}
+    StreamWrapper(AudioStream* stream) : stream_(stream), closed_(false), is_draining_(false) {}
     
-    // Perform a thread-safe write. 
-    // IMPORTANT: We hold the lock during Write to ensure the stream pointer remains valid.
-    bool write(const echomesh::VoicePacket& packet) {
-        std::lock_guard<std::mutex> lock(mutex_);
-        if (closed_ || !stream_) return false;
-        return stream_->Write(packet);
-    }
+    bool enqueue(const echomesh::VoicePacket& packet, ThreadPool& pool);
     
+    // Updated close to wait for active drainers
     void close() {
-        std::lock_guard<std::mutex> lock(mutex_);
+        std::unique_lock<std::mutex> lock(mutex_);
         closed_ = true;
+        
+        // Wait until any active drain task finishes its current Write and exits
+        // This ensures the stream_ pointer isn't used after this function returns
+        close_cv_.wait(lock, [this] { return !is_draining_; });
+        
         stream_ = nullptr;
+        std::queue<echomesh::VoicePacket> empty;
+        std::swap(write_queue_, empty);
     }
 
 private:
+    void drain();
+
     AudioStream* stream_;
     bool closed_;
+    std::queue<echomesh::VoicePacket> write_queue_;
     std::mutex mutex_;
+    std::condition_variable close_cv_;
+    std::atomic<bool> is_draining_;
 };
 
 // A simple thread pool for handling asynchronous tasks
