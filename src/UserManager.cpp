@@ -1,5 +1,6 @@
 #include "UserManager.h"
 #include "RoomManager.h"
+#include <spdlog/spdlog.h>
 
 UserManager &UserManager::getInstance() {
   static UserManager instance;
@@ -22,6 +23,8 @@ UserId UserManager::login(const std::string &username, const Token &token) {
   users_[userId] = newUser;
   token_to_user_[token] = userId;
   
+  spdlog::info("User '{}' logged in with ID {}", username, userId);
+  
   return userId;
 }
 
@@ -30,10 +33,13 @@ void UserManager::logout(UserId userId) {
   
   auto it = users_.find(userId);
   if (it != users_.end()) {
+    std::string username = it->second.username;
     // Remove token mapping first
     token_to_user_.erase(it->second.token);
     // Then remove user object
     users_.erase(it);
+
+    spdlog::info("User '{}' (ID {}) logged out", username, userId);
 
     // Also remove user from any room they might be in.
     // This maintains the logic from the old implementation.

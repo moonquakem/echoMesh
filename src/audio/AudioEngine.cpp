@@ -1,5 +1,5 @@
 #include "audio/AudioEngine.h"
-#include <iostream>
+#include <spdlog/spdlog.h>
 #include <stdexcept>
 
 namespace {
@@ -88,7 +88,7 @@ void AudioEngine::senderThread() {
                 packet.data = opus_data;
                 udp_sender_.send(packet);
             } catch (const std::exception& e) {
-                std::cerr << "Error in sender thread: " << e.what() << std::endl;
+                spdlog::error("Error in sender thread: {}", e.what());
             }
         }
     }

@@ -219,6 +219,8 @@ echomesh_server: CMakeFiles/echomesh_server.dir/message.grpc.pb.cc.o
 echomesh_server: CMakeFiles/echomesh_server.dir/build.make
 echomesh_server: /usr/lib/x86_64-linux-gnu/libgrpc++.so.1.51.1
 echomesh_server: /usr/lib/x86_64-linux-gnu/libprotobuf.so
+echomesh_server: _deps/gflags-build/libgflags_nothreads.a
+echomesh_server: _deps/spdlog-build/libspdlog.a
 echomesh_server: /usr/lib/x86_64-linux-gnu/libprotobuf.so
 echomesh_server: /usr/lib/x86_64-linux-gnu/libgrpc.so.29.0.0
 echomesh_server: /usr/lib/x86_64-linux-gnu/libz.so

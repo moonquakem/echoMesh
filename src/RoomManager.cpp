@@ -3,6 +3,11 @@
 #include <iostream>
 #include <vector>
 #include <atomic>
+#include <gflags/gflags.h>
+#include <spdlog/spdlog.h>
+
+DECLARE_int32(max_threads);
+DECLARE_int32(max_pending_packets);
 
 // Global atomic to track pending broadcast packets across all streams
 std::atomic<int> g_pending_packets(0);
@@ -18,6 +23,7 @@ bool StreamWrapper::enqueue(const echomesh::VoicePacket& packet, ThreadPool& poo
         if (write_queue_.size() > 50) {
             write_queue_.pop();
             g_pending_packets--;
+            spdlog::warn("Stream queue full, dropping oldest packet");
         }
 
         write_queue_.push(packet);
@@ -61,6 +67,7 @@ void StreamWrapper::drain() {
                 stream_ = nullptr;
                 is_draining_ = false;
                 close_cv_.notify_all();
+                spdlog::error("gRPC Write failed, closing stream");
                 return;
             }
         }
@@ -105,7 +112,12 @@ void Room::removeAudioStream(UserId userId) {
 
 void Room::broadcastAudio(UserId senderId, const echomesh::VoicePacket& packet, ThreadPool& pool) {
     // Global protection: if total pending packets exceed a threshold, drop this broadcast
-    if (g_pending_packets.load() > 5000) {
+    if (g_pending_packets.load() > FLAGS_max_pending_packets) {
+        static uint64_t drop_count = 0;
+        if (drop_count++ % 100 == 0) {
+            spdlog::warn("Global pending packets ({}) exceeds limit ({}), dropping broadcast (sampled 1/100)", 
+                         g_pending_packets.load(), FLAGS_max_pending_packets);
+        }
         return;
     }
 
@@ -131,8 +143,9 @@ void Room::broadcastAudio(UserId senderId, const echomesh::VoicePacket& packet, 
 // --- RoomManager Implementation ---
 
 RoomManager::RoomManager() {
-    // 64 threads is a healthy amount for a pool where tasks spend time in IO (Write)
-    m_threadPool = std::make_unique<ThreadPool>(64);
+    // max_threads threads is a healthy amount for a pool where tasks spend time in IO (Write)
+    spdlog::info("Initializing RoomManager with {} threads", FLAGS_max_threads);
+    m_threadPool = std::make_unique<ThreadPool>(FLAGS_max_threads);
 }
 
 RoomManager &RoomManager::getInstance() {

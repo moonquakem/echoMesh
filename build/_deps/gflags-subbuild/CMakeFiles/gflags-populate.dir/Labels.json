@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/moon/\u684c\u9762/code/echo/echoMesh/build/_deps/gflags-subbuild/CMakeFiles/gflags-populate"
+		},
+		{
+			"file" : "/home/moon/\u684c\u9762/code/echo/echoMesh/build/_deps/gflags-subbuild/CMakeFiles/gflags-populate.rule"
+		},
+		{
+			"file" : "/home/moon/\u684c\u9762/code/echo/echoMesh/build/_deps/gflags-subbuild/CMakeFiles/gflags-populate-complete.rule"
+		},
+		{
+			"file" : "/home/moon/\u684c\u9762/code/echo/echoMesh/build/_deps/gflags-subbuild/gflags-populate-prefix/src/gflags-populate-stamp/gflags-populate-build.rule"
+		},
+		{
+			"file" : "/home/moon/\u684c\u9762/code/echo/echoMesh/build/_deps/gflags-subbuild/gflags-populate-prefix/src/gflags-populate-stamp/gflags-populate-configure.rule"
+		},
+		{
+			"file" : "/home/moon/\u684c\u9762/code/echo/echoMesh/build/_deps/gflags-subbuild/gflags-populate-prefix/src/gflags-populate-stamp/gflags-populate-download.rule"
+		},
+		{
+			"file" : "/home/moon/\u684c\u9762/code/echo/echoMesh/build/_deps/gflags-subbuild/gflags-populate-prefix/src/gflags-populate-stamp/gflags-populate-install.rule"
+		},
+		{
+			"file" : "/home/moon/\u684c\u9762/code/echo/echoMesh/build/_deps/gflags-subbuild/gflags-populate-prefix/src/gflags-populate-stamp/gflags-populate-mkdir.rule"
+		},
+		{
+			"file" : "/home/moon/\u684c\u9762/code/echo/echoMesh/build/_deps/gflags-subbuild/gflags-populate-prefix/src/gflags-populate-stamp/gflags-populate-patch.rule"
+		},
+		{
+			"file" : "/home/moon/\u684c\u9762/code/echo/echoMesh/build/_deps/gflags-subbuild/gflags-populate-prefix/src/gflags-populate-stamp/gflags-populate-test.rule"
+		},
+		{
+			"file" : "/home/moon/\u684c\u9762/code/echo/echoMesh/build/_deps/gflags-subbuild/gflags-populate-prefix/src/gflags-populate-stamp/gflags-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"gflags-populate"
+		],
+		"name" : "gflags-populate"
+	}
+}

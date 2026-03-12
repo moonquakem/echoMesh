@@ -1308,6 +1308,20 @@ CMakeFiles/echomesh_server.dir/src/EchoMeshServiceImpl.cpp.o: /home/moon/桌面/
   /usr/include/pthread.h \
   /usr/include/sched.h \
   /usr/include/semaphore.h \
+  /usr/include/spdlog/common.h \
+  /usr/include/spdlog/details/backtracer.h \
+  /usr/include/spdlog/details/circular_q.h \
+  /usr/include/spdlog/details/log_msg.h \
+  /usr/include/spdlog/details/log_msg_buffer.h \
+  /usr/include/spdlog/details/null_mutex.h \
+  /usr/include/spdlog/details/periodic_worker.h \
+  /usr/include/spdlog/details/registry.h \
+  /usr/include/spdlog/details/synchronous_factory.h \
+  /usr/include/spdlog/fmt/fmt.h \
+  /usr/include/spdlog/logger.h \
+  /usr/include/spdlog/spdlog.h \
+  /usr/include/spdlog/tweakme.h \
+  /usr/include/spdlog/version.h \
   /usr/include/stdc-predef.h \
   /usr/include/stdint.h \
   /usr/include/stdio.h \
@@ -1431,9 +1445,13 @@ CMakeFiles/echomesh_server.dir/src/EchoMeshServiceImpl.cpp.o: /home/moon/桌面/
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h \
-  /usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h \
+  /usr/local/include/fmt/core.h \
+  /usr/local/include/fmt/format.h
 
 CMakeFiles/echomesh_server.dir/src/RoomManager.cpp.o: /home/moon/桌面/code/echo/echoMesh/src/RoomManager.cpp \
+  _deps/gflags-build/include/gflags/gflags.h \
+  _deps/gflags-build/include/gflags/gflags_declare.h \
   message.grpc.pb.h \
   message.pb.h \
   /home/moon/桌面/code/echo/echoMesh/include/RoomManager.h \
@@ -1876,6 +1894,20 @@ CMakeFiles/echomesh_server.dir/src/RoomManager.cpp.o: /home/moon/桌面/code/ech
   /usr/include/pthread.h \
   /usr/include/sched.h \
   /usr/include/semaphore.h \
+  /usr/include/spdlog/common.h \
+  /usr/include/spdlog/details/backtracer.h \
+  /usr/include/spdlog/details/circular_q.h \
+  /usr/include/spdlog/details/log_msg.h \
+  /usr/include/spdlog/details/log_msg_buffer.h \
+  /usr/include/spdlog/details/null_mutex.h \
+  /usr/include/spdlog/details/periodic_worker.h \
+  /usr/include/spdlog/details/registry.h \
+  /usr/include/spdlog/details/synchronous_factory.h \
+  /usr/include/spdlog/fmt/fmt.h \
+  /usr/include/spdlog/logger.h \
+  /usr/include/spdlog/spdlog.h \
+  /usr/include/spdlog/tweakme.h \
+  /usr/include/spdlog/version.h \
   /usr/include/stdc-predef.h \
   /usr/include/stdint.h \
   /usr/include/stdio.h \
@@ -1998,7 +2030,9 @@ CMakeFiles/echomesh_server.dir/src/RoomManager.cpp.o: /home/moon/桌面/code/ech
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h \
-  /usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h \
+  /usr/local/include/fmt/core.h \
+  /usr/local/include/fmt/format.h
 
 CMakeFiles/echomesh_server.dir/src/UserManager.cpp.o: /home/moon/桌面/code/echo/echoMesh/src/UserManager.cpp \
   message.grpc.pb.h \
@@ -2443,6 +2477,20 @@ CMakeFiles/echomesh_server.dir/src/UserManager.cpp.o: /home/moon/桌面/code/ech
   /usr/include/pthread.h \
   /usr/include/sched.h \
   /usr/include/semaphore.h \
+  /usr/include/spdlog/common.h \
+  /usr/include/spdlog/details/backtracer.h \
+  /usr/include/spdlog/details/circular_q.h \
+  /usr/include/spdlog/details/log_msg.h \
+  /usr/include/spdlog/details/log_msg_buffer.h \
+  /usr/include/spdlog/details/null_mutex.h \
+  /usr/include/spdlog/details/periodic_worker.h \
+  /usr/include/spdlog/details/registry.h \
+  /usr/include/spdlog/details/synchronous_factory.h \
+  /usr/include/spdlog/fmt/fmt.h \
+  /usr/include/spdlog/logger.h \
+  /usr/include/spdlog/spdlog.h \
+  /usr/include/spdlog/tweakme.h \
+  /usr/include/spdlog/version.h \
   /usr/include/stdc-predef.h \
   /usr/include/stdint.h \
   /usr/include/stdio.h \
@@ -2565,7 +2613,9 @@ CMakeFiles/echomesh_server.dir/src/UserManager.cpp.o: /home/moon/桌面/code/ech
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h \
-  /usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h \
+  /usr/local/include/fmt/core.h \
+  /usr/local/include/fmt/format.h
 
 CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.o: /home/moon/桌面/code/echo/echoMesh/src/audio/JitterBuffer.cpp \
   /home/moon/桌面/code/echo/echoMesh/include/audio/JitterBuffer.h \
@@ -2966,6 +3016,8 @@ CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.o: /home/moon/桌面/co
   /usr/local/include/opus/opus_types.h
 
 CMakeFiles/echomesh_server.dir/src/main.cpp.o: /home/moon/桌面/code/echo/echoMesh/src/main.cpp \
+  _deps/gflags-build/include/gflags/gflags.h \
+  _deps/gflags-build/include/gflags/gflags_declare.h \
   message.grpc.pb.h \
   message.pb.h \
   /home/moon/桌面/code/echo/echoMesh/include/EchoMeshServiceImpl.h \
@@ -3409,6 +3461,20 @@ CMakeFiles/echomesh_server.dir/src/main.cpp.o: /home/moon/桌面/code/echo/echoM
   /usr/include/pthread.h \
   /usr/include/sched.h \
   /usr/include/semaphore.h \
+  /usr/include/spdlog/common.h \
+  /usr/include/spdlog/details/backtracer.h \
+  /usr/include/spdlog/details/circular_q.h \
+  /usr/include/spdlog/details/log_msg.h \
+  /usr/include/spdlog/details/log_msg_buffer.h \
+  /usr/include/spdlog/details/null_mutex.h \
+  /usr/include/spdlog/details/periodic_worker.h \
+  /usr/include/spdlog/details/registry.h \
+  /usr/include/spdlog/details/synchronous_factory.h \
+  /usr/include/spdlog/fmt/fmt.h \
+  /usr/include/spdlog/logger.h \
+  /usr/include/spdlog/spdlog.h \
+  /usr/include/spdlog/tweakme.h \
+  /usr/include/spdlog/version.h \
   /usr/include/stdc-predef.h \
   /usr/include/stdint.h \
   /usr/include/stdio.h \
@@ -3531,7 +3597,9 @@ CMakeFiles/echomesh_server.dir/src/main.cpp.o: /home/moon/桌面/code/echo/echoM
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h \
-  /usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h \
+  /usr/local/include/fmt/core.h \
+  /usr/local/include/fmt/format.h
 
 
 /usr/local/include/opus/opus_types.h:
@@ -3570,9 +3638,35 @@ CMakeFiles/echomesh_server.dir/src/main.cpp.o: /home/moon/桌面/code/echo/echoM
 
 /home/moon/桌面/code/echo/echoMesh/src/audio/JitterBuffer.cpp:
 
+_deps/gflags-build/include/gflags/gflags_declare.h:
+
+_deps/gflags-build/include/gflags/gflags.h:
+
 /home/moon/桌面/code/echo/echoMesh/src/RoomManager.cpp:
 
+/usr/local/include/fmt/format.h:
+
+/usr/local/include/fmt/core.h:
+
 /usr/include/uuid/uuid.h:
+
+/usr/include/spdlog/tweakme.h:
+
+/usr/include/spdlog/spdlog.h:
+
+/usr/include/spdlog/logger.h:
+
+/usr/include/spdlog/fmt/fmt.h:
+
+/usr/include/spdlog/details/synchronous_factory.h:
+
+/usr/include/spdlog/details/registry.h:
+
+/usr/include/spdlog/details/log_msg.h:
+
+/usr/include/spdlog/details/circular_q.h:
+
+/usr/include/spdlog/common.h:
 
 /usr/include/semaphore.h:
 
@@ -3627,6 +3721,8 @@ CMakeFiles/echomesh_server.dir/src/main.cpp.o: /home/moon/桌面/code/echo/echoM
 /usr/include/google/protobuf/descriptor.pb.h:
 
 /usr/include/google/protobuf/arenastring.h:
+
+/usr/include/spdlog/details/periodic_worker.h:
 
 /usr/include/x86_64-linux-gnu/bits/libc-header-start.h:
 
@@ -4232,6 +4328,8 @@ message.grpc.pb.cc:
 
 /usr/include/google/protobuf/stubs/mutex.h:
 
+/usr/include/spdlog/version.h:
+
 /usr/include/x86_64-linux-gnu/bits/fp-fast.h:
 
 /usr/include/x86_64-linux-gnu/sys/single_threaded.h:
@@ -4278,6 +4376,8 @@ message.grpc.pb.cc:
 
 /usr/include/google/protobuf/stubs/port.h:
 
+/usr/include/spdlog/details/backtracer.h:
+
 /usr/include/x86_64-linux-gnu/bits/uintn-identity.h:
 
 /usr/include/google/protobuf/stubs/status.h:
@@ -4309,6 +4409,8 @@ message.grpc.pb.cc:
 /usr/include/linux/close_range.h:
 
 /usr/include/grpc/grpc.h:
+
+/usr/include/spdlog/details/null_mutex.h:
 
 /usr/include/grpc/impl/codegen/compression_types.h:
 
@@ -4577,6 +4679,8 @@ message.grpc.pb.cc:
 /usr/include/x86_64-linux-gnu/bits/sched.h:
 
 /usr/include/x86_64-linux-gnu/bits/time.h:
+
+/usr/include/spdlog/details/log_msg_buffer.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdint-least.h:
 

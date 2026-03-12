@@ -12,6 +12,25 @@ pkg_check_modules(OPUS REQUIRED opus)
 find_package(Protobuf REQUIRED)
 find_package(gRPC REQUIRED)
 
+# Fetch spdlog
+include(FetchContent)
+FetchContent_Declare(
+  spdlog
+  GIT_REPOSITORY https://github.com/gabime/spdlog.git
+  GIT_TAG        v1.12.0
+)
+FetchContent_MakeAvailable(spdlog)
+
+# Fetch gflags
+FetchContent_Declare(
+  gflags
+  GIT_REPOSITORY https://github.com/gflags/gflags.git
+  GIT_TAG        v2.2.2
+)
+set(GFLAGS_BUILD_TESTING OFF CACHE INTERNAL "")
+set(GFLAGS_BUILD_SHARED_LIBS OFF CACHE INTERNAL "")
+FetchContent_MakeAvailable(gflags)
+
 # Add include directories
 include_directories(${PROTOBUF_INCLUDE_DIRS})
 include_directories(${GRPC_INCLUDE_DIRS})
@@ -60,4 +79,6 @@ target_link_libraries(echomesh_server PRIVATE
     ${OPUS_LIBRARIES}
     uuid
     asound
+    gflags
+    spdlog::spdlog
 )

@@ -42,7 +42,7 @@ graph TD
 
 #### 核心服务 (Core)
 *   **`proto/message.proto`**: 定义了 gRPC 服务契约。包括 `Login`（登录）、`ManageRoom`（房间管理）和关键的 `StreamAudio`（双向音频流消息）。
-*   **`src/main.cpp`**: 服务端入口。负责初始化 gRPC 服务器、绑定端口并启动服务。
+*   **`src/main.cpp`**: 服务端入口。负责配置解析、日志初始化及 gRPC 服务器启动。
 *   **`src/EchoMeshServiceImpl.cpp`**: gRPC 服务的具体实现。处理流的开启、读取循环和身份验证逻辑。
 
 #### 业务管理 (Management)
@@ -90,7 +90,30 @@ make -j$(nproc)
 ```
 编译成功后，会在 `build` 目录下生成可执行文件 `echomesh_server`。
 
-### 3. 配置并运行客户端
+### 3. 运行服务端 (命令行参数)
+服务端现在支持丰富的命令行参数配置：
+
+```bash
+# 基本运行
+./build/echomesh_server
+
+# 自定义端口和日志级别
+./build/echomesh_server --port=9000 --log_level=debug
+
+# 针对极高并发进行调优
+./build/echomesh_server --max_threads=128 --max_pending_packets=10000
+```
+
+**可用标志位参考：**
+| 标志位 | 说明 | 默认值 |
+| :--- | :--- | :--- |
+| `--host` | 服务器监听地址 | `0.0.0.0` |
+| `--port` | gRPC 服务端口 | `8888` |
+| `--log_level` | 日志级别 (`trace`, `debug`, `info`, `warn`, `err`, `off`) | `info` |
+| `--max_threads` | 音频转发线程池大小 | `64` |
+| `--max_pending_packets` | 全局允许积压的最大音频包数 | `5000` |
+
+### 4. 配置并运行客户端
 我们将在单机上通过运行两个客户端来模拟语音通话。
 
 **A. 准备 Python 环境**
@@ -111,7 +134,7 @@ venv/bin/python3 client.py --list-devices
 
 *   **终端 1: 启动服务端**
     ```bash
-    ./build/echomesh_server
+    ./build/echomesh_server --log_level=debug
     ```
 
 *   **终端 2: 启动 Client A**
@@ -126,7 +149,7 @@ venv/bin/python3 client.py --list-devices
     venv/bin/python3 client.py user_B room_1
     ```
 
-### 4. 性能测试 (Load Testing)
+### 5. 性能测试 (Load Testing)
 使用压测工具验证系统稳定性：
 ```bash
 cd test_client
@@ -141,6 +164,9 @@ cd test_client
 2.  **异步化分发架构**: 
     -   **读写分离**: `Read` 循环不被 `Write` 阻塞。
     -   **写合并**: 每个连接独占排水任务，消除全局锁竞争。
-3.  **高可用设计**: 
+3.  **工业级可观测性**: 
+    -   **spdlog**: 高性能异步日志记录，支持动态级别调整。
+    -   **gflags**: 灵活的命令行配置管理，无需重新编译即可调优性能。
+4.  **高可用设计**: 
     -   **Load Shedding**: 任务积压时主动丢包，保护核心服务。
     -   **内存安全**: 完善的智能指针策略，避免高并发下的竞态与悬挂指针。

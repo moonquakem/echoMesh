@@ -7,7 +7,7 @@
 #include <arpa/inet.h>
 #include <cassert>
 #include <cerrno>
-#include <iostream>
+#include <spdlog/spdlog.h>
 #include <unistd.h>
 
 void defaultConnectionCallback(const TcpConnectionPtr &conn) {
@@ -177,7 +177,7 @@ void TcpConnection::handleClose() {
   if (userId != 0) {
     userManager.logout(userId);
     RoomManager::getInstance().userLogout(userId);
-    std::cout << "User " << userId << " logged out." << std::endl;
+    spdlog::info("User {} logged out.", userId);
   }
 
   connectionCallback_(guardThis);

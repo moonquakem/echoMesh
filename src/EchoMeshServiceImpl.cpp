@@ -1,6 +1,6 @@
 #include "EchoMeshServiceImpl.h"
-#include <iostream>
 #include <memory>
+#include <spdlog/spdlog.h>
 #include <string>
 #include <uuid/uuid.h> // For generating tokens
 
@@ -22,7 +22,7 @@ grpc::Status EchoMeshServiceImpl::Login(
     const echomesh::LoginRequest* request, 
     echomesh::LoginResponse* response) {
     
-    std::cout << "RPC: Login for user '" << request->username() << "'" << std::endl;
+    spdlog::info("RPC: Login for user '{}'", request->username());
 
     // In a real app, you'd verify the password. Here we just log in.
     std::string token = generate_token();
@@ -53,7 +53,7 @@ grpc::Status EchoMeshServiceImpl::ManageRoom(
         return grpc::Status(grpc::StatusCode::UNAUTHENTICATED, response->message());
     }
 
-    std::cout << "RPC: ManageRoom for user " << userId << " in room '" << request->room_id() << "'" << std::endl;
+    spdlog::info("RPC: ManageRoom for user {} in room '{}'", userId, request->room_id());
 
     switch (request->action_type()) {
         case echomesh::RA_CREATE_OR_JOIN:
@@ -63,18 +63,18 @@ grpc::Status EchoMeshServiceImpl::ManageRoom(
                 
                 response->set_status_code(echomesh::SC_OK);
                 response->set_message("Joined room successfully.");
-                std::cout << "User " << userId << " joined room " << request->room_id() << std::endl;
+                spdlog::info("User {} joined room {}", userId, request->room_id());
             } else {
                 response->set_status_code(echomesh::SC_ERROR);
                 response->set_message("Failed to join room.");
-                std::cout << "User " << userId << " failed to join room " << request->room_id() << std::endl;
+                spdlog::info("User {} failed to join room {}", userId, request->room_id());
             }
             break;
         case echomesh::RA_LEAVE:
             m_roomManager.leaveRoom(request->room_id(), userId);
             response->set_status_code(echomesh::SC_OK);
             response->set_message("Left room successfully.");
-            std::cout << "User " << userId << " left room " << request->room_id() << std::endl;
+            spdlog::info("User {} left room {}", userId, request->room_id());
             break;
         default:
             response->set_status_code(echomesh::SC_ERROR);
@@ -99,7 +99,7 @@ grpc::Status EchoMeshServiceImpl::StreamAudio(
         return grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "User is not in a room.");
     }
     
-    std::cout << "RPC: StreamAudio started for user " << userId << " in room " << roomId << std::endl;
+    spdlog::info("RPC: StreamAudio started for user {} in room {}", userId, roomId);
 
     // This is the most complex part. We need to register this user's stream
     // with the RoomManager so other users can send audio to it.
@@ -119,7 +119,7 @@ grpc::Status EchoMeshServiceImpl::StreamAudio(
     }
 
     // The stream has ended (client disconnected).
-    std::cout << "RPC: StreamAudio ended for user " << userId << std::endl;
+    spdlog::info("RPC: StreamAudio ended for user {}", userId);
     m_roomManager.removeAudioStream(roomId, userId);
 
     return grpc::Status::OK;
@@ -131,7 +131,7 @@ UserId EchoMeshServiceImpl::getUserIdFromContext(grpc::ServerContext* context) {
     auto token_iter = metadata.find("session-token");
 
     if (token_iter == metadata.end()) {
-        std::cerr << "Authentication Error: No session-token in metadata." << std::endl;
+        spdlog::error("Authentication Error: No session-token in metadata.");
         return 0; // Invalid UserId
     }
 
@@ -139,7 +139,7 @@ UserId EchoMeshServiceImpl::getUserIdFromContext(grpc::ServerContext* context) {
     UserId userId = m_userManager.getUserIdByToken(token);
 
     if (userId == 0) {
-        std::cerr << "Authentication Error: Invalid token '" << token << "'" << std::endl;
+        spdlog::error("Authentication Error: Invalid token '{}'", token);
     }
 
     return userId;

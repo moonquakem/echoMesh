@@ -1,5 +1,5 @@
 #include "MsgDispatcher.h"
-#include <iostream>
+#include <spdlog/spdlog.h>
 
 MsgDispatcher &MsgDispatcher::getInstance() {
   static MsgDispatcher instance;
@@ -25,6 +25,6 @@ void MsgDispatcher::dispatch(const ConnectionPtr &conn,
   if (handler) {
     handler(conn, msg);
   } else {
-    std::cerr << "No handler for message type: " << msg.type() << std::endl;
+    spdlog::error("No handler for message type: {}", static_cast<int>(msg.type()));
   }
 }

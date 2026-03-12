@@ -6,17 +6,17 @@
 #include "MsgDispatcher.h" 
 #include <cassert>
 #include <functional>
-#include <iostream>
+#include <spdlog/spdlog.h>
 
 namespace {
 void defaultConnectionCallback(const TcpConnectionPtr &conn) {
   if (conn->connected()) {
-    std::cout << "New connection " << conn->name() << " from "
-              << conn->peerAddress().sin_addr.s_addr << std::endl;
+    spdlog::info("New connection {} from {}", conn->name(), conn->peerAddress().sin_addr.s_addr);
   } else {
-    std::cout << "Connection " << conn->name() << " is down." << std::endl;
+    spdlog::info("Connection {} is down.", conn->name());
   }
 }
+...
 
 void defaultMessageCallback(const TcpConnectionPtr &conn, Buffer *buffer) {
     while (buffer->readableBytes() >= 4) {

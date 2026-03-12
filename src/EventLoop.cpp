@@ -5,7 +5,8 @@
 #include <sys/eventfd.h>
 #include <unistd.h>
 #include <cassert>
-#include <iostream>
+#include <spdlog/spdlog.h>
+#include <sstream>
 
 namespace {
     // A thread-local pointer to the EventLoop for the current thread.
@@ -113,9 +114,11 @@ void EventLoop::removeChannel(Channel* channel) {
 
 void EventLoop::abortNotInLoopThread() {
     // Log error and abort
-    std::cerr << "EventLoop::abortNotInLoopThread() - EventLoop " << this
-              << " was created in threadId_ = " << threadId_
-              << ", current thread id = " << std::this_thread::get_id() << std::endl;
+    std::stringstream ss_created, ss_current;
+    ss_created << threadId_;
+    ss_current << std::this_thread::get_id();
+    spdlog::error("EventLoop::abortNotInLoopThread() - EventLoop {} was created in threadId_ = {}, current thread id = {}",
+                  (void*)this, ss_created.str(), ss_current.str());
     abort();
 }
 

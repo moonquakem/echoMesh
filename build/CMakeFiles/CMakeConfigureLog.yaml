@@ -562,3 +562,280 @@ events:
         
       exitCode: 0
 ...
+
+---
+events:
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake-3.28/Modules/CheckIncludeFileCXX.cmake:89 (try_compile)"
+      - "build/_deps/gflags-src/CMakeLists.txt:252 (check_include_file_cxx)"
+    checks:
+      - "Looking for C++ include unistd.h"
+    directories:
+      source: "/home/moon/\u684c\u9762/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-yiCy5L"
+      binary: "/home/moon/\u684c\u9762/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-yiCy5L"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_MODULE_PATH: "/usr/lib/x86_64-linux-gnu/cmake/grpc/modules"
+    buildResult:
+      variable: "HAVE_UNISTD_H"
+      cached: true
+      stdout: |
+        Change Dir: '/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-yiCy5L'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_e05cf/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_e05cf.dir/build.make CMakeFiles/cmTC_e05cf.dir/build
+        gmake[1]: 进入目录“/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-yiCy5L”
+        Building CXX object CMakeFiles/cmTC_e05cf.dir/CheckIncludeFile.cxx.o
+        /usr/bin/c++    -o CMakeFiles/cmTC_e05cf.dir/CheckIncludeFile.cxx.o -c /home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-yiCy5L/CheckIncludeFile.cxx
+        Linking CXX executable cmTC_e05cf
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e05cf.dir/link.txt --verbose=1
+        /usr/bin/c++ -rdynamic CMakeFiles/cmTC_e05cf.dir/CheckIncludeFile.cxx.o -o cmTC_e05cf 
+        gmake[1]: 离开目录“/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-yiCy5L”
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake-3.28/Modules/CheckIncludeFileCXX.cmake:89 (try_compile)"
+      - "build/_deps/gflags-src/CMakeLists.txt:252 (check_include_file_cxx)"
+    checks:
+      - "Looking for C++ include stdint.h"
+    directories:
+      source: "/home/moon/\u684c\u9762/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-9BYKhq"
+      binary: "/home/moon/\u684c\u9762/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-9BYKhq"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_MODULE_PATH: "/usr/lib/x86_64-linux-gnu/cmake/grpc/modules"
+    buildResult:
+      variable: "HAVE_STDINT_H"
+      cached: true
+      stdout: |
+        Change Dir: '/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-9BYKhq'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_ddf4a/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_ddf4a.dir/build.make CMakeFiles/cmTC_ddf4a.dir/build
+        gmake[1]: 进入目录“/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-9BYKhq”
+        Building CXX object CMakeFiles/cmTC_ddf4a.dir/CheckIncludeFile.cxx.o
+        /usr/bin/c++    -o CMakeFiles/cmTC_ddf4a.dir/CheckIncludeFile.cxx.o -c /home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-9BYKhq/CheckIncludeFile.cxx
+        Linking CXX executable cmTC_ddf4a
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ddf4a.dir/link.txt --verbose=1
+        /usr/bin/c++ -rdynamic CMakeFiles/cmTC_ddf4a.dir/CheckIncludeFile.cxx.o -o cmTC_ddf4a 
+        gmake[1]: 离开目录“/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-9BYKhq”
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake-3.28/Modules/CheckIncludeFileCXX.cmake:89 (try_compile)"
+      - "build/_deps/gflags-src/CMakeLists.txt:252 (check_include_file_cxx)"
+    checks:
+      - "Looking for C++ include inttypes.h"
+    directories:
+      source: "/home/moon/\u684c\u9762/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-wqilfr"
+      binary: "/home/moon/\u684c\u9762/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-wqilfr"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_MODULE_PATH: "/usr/lib/x86_64-linux-gnu/cmake/grpc/modules"
+    buildResult:
+      variable: "HAVE_INTTYPES_H"
+      cached: true
+      stdout: |
+        Change Dir: '/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-wqilfr'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_52a1e/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_52a1e.dir/build.make CMakeFiles/cmTC_52a1e.dir/build
+        gmake[1]: 进入目录“/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-wqilfr”
+        Building CXX object CMakeFiles/cmTC_52a1e.dir/CheckIncludeFile.cxx.o
+        /usr/bin/c++    -o CMakeFiles/cmTC_52a1e.dir/CheckIncludeFile.cxx.o -c /home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-wqilfr/CheckIncludeFile.cxx
+        Linking CXX executable cmTC_52a1e
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_52a1e.dir/link.txt --verbose=1
+        /usr/bin/c++ -rdynamic CMakeFiles/cmTC_52a1e.dir/CheckIncludeFile.cxx.o -o cmTC_52a1e 
+        gmake[1]: 离开目录“/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-wqilfr”
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake-3.28/Modules/CheckIncludeFileCXX.cmake:89 (try_compile)"
+      - "build/_deps/gflags-src/CMakeLists.txt:252 (check_include_file_cxx)"
+    checks:
+      - "Looking for C++ include sys/types.h"
+    directories:
+      source: "/home/moon/\u684c\u9762/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-r9dy6Z"
+      binary: "/home/moon/\u684c\u9762/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-r9dy6Z"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_MODULE_PATH: "/usr/lib/x86_64-linux-gnu/cmake/grpc/modules"
+    buildResult:
+      variable: "HAVE_SYS_TYPES_H"
+      cached: true
+      stdout: |
+        Change Dir: '/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-r9dy6Z'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_efd59/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_efd59.dir/build.make CMakeFiles/cmTC_efd59.dir/build
+        gmake[1]: 进入目录“/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-r9dy6Z”
+        Building CXX object CMakeFiles/cmTC_efd59.dir/CheckIncludeFile.cxx.o
+        /usr/bin/c++    -o CMakeFiles/cmTC_efd59.dir/CheckIncludeFile.cxx.o -c /home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-r9dy6Z/CheckIncludeFile.cxx
+        Linking CXX executable cmTC_efd59
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_efd59.dir/link.txt --verbose=1
+        /usr/bin/c++ -rdynamic CMakeFiles/cmTC_efd59.dir/CheckIncludeFile.cxx.o -o cmTC_efd59 
+        gmake[1]: 离开目录“/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-r9dy6Z”
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake-3.28/Modules/CheckIncludeFileCXX.cmake:89 (try_compile)"
+      - "build/_deps/gflags-src/CMakeLists.txt:252 (check_include_file_cxx)"
+    checks:
+      - "Looking for C++ include sys/stat.h"
+    directories:
+      source: "/home/moon/\u684c\u9762/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-ANK92u"
+      binary: "/home/moon/\u684c\u9762/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-ANK92u"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_MODULE_PATH: "/usr/lib/x86_64-linux-gnu/cmake/grpc/modules"
+    buildResult:
+      variable: "HAVE_SYS_STAT_H"
+      cached: true
+      stdout: |
+        Change Dir: '/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-ANK92u'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_453b3/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_453b3.dir/build.make CMakeFiles/cmTC_453b3.dir/build
+        gmake[1]: 进入目录“/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-ANK92u”
+        Building CXX object CMakeFiles/cmTC_453b3.dir/CheckIncludeFile.cxx.o
+        /usr/bin/c++    -o CMakeFiles/cmTC_453b3.dir/CheckIncludeFile.cxx.o -c /home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-ANK92u/CheckIncludeFile.cxx
+        Linking CXX executable cmTC_453b3
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_453b3.dir/link.txt --verbose=1
+        /usr/bin/c++ -rdynamic CMakeFiles/cmTC_453b3.dir/CheckIncludeFile.cxx.o -o cmTC_453b3 
+        gmake[1]: 离开目录“/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-ANK92u”
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake-3.28/Modules/CheckIncludeFileCXX.cmake:89 (try_compile)"
+      - "build/_deps/gflags-src/CMakeLists.txt:252 (check_include_file_cxx)"
+    checks:
+      - "Looking for C++ include fnmatch.h"
+    directories:
+      source: "/home/moon/\u684c\u9762/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-wMQ85k"
+      binary: "/home/moon/\u684c\u9762/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-wMQ85k"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_MODULE_PATH: "/usr/lib/x86_64-linux-gnu/cmake/grpc/modules"
+    buildResult:
+      variable: "HAVE_FNMATCH_H"
+      cached: true
+      stdout: |
+        Change Dir: '/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-wMQ85k'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_89014/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_89014.dir/build.make CMakeFiles/cmTC_89014.dir/build
+        gmake[1]: 进入目录“/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-wMQ85k”
+        Building CXX object CMakeFiles/cmTC_89014.dir/CheckIncludeFile.cxx.o
+        /usr/bin/c++    -o CMakeFiles/cmTC_89014.dir/CheckIncludeFile.cxx.o -c /home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-wMQ85k/CheckIncludeFile.cxx
+        Linking CXX executable cmTC_89014
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_89014.dir/link.txt --verbose=1
+        /usr/bin/c++ -rdynamic CMakeFiles/cmTC_89014.dir/CheckIncludeFile.cxx.o -o cmTC_89014 
+        gmake[1]: 离开目录“/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-wMQ85k”
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake-3.28/Modules/CheckIncludeFileCXX.cmake:89 (try_compile)"
+      - "/usr/share/cmake-3.28/Modules/CheckTypeSize.cmake:260 (check_include_file_cxx)"
+      - "build/_deps/gflags-src/CMakeLists.txt:273 (check_type_size)"
+    checks:
+      - "Looking for C++ include stddef.h"
+    directories:
+      source: "/home/moon/\u684c\u9762/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-w0Y7ez"
+      binary: "/home/moon/\u684c\u9762/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-w0Y7ez"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_MODULE_PATH: "/usr/lib/x86_64-linux-gnu/cmake/grpc/modules"
+    buildResult:
+      variable: "HAVE_STDDEF_H"
+      cached: true
+      stdout: |
+        Change Dir: '/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-w0Y7ez'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_1068e/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_1068e.dir/build.make CMakeFiles/cmTC_1068e.dir/build
+        gmake[1]: 进入目录“/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-w0Y7ez”
+        Building CXX object CMakeFiles/cmTC_1068e.dir/CheckIncludeFile.cxx.o
+        /usr/bin/c++    -o CMakeFiles/cmTC_1068e.dir/CheckIncludeFile.cxx.o -c /home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-w0Y7ez/CheckIncludeFile.cxx
+        Linking CXX executable cmTC_1068e
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1068e.dir/link.txt --verbose=1
+        /usr/bin/c++ -rdynamic CMakeFiles/cmTC_1068e.dir/CheckIncludeFile.cxx.o -o cmTC_1068e 
+        gmake[1]: 离开目录“/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-w0Y7ez”
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake-3.28/Modules/CheckTypeSize.cmake:146 (try_compile)"
+      - "/usr/share/cmake-3.28/Modules/CheckTypeSize.cmake:271 (__check_type_size_impl)"
+      - "build/_deps/gflags-src/CMakeLists.txt:273 (check_type_size)"
+    checks:
+      - "Check size of uint32_t"
+    directories:
+      source: "/home/moon/\u684c\u9762/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-uVTpDj"
+      binary: "/home/moon/\u684c\u9762/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-uVTpDj"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_MODULE_PATH: "/usr/lib/x86_64-linux-gnu/cmake/grpc/modules"
+    buildResult:
+      variable: "HAVE_uint32_t"
+      cached: true
+      stdout: |
+        Change Dir: '/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-uVTpDj'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_056f9/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_056f9.dir/build.make CMakeFiles/cmTC_056f9.dir/build
+        gmake[1]: 进入目录“/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-uVTpDj”
+        Building CXX object CMakeFiles/cmTC_056f9.dir/uint32_t.cpp.o
+        /usr/bin/c++    -o CMakeFiles/cmTC_056f9.dir/uint32_t.cpp.o -c /home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-uVTpDj/uint32_t.cpp
+        Linking CXX executable cmTC_056f9
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_056f9.dir/link.txt --verbose=1
+        /usr/bin/c++ -rdynamic CMakeFiles/cmTC_056f9.dir/uint32_t.cpp.o -o cmTC_056f9 
+        gmake[1]: 离开目录“/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-uVTpDj”
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake-3.28/Modules/CheckSymbolExists.cmake:140 (try_compile)"
+      - "/usr/share/cmake-3.28/Modules/CheckCXXSymbolExists.cmake:72 (__CHECK_SYMBOL_EXISTS_IMPL)"
+      - "build/_deps/gflags-src/CMakeLists.txt:308 (check_cxx_symbol_exists)"
+    checks:
+      - "Looking for strtoll"
+    directories:
+      source: "/home/moon/\u684c\u9762/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-v5aF6i"
+      binary: "/home/moon/\u684c\u9762/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-v5aF6i"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_MODULE_PATH: "/usr/lib/x86_64-linux-gnu/cmake/grpc/modules"
+    buildResult:
+      variable: "HAVE_STRTOLL"
+      cached: true
+      stdout: |
+        Change Dir: '/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-v5aF6i'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_3e65c/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_3e65c.dir/build.make CMakeFiles/cmTC_3e65c.dir/build
+        gmake[1]: 进入目录“/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-v5aF6i”
+        Building CXX object CMakeFiles/cmTC_3e65c.dir/CheckSymbolExists.cxx.o
+        /usr/bin/c++    -o CMakeFiles/cmTC_3e65c.dir/CheckSymbolExists.cxx.o -c /home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-v5aF6i/CheckSymbolExists.cxx
+        Linking CXX executable cmTC_3e65c
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3e65c.dir/link.txt --verbose=1
+        /usr/bin/c++ -rdynamic CMakeFiles/cmTC_3e65c.dir/CheckSymbolExists.cxx.o -o cmTC_3e65c 
+        gmake[1]: 离开目录“/home/moon/桌面/code/echo/echoMesh/build/CMakeFiles/CMakeScratch/TryCompile-v5aF6i”
+        
+      exitCode: 0
+...
