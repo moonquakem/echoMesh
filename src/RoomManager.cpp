@@ -5,6 +5,8 @@
 #include <atomic>
 #include <gflags/gflags.h>
 #include <spdlog/spdlog.h>
+#include <grpcpp/support/proto_buffer_writer.h>
+#include <grpcpp/support/proto_buffer_reader.h>
 
 DECLARE_int32(max_threads);
 DECLARE_int32(max_pending_packets);
@@ -14,27 +16,25 @@ std::atomic<int> g_pending_packets(0);
 
 // --- StreamWrapper Implementation ---
 
-bool StreamWrapper::enqueue(std::shared_ptr<const echomesh::VoicePacket> packet, ThreadPool& pool) {
+bool StreamWrapper::enqueue(std::shared_ptr<const grpc::ByteBuffer> buffer, ThreadPool& pool) {
     {
         std::lock_guard<std::mutex> lock(mutex_);
         if (closed_) return false;
 
-        // OPTIMIZATION: Increased individual queue size to 200 packets (approx 4s of audio)
-        // This helps absorb temporary network spikes or scheduler delays.
+        // Increased individual queue size to 200 packets
         if (write_queue_.size() > 200) {
             write_queue_.pop();
             g_pending_packets--;
             static uint64_t stream_drop_count = 0;
             if (stream_drop_count++ % 100 == 0) {
-                spdlog::warn("Stream queue full, dropping oldest packet (sampled 1/100)");
+                spdlog::warn("Stream queue full, dropping oldest pre-serialized packet (sampled 1/100)");
             }
         }
 
-        write_queue_.push(packet);
+        write_queue_.push(buffer);
         g_pending_packets++;
     }
 
-    // Only enqueue a drain task if one isn't already running
     bool expected = false;
     if (is_draining_.compare_exchange_strong(expected, true)) {
         auto self = shared_from_this();
@@ -47,32 +47,32 @@ bool StreamWrapper::enqueue(std::shared_ptr<const echomesh::VoicePacket> packet,
 
 void StreamWrapper::drain() {
     while (true) {
-        std::shared_ptr<const echomesh::VoicePacket> packet;
+        std::shared_ptr<const grpc::ByteBuffer> buffer;
         AudioStream* current_stream = nullptr;
 
         {
             std::lock_guard<std::mutex> lock(mutex_);
             if (closed_ || write_queue_.empty()) {
                 is_draining_ = false;
-                close_cv_.notify_all(); // Notify close() that we are done
+                close_cv_.notify_all();
                 return;
             }
-            packet = std::move(write_queue_.front());
+            buffer = std::move(write_queue_.front());
             write_queue_.pop();
             g_pending_packets--;
             current_stream = stream_;
         }
 
-        if (current_stream && packet) {
-            // Write takes a const reference, so we can pass the shared object directly.
-            // This still involves internal gRPC serialization, but we've eliminated the deep copy in the queue.
-            if (!current_stream->Write(*packet)) {
+        if (current_stream && buffer) {
+            // Write the pre-serialized ByteBuffer directly. 
+            // This bypasses the serialization step in gRPC for this stream.
+            if (!current_stream->Write(*buffer, grpc::WriteOptions())) {
                 std::lock_guard<std::mutex> lock(mutex_);
-                closed_ = true; // Mark as closed if write fails
+                closed_ = true;
                 stream_ = nullptr;
                 is_draining_ = false;
                 close_cv_.notify_all();
-                spdlog::error("gRPC Write failed, closing stream");
+                spdlog::error("gRPC Write (ByteBuffer) failed, closing stream");
                 return;
             }
         }
@@ -116,7 +116,6 @@ void Room::removeAudioStream(UserId userId) {
 }
 
 void Room::broadcastAudio(UserId senderId, const echomesh::VoicePacket& packet, ThreadPool& pool) {
-    // Global protection: if total pending packets exceed a threshold, drop this broadcast
     if (g_pending_packets.load() > FLAGS_max_pending_packets) {
         static uint64_t drop_count = 0;
         if (drop_count++ % 100 == 0) {
@@ -126,9 +125,18 @@ void Room::broadcastAudio(UserId senderId, const echomesh::VoicePacket& packet, 
         return;
     }
 
-    // MEMORY OPTIMIZATION: Wrap the packet in a shared_ptr once.
-    // All subsequent enqueues will only copy the pointer, not the entire audio payload.
-    auto shared_packet = std::make_shared<const echomesh::VoicePacket>(packet);
+    // PRE-SERIALIZATION OPTIMIZATION:
+    // Serialize the packet ONCE into a ByteBuffer.
+    auto shared_buffer = std::make_shared<grpc::ByteBuffer>();
+    bool own_buffer = false;
+    grpc::Status status = grpc::GenericSerialize<grpc::ProtoBufferWriter, echomesh::VoicePacket>(
+        packet, shared_buffer.get(), &own_buffer
+    );
+
+    if (!status.ok()) {
+        spdlog::error("Failed to pre-serialize VoicePacket: {}", status.error_message());
+        return;
+    }
 
     std::vector<std::shared_ptr<StreamWrapper>> targets;
     {
@@ -140,8 +148,11 @@ void Room::broadcastAudio(UserId senderId, const echomesh::VoicePacket& packet, 
         }
     }
 
+    // Push the pre-serialized buffer to all targets.
+    // Each targets[i]->Write(*shared_buffer) will now be a simple bit-copy 
+    // instead of a full protobuf serialization.
     for (auto& stream_wrapper : targets) {
-        stream_wrapper->enqueue(shared_packet, pool);
+        stream_wrapper->enqueue(shared_buffer, pool);
     }
 }
 
@@ -149,7 +160,6 @@ void Room::broadcastAudio(UserId senderId, const echomesh::VoicePacket& packet, 
 // --- RoomManager Implementation ---
 
 RoomManager::RoomManager() {
-    // 256 threads is a healthy amount for a pool where tasks spend time in blocking IO (Write)
     spdlog::info("Initializing RoomManager with {} threads", FLAGS_max_threads);
     m_threadPool = std::make_unique<ThreadPool>(FLAGS_max_threads);
 }

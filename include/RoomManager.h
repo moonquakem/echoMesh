@@ -20,8 +20,8 @@
 using UserId = int64_t;
 using RoomId = std::string;
 
-// A type alias for the bidirectional audio stream
-using AudioStream = grpc::ServerReaderWriter<echomesh::VoicePacket, echomesh::VoicePacket>;
+// OPTIMIZATION: Use grpc::ByteBuffer directly to support pre-serialization
+using AudioStream = grpc::ServerReaderWriter<grpc::ByteBuffer, grpc::ByteBuffer>;
 
 class ThreadPool;
 
@@ -30,19 +30,16 @@ class StreamWrapper : public std::enable_shared_from_this<StreamWrapper> {
 public:
     StreamWrapper(AudioStream* stream) : stream_(stream), closed_(false), is_draining_(false) {}
     
-    bool enqueue(std::shared_ptr<const echomesh::VoicePacket> packet, ThreadPool& pool);
+    // Now enqueues pre-serialized ByteBuffers
+    bool enqueue(std::shared_ptr<const grpc::ByteBuffer> buffer, ThreadPool& pool);
     
-    // Updated close to wait for active drainers
     void close() {
         std::unique_lock<std::mutex> lock(mutex_);
         closed_ = true;
-        
-        // Wait until any active drain task finishes its current Write and exits
-        // This ensures the stream_ pointer isn't used after this function returns
         close_cv_.wait(lock, [this] { return !is_draining_; });
         
         stream_ = nullptr;
-        std::queue<std::shared_ptr<const echomesh::VoicePacket>> empty;
+        std::queue<std::shared_ptr<const grpc::ByteBuffer>> empty;
         std::swap(write_queue_, empty);
     }
 
@@ -51,13 +48,13 @@ private:
 
     AudioStream* stream_;
     bool closed_;
-    std::queue<std::shared_ptr<const echomesh::VoicePacket>> write_queue_;
+    std::queue<std::shared_ptr<const grpc::ByteBuffer>> write_queue_;
     std::mutex mutex_;
     std::condition_variable close_cv_;
     std::atomic<bool> is_draining_;
 };
 
-// A simple thread pool for handling asynchronous tasks
+// ThreadPool remains unchanged...
 class ThreadPool {
 public:
     ThreadPool(size_t threads) : stop(false) {
@@ -110,7 +107,6 @@ public:
   void removeUser(UserId userId);
   std::set<UserId> getUsers() const;
 
-  // Stream management
   void addAudioStream(UserId userId, AudioStream* stream);
   void removeAudioStream(UserId userId);
   void broadcastAudio(UserId senderId, const echomesh::VoicePacket& packet, ThreadPool& pool);

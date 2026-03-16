@@ -2,7 +2,9 @@
 #include <memory>
 #include <spdlog/spdlog.h>
 #include <string>
-#include <uuid/uuid.h> // For generating tokens
+#include <uuid/uuid.h> 
+#include <grpcpp/support/proto_buffer_writer.h>
+#include <grpcpp/support/proto_buffer_reader.h>
 
 // Helper to generate a random session token
 std::string generate_token() {
@@ -24,7 +26,6 @@ grpc::Status EchoMeshServiceImpl::Login(
     
     spdlog::info("RPC: Login for user '{}'", request->username());
 
-    // In a real app, you'd verify the password. Here we just log in.
     std::string token = generate_token();
     UserId userId = m_userManager.login(request->username(), token);
 
@@ -58,23 +59,18 @@ grpc::Status EchoMeshServiceImpl::ManageRoom(
     switch (request->action_type()) {
         case echomesh::RA_CREATE_OR_JOIN:
             if (m_roomManager.joinRoom(request->room_id(), userId)) {
-                // This was the missing piece: update the UserManager as well.
                 m_userManager.joinRoom(userId, request->room_id());
-                
                 response->set_status_code(echomesh::SC_OK);
                 response->set_message("Joined room successfully.");
-                spdlog::info("User {} joined room {}", userId, request->room_id());
             } else {
                 response->set_status_code(echomesh::SC_ERROR);
                 response->set_message("Failed to join room.");
-                spdlog::info("User {} failed to join room {}", userId, request->room_id());
             }
             break;
         case echomesh::RA_LEAVE:
             m_roomManager.leaveRoom(request->room_id(), userId);
             response->set_status_code(echomesh::SC_OK);
             response->set_message("Left room successfully.");
-            spdlog::info("User {} left room {}", userId, request->room_id());
             break;
         default:
             response->set_status_code(echomesh::SC_ERROR);
@@ -101,24 +97,32 @@ grpc::Status EchoMeshServiceImpl::StreamAudio(
     
     spdlog::info("RPC: StreamAudio started for user {} in room {}", userId, roomId);
 
-    // This is the most complex part. We need to register this user's stream
-    // with the RoomManager so other users can send audio to it.
-    // And we need a loop to read this user's audio and forward it.
-    
-    // For now, this is a placeholder implementation.
-    // In the real implementation, we will modify RoomManager to handle the streams.
+    // HACK: Cast the typed stream to a ByteBuffer stream.
+    // This works in gRPC C++ because the wire format is determined by the serialized bytes.
+    // This allows us to use pre-serialized buffers for broadcast.
+    auto byte_stream = reinterpret_cast<AudioStream*>(stream);
 
-    m_roomManager.addAudioStream(roomId, userId, stream);
+    m_roomManager.addAudioStream(roomId, userId, byte_stream);
 
-    echomesh::VoicePacket received_packet;
-    while (stream->Read(&received_packet)) {
-        // The user sent us a packet. We need to forward it.
-        // We'll add the user ID to the packet before forwarding.
-        received_packet.set_user_id(userId);
-        m_roomManager.broadcastAudio(roomId, userId, received_packet);
+    grpc::ByteBuffer buffer;
+    while (byte_stream->Read(&buffer)) {
+        echomesh::VoicePacket packet;
+        bool own_buffer = false;
+        
+        // Deserialize the received buffer into a Packet
+        grpc::Status status = grpc::GenericDeserialize<grpc::ProtoBufferReader, echomesh::VoicePacket>(
+            &buffer, &packet
+        );
+
+        if (status.ok()) {
+            packet.set_user_id(userId);
+            m_roomManager.broadcastAudio(roomId, userId, packet);
+        } else {
+            spdlog::error("Failed to deserialize VoicePacket from user {}", userId);
+        }
+        buffer.Clear();
     }
 
-    // The stream has ended (client disconnected).
     spdlog::info("RPC: StreamAudio ended for user {}", userId);
     m_roomManager.removeAudioStream(roomId, userId);
 
@@ -132,7 +136,7 @@ UserId EchoMeshServiceImpl::getUserIdFromContext(grpc::ServerContext* context) {
 
     if (token_iter == metadata.end()) {
         spdlog::error("Authentication Error: No session-token in metadata.");
-        return 0; // Invalid UserId
+        return 0; 
     }
 
     std::string token(token_iter->second.data(), token_iter->second.length());
