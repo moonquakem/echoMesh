@@ -62,8 +62,6 @@ set(SOURCE_FILES
     src/UserManager.cpp
     src/RoomManager.cpp
     src/EchoMeshServiceImpl.cpp
-    src/audio/OpusWrapper.cpp
-    src/audio/JitterBuffer.cpp
     ${PROTO_CC}
     ${GRPC_CC}
 )

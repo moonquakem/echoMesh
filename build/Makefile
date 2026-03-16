@@ -333,54 +333,6 @@ src/UserManager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/UserManager.cpp.s
 .PHONY : src/UserManager.cpp.s
 
-src/audio/JitterBuffer.o: src/audio/JitterBuffer.cpp.o
-.PHONY : src/audio/JitterBuffer.o
-
-# target to build an object file
-src/audio/JitterBuffer.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.o
-.PHONY : src/audio/JitterBuffer.cpp.o
-
-src/audio/JitterBuffer.i: src/audio/JitterBuffer.cpp.i
-.PHONY : src/audio/JitterBuffer.i
-
-# target to preprocess a source file
-src/audio/JitterBuffer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.i
-.PHONY : src/audio/JitterBuffer.cpp.i
-
-src/audio/JitterBuffer.s: src/audio/JitterBuffer.cpp.s
-.PHONY : src/audio/JitterBuffer.s
-
-# target to generate assembly for a file
-src/audio/JitterBuffer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.s
-.PHONY : src/audio/JitterBuffer.cpp.s
-
-src/audio/OpusWrapper.o: src/audio/OpusWrapper.cpp.o
-.PHONY : src/audio/OpusWrapper.o
-
-# target to build an object file
-src/audio/OpusWrapper.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.o
-.PHONY : src/audio/OpusWrapper.cpp.o
-
-src/audio/OpusWrapper.i: src/audio/OpusWrapper.cpp.i
-.PHONY : src/audio/OpusWrapper.i
-
-# target to preprocess a source file
-src/audio/OpusWrapper.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.i
-.PHONY : src/audio/OpusWrapper.cpp.i
-
-src/audio/OpusWrapper.s: src/audio/OpusWrapper.cpp.s
-.PHONY : src/audio/OpusWrapper.s
-
-# target to generate assembly for a file
-src/audio/OpusWrapper.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.s
-.PHONY : src/audio/OpusWrapper.cpp.s
-
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -436,12 +388,6 @@ help:
 	@echo "... src/UserManager.o"
 	@echo "... src/UserManager.i"
 	@echo "... src/UserManager.s"
-	@echo "... src/audio/JitterBuffer.o"
-	@echo "... src/audio/JitterBuffer.i"
-	@echo "... src/audio/JitterBuffer.s"
-	@echo "... src/audio/OpusWrapper.o"
-	@echo "... src/audio/OpusWrapper.i"
-	@echo "... src/audio/OpusWrapper.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

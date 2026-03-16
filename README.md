@@ -52,11 +52,7 @@ graph TD
 #### 性能引擎 (Performance Engine)
 *   **`include/RoomManager.h` (ThreadPool & StreamWrapper)**: 
     *   `ThreadPool`: 自定义高性能线程池，处理海量并发写任务。
-    *   `StreamWrapper`: **核心亮点**。为每个流实现私有队列和 Actor 式异步写逻辑，彻底解决了锁竞争和背压问题。
-
-#### 音频处理 (Audio)
-*   **`src/audio/OpusWrapper.cpp`**: Opus 编解码器的 C++ 封装，实现高效音频压缩。
-*   **`src/audio/JitterBuffer.cpp`**: 抖动缓冲区实现，平滑网络抖动带来的包乱序和延迟。
+    *   `StreamWrapper`: **核心亮点**。为每个流实现私有队列 and Actor 式异步写逻辑，彻底解决了锁竞争和背压问题。
 
 #### 测试工具 (Testing)
 *   **`test_client/client.py`**: 功能客户端。支持麦克风采集、Opus 编码、gRPC 传输和音频回放。

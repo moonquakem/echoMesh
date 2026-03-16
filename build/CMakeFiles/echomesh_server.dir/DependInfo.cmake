@@ -13,8 +13,6 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/moon/桌面/code/echo/echoMesh/src/EchoMeshServiceImpl.cpp" "CMakeFiles/echomesh_server.dir/src/EchoMeshServiceImpl.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/EchoMeshServiceImpl.cpp.o.d"
   "/home/moon/桌面/code/echo/echoMesh/src/RoomManager.cpp" "CMakeFiles/echomesh_server.dir/src/RoomManager.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/RoomManager.cpp.o.d"
   "/home/moon/桌面/code/echo/echoMesh/src/UserManager.cpp" "CMakeFiles/echomesh_server.dir/src/UserManager.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/UserManager.cpp.o.d"
-  "/home/moon/桌面/code/echo/echoMesh/src/audio/JitterBuffer.cpp" "CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/audio/JitterBuffer.cpp.o.d"
-  "/home/moon/桌面/code/echo/echoMesh/src/audio/OpusWrapper.cpp" "CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/audio/OpusWrapper.cpp.o.d"
   "/home/moon/桌面/code/echo/echoMesh/src/main.cpp" "CMakeFiles/echomesh_server.dir/src/main.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/main.cpp.o.d"
   )
 
