@@ -7,8 +7,8 @@
 
 DEFINE_string(host, "0.0.0.0", "Server host address");
 DEFINE_int32(port, 8888, "Server port");
-DEFINE_int32(max_threads, 64, "Max threads for audio broadcasting");
-DEFINE_int32(max_pending_packets, 5000, "Max pending packets before dropping");
+DEFINE_int32(max_threads, 256, "Max threads for audio broadcasting");
+DEFINE_int32(max_pending_packets, 20000, "Max pending packets before dropping");
 DEFINE_string(log_level, "info", "Log level (trace, debug, info, warn, err, critical, off)");
 
 void SetLogLevel(const std::string& level) {

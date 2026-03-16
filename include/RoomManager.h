@@ -30,7 +30,7 @@ class StreamWrapper : public std::enable_shared_from_this<StreamWrapper> {
 public:
     StreamWrapper(AudioStream* stream) : stream_(stream), closed_(false), is_draining_(false) {}
     
-    bool enqueue(const echomesh::VoicePacket& packet, ThreadPool& pool);
+    bool enqueue(std::shared_ptr<const echomesh::VoicePacket> packet, ThreadPool& pool);
     
     // Updated close to wait for active drainers
     void close() {
@@ -42,7 +42,7 @@ public:
         close_cv_.wait(lock, [this] { return !is_draining_; });
         
         stream_ = nullptr;
-        std::queue<echomesh::VoicePacket> empty;
+        std::queue<std::shared_ptr<const echomesh::VoicePacket>> empty;
         std::swap(write_queue_, empty);
     }
 
@@ -51,7 +51,7 @@ private:
 
     AudioStream* stream_;
     bool closed_;
-    std::queue<echomesh::VoicePacket> write_queue_;
+    std::queue<std::shared_ptr<const echomesh::VoicePacket>> write_queue_;
     std::mutex mutex_;
     std::condition_variable close_cv_;
     std::atomic<bool> is_draining_;

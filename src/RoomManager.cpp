@@ -14,16 +14,20 @@ std::atomic<int> g_pending_packets(0);
 
 // --- StreamWrapper Implementation ---
 
-bool StreamWrapper::enqueue(const echomesh::VoicePacket& packet, ThreadPool& pool) {
+bool StreamWrapper::enqueue(std::shared_ptr<const echomesh::VoicePacket> packet, ThreadPool& pool) {
     {
         std::lock_guard<std::mutex> lock(mutex_);
         if (closed_) return false;
 
-        // Limit individual queue size to 50 packets (approx 1s of audio)
-        if (write_queue_.size() > 50) {
+        // OPTIMIZATION: Increased individual queue size to 200 packets (approx 4s of audio)
+        // This helps absorb temporary network spikes or scheduler delays.
+        if (write_queue_.size() > 200) {
             write_queue_.pop();
             g_pending_packets--;
-            spdlog::warn("Stream queue full, dropping oldest packet");
+            static uint64_t stream_drop_count = 0;
+            if (stream_drop_count++ % 100 == 0) {
+                spdlog::warn("Stream queue full, dropping oldest packet (sampled 1/100)");
+            }
         }
 
         write_queue_.push(packet);
@@ -43,7 +47,7 @@ bool StreamWrapper::enqueue(const echomesh::VoicePacket& packet, ThreadPool& poo
 
 void StreamWrapper::drain() {
     while (true) {
-        echomesh::VoicePacket packet;
+        std::shared_ptr<const echomesh::VoicePacket> packet;
         AudioStream* current_stream = nullptr;
 
         {
@@ -59,9 +63,10 @@ void StreamWrapper::drain() {
             current_stream = stream_;
         }
 
-        if (current_stream) {
-            // Blocking write happens here, but only affects this stream's dedicated drain task
-            if (!current_stream->Write(packet)) {
+        if (current_stream && packet) {
+            // Write takes a const reference, so we can pass the shared object directly.
+            // This still involves internal gRPC serialization, but we've eliminated the deep copy in the queue.
+            if (!current_stream->Write(*packet)) {
                 std::lock_guard<std::mutex> lock(mutex_);
                 closed_ = true; // Mark as closed if write fails
                 stream_ = nullptr;
@@ -121,6 +126,10 @@ void Room::broadcastAudio(UserId senderId, const echomesh::VoicePacket& packet, 
         return;
     }
 
+    // MEMORY OPTIMIZATION: Wrap the packet in a shared_ptr once.
+    // All subsequent enqueues will only copy the pointer, not the entire audio payload.
+    auto shared_packet = std::make_shared<const echomesh::VoicePacket>(packet);
+
     std::vector<std::shared_ptr<StreamWrapper>> targets;
     {
         std::lock_guard<std::mutex> lock(mutex_);
@@ -131,11 +140,8 @@ void Room::broadcastAudio(UserId senderId, const echomesh::VoicePacket& packet, 
         }
     }
 
-    // BROADCAST OPTIMIZATION:
-    // Broadcaster thread now only performs ultra-fast push operations.
-    // This removes O(N^2) lock contention during gRPC Write calls.
     for (auto& stream_wrapper : targets) {
-        stream_wrapper->enqueue(packet, pool);
+        stream_wrapper->enqueue(shared_packet, pool);
     }
 }
 
@@ -143,7 +149,7 @@ void Room::broadcastAudio(UserId senderId, const echomesh::VoicePacket& packet, 
 // --- RoomManager Implementation ---
 
 RoomManager::RoomManager() {
-    // max_threads threads is a healthy amount for a pool where tasks spend time in IO (Write)
+    // 256 threads is a healthy amount for a pool where tasks spend time in blocking IO (Write)
     spdlog::info("Initializing RoomManager with {} threads", FLAGS_max_threads);
     m_threadPool = std::make_unique<ThreadPool>(FLAGS_max_threads);
 }
