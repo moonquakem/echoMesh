@@ -1,4 +1,5 @@
 #include "EchoMeshServiceImpl.h"
+#include "DatabaseManager.h"
 #include <grpcpp/grpcpp.h>
 #include <iostream>
 #include <memory>
@@ -26,6 +27,12 @@ void SetLogLevel(const std::string& level) {
 }
 
 void RunServer() {
+    // Initialize Database
+    if (!DatabaseManager::getInstance().init("localhost", "echo_user", "echo_pass123", "echomesh")) {
+        spdlog::critical("Failed to initialize database. Exiting.");
+        return;
+    }
+
     std::string server_address = FLAGS_host + ":" + std::to_string(FLAGS_port);
     EchoMeshServiceImpl service;
 

@@ -27,7 +27,7 @@ grpc::Status EchoMeshServiceImpl::Login(
     spdlog::info("RPC: Login for user '{}'", request->username());
 
     std::string token = generate_token();
-    UserId userId = m_userManager.login(request->username(), token);
+    UserId userId = m_userManager.login(request->username(), request->password(), token);
 
     if (userId > 0) {
         response->set_status_code(echomesh::SC_OK);

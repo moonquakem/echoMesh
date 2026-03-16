@@ -23,7 +23,7 @@ public:
     static UserManager &getInstance();
 
     // Creates a user session with a token and returns the new user's ID
-    UserId login(const std::string &username, const Token &token);
+    UserId login(const std::string &username, const std::string &password, const Token &token);
 
     // Removes a user session
     void logout(UserId userId);

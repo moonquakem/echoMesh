@@ -21,7 +21,6 @@ bool StreamWrapper::enqueue(std::shared_ptr<const grpc::ByteBuffer> buffer, Thre
         std::lock_guard<std::mutex> lock(mutex_);
         if (closed_) return false;
 
-        // Increased individual queue size to 200 packets
         if (write_queue_.size() > 200) {
             write_queue_.pop();
             g_pending_packets--;
@@ -64,8 +63,6 @@ void StreamWrapper::drain() {
         }
 
         if (current_stream && buffer) {
-            // Write the pre-serialized ByteBuffer directly. 
-            // This bypasses the serialization step in gRPC for this stream.
             if (!current_stream->Write(*buffer, grpc::WriteOptions())) {
                 std::lock_guard<std::mutex> lock(mutex_);
                 closed_ = true;
@@ -125,8 +122,6 @@ void Room::broadcastAudio(UserId senderId, const echomesh::VoicePacket& packet, 
         return;
     }
 
-    // PRE-SERIALIZATION OPTIMIZATION:
-    // Serialize the packet ONCE into a ByteBuffer.
     auto shared_buffer = std::make_shared<grpc::ByteBuffer>();
     bool own_buffer = false;
     grpc::Status status = grpc::GenericSerialize<grpc::ProtoBufferWriter, echomesh::VoicePacket>(
@@ -148,9 +143,6 @@ void Room::broadcastAudio(UserId senderId, const echomesh::VoicePacket& packet, 
         }
     }
 
-    // Push the pre-serialized buffer to all targets.
-    // Each targets[i]->Write(*shared_buffer) will now be a simple bit-copy 
-    // instead of a full protobuf serialization.
     for (auto& stream_wrapper : targets) {
         stream_wrapper->enqueue(shared_buffer, pool);
     }
@@ -160,7 +152,7 @@ void Room::broadcastAudio(UserId senderId, const echomesh::VoicePacket& packet, 
 // --- RoomManager Implementation ---
 
 RoomManager::RoomManager() {
-    spdlog::info("Initializing RoomManager with {} threads", FLAGS_max_threads);
+    spdlog::info("Initializing Sharded RoomManager with {} threads", FLAGS_max_threads);
     m_threadPool = std::make_unique<ThreadPool>(FLAGS_max_threads);
 }
 
@@ -169,57 +161,95 @@ RoomManager &RoomManager::getInstance() {
   return instance;
 }
 
-bool RoomManager::createRoom_nl(const RoomId &roomId) {
-    if (rooms_.count(roomId)) {
-        return false;
-    }
-    rooms_[roomId] = std::make_shared<Room>();
-    return true;
+RoomManager::RoomShard& RoomManager::getRoomShard(const RoomId& roomId) {
+    size_t hash = std::hash<RoomId>{}(roomId);
+    return room_shards_[hash % kNumShards];
+}
+
+RoomManager::UserShard& RoomManager::getUserShard(UserId userId) {
+    size_t hash = std::hash<UserId>{}(userId);
+    return user_shards_[hash % kNumShards];
 }
 
 bool RoomManager::createRoom(const RoomId &roomId) {
-  std::lock_guard<std::mutex> lock(mutex_);
-  return createRoom_nl(roomId);
+    auto& shard = getRoomShard(roomId);
+    std::unique_lock<std::shared_mutex> lock(shard.mutex);
+    if (shard.rooms.count(roomId)) {
+        return false;
+    }
+    shard.rooms[roomId] = std::make_shared<Room>();
+    return true;
 }
 
 bool RoomManager::joinRoom(const RoomId &roomId, UserId userId) {
-  std::lock_guard<std::mutex> lock(mutex_);
-  auto it = rooms_.find(roomId);
-  if (it == rooms_.end()) {
-    if (!createRoom_nl(roomId)) return false;
-    it = rooms_.find(roomId);
-  }
-  it->second->addUser(userId);
-  user_to_room_map_[userId] = roomId;
-  return true;
+    std::shared_ptr<Room> room;
+    {
+        auto& r_shard = getRoomShard(roomId);
+        // Use unique_lock because we might need to create the room
+        std::unique_lock<std::shared_mutex> lock(r_shard.mutex);
+        auto it = r_shard.rooms.find(roomId);
+        if (it == r_shard.rooms.end()) {
+            room = std::make_shared<Room>();
+            r_shard.rooms[roomId] = room;
+        } else {
+            room = it->second;
+        }
+    }
+    
+    room->addUser(userId);
+
+    auto& u_shard = getUserShard(userId);
+    std::unique_lock<std::shared_mutex> lock(u_shard.mutex);
+    u_shard.map[userId] = roomId;
+    return true;
 }
 
 void RoomManager::leaveRoom(const RoomId &roomId, UserId userId) {
-  std::lock_guard<std::mutex> lock(mutex_);
-  auto it = rooms_.find(roomId);
-  if (it != rooms_.end()) {
-    it->second->removeUser(userId);
-  }
-  user_to_room_map_.erase(userId);
+    auto& r_shard = getRoomShard(roomId);
+    std::shared_ptr<Room> room;
+    {
+        std::shared_lock<std::shared_mutex> lock(r_shard.mutex);
+        auto it = r_shard.rooms.find(roomId);
+        if (it != r_shard.rooms.end()) {
+            room = it->second;
+        }
+    }
+
+    if (room) {
+        room->removeUser(userId);
+    }
+
+    auto& u_shard = getUserShard(userId);
+    std::unique_lock<std::shared_mutex> lock(u_shard.mutex);
+    u_shard.map.erase(userId);
 }
 
 void RoomManager::userLogout(UserId userId) {
-    std::unique_lock<std::mutex> lock(mutex_);
-    auto it = user_to_room_map_.find(userId);
-    if (it != user_to_room_map_.end()) {
-        RoomId roomId = it->second;
-        lock.unlock();
+    RoomId roomId;
+    bool found = false;
+    {
+        auto& u_shard = getUserShard(userId);
+        std::shared_lock<std::shared_mutex> lock(u_shard.mutex);
+        auto it = u_shard.map.find(userId);
+        if (it != u_shard.map.end()) {
+            roomId = it->second;
+            found = true;
+        }
+    }
+
+    if (found) {
         leaveRoom(roomId, userId);
     }
 }
 
 std::shared_ptr<Room> RoomManager::getRoom(const RoomId &roomId) {
-  std::lock_guard<std::mutex> lock(mutex_);
-  auto it = rooms_.find(roomId);
-  if (it != rooms_.end()) {
-    return it->second;
-  }
-  return nullptr;
+    auto& shard = getRoomShard(roomId);
+    std::shared_lock<std::shared_mutex> lock(shard.mutex);
+    auto it = shard.rooms.find(roomId);
+    if (it != shard.rooms.end()) {
+        return it->second;
+    }
+    return nullptr;
 }
 
 std::set<UserId> RoomManager::getUsersInRoom(const RoomId &roomId) {

@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/moon/桌面/code/echo/echoMesh/build/message.grpc.pb.cc" "CMakeFiles/echomesh_server.dir/message.grpc.pb.cc.o" "gcc" "CMakeFiles/echomesh_server.dir/message.grpc.pb.cc.o.d"
   "/home/moon/桌面/code/echo/echoMesh/build/message.pb.cc" "CMakeFiles/echomesh_server.dir/message.pb.cc.o" "gcc" "CMakeFiles/echomesh_server.dir/message.pb.cc.o.d"
+  "/home/moon/桌面/code/echo/echoMesh/src/DatabaseManager.cpp" "CMakeFiles/echomesh_server.dir/src/DatabaseManager.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/DatabaseManager.cpp.o.d"
   "/home/moon/桌面/code/echo/echoMesh/src/EchoMeshServiceImpl.cpp" "CMakeFiles/echomesh_server.dir/src/EchoMeshServiceImpl.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/EchoMeshServiceImpl.cpp.o.d"
   "/home/moon/桌面/code/echo/echoMesh/src/RoomManager.cpp" "CMakeFiles/echomesh_server.dir/src/RoomManager.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/RoomManager.cpp.o.d"
   "/home/moon/桌面/code/echo/echoMesh/src/UserManager.cpp" "CMakeFiles/echomesh_server.dir/src/UserManager.cpp.o" "gcc" "CMakeFiles/echomesh_server.dir/src/UserManager.cpp.o.d"

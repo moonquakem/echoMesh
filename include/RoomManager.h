@@ -117,6 +117,11 @@ private:
   std::unordered_map<UserId, std::shared_ptr<StreamWrapper>> audio_streams_;
 };
 
+#include <shared_mutex>
+#include <array>
+
+// ... RoomManager class definition ...
+
 class RoomManager {
 public:
   static RoomManager &getInstance();
@@ -132,18 +137,29 @@ public:
   void removeAudioStream(const RoomId& roomId, UserId userId);
   void broadcastAudio(const RoomId& roomId, UserId senderId, const echomesh::VoicePacket& packet);
 
-
 private:
   RoomManager();
   ~RoomManager() = default;
   RoomManager(const RoomManager &) = delete;
   RoomManager &operator=(const RoomManager &) = delete;
 
-  bool createRoom_nl(const RoomId &roomId);
+  // Sharding structures to reduce lock contention
+  struct RoomShard {
+    mutable std::shared_mutex mutex;
+    std::unordered_map<RoomId, std::shared_ptr<Room>> rooms;
+  };
 
-  mutable std::mutex mutex_;
-  std::unordered_map<RoomId, std::shared_ptr<Room>> rooms_;
-  std::unordered_map<UserId, RoomId> user_to_room_map_;
-  
+  struct UserShard {
+    mutable std::shared_mutex mutex;
+    std::unordered_map<UserId, RoomId> map;
+  };
+
+  static constexpr size_t kNumShards = 32;
+  std::array<RoomShard, kNumShards> room_shards_;
+  std::array<UserShard, kNumShards> user_shards_;
+
+  RoomShard& getRoomShard(const RoomId& roomId);
+  UserShard& getUserShard(UserId userId);
+
   std::unique_ptr<ThreadPool> m_threadPool;
 };

@@ -3,6 +3,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/echomesh_server.dir/message.grpc.pb.cc.o.d"
   "CMakeFiles/echomesh_server.dir/message.pb.cc.o"
   "CMakeFiles/echomesh_server.dir/message.pb.cc.o.d"
+  "CMakeFiles/echomesh_server.dir/src/DatabaseManager.cpp.o"
+  "CMakeFiles/echomesh_server.dir/src/DatabaseManager.cpp.o.d"
   "CMakeFiles/echomesh_server.dir/src/EchoMeshServiceImpl.cpp.o"
   "CMakeFiles/echomesh_server.dir/src/EchoMeshServiceImpl.cpp.o.d"
   "CMakeFiles/echomesh_server.dir/src/RoomManager.cpp.o"

@@ -482,7 +482,18 @@ CMakeFiles/echomesh_server.dir/src/main.cpp.o: \
  /usr/include/c++/13/bits/this_thread_sleep.h /usr/include/semaphore.h \
  /usr/include/x86_64-linux-gnu/bits/semaphore.h \
  /usr/include/c++/13/condition_variable /usr/include/c++/13/future \
- /usr/include/c++/13/bits/atomic_futex.h \
+ /usr/include/c++/13/bits/atomic_futex.h /usr/include/c++/13/shared_mutex \
+ /home/moon/桌面/code/echo/echoMesh/include/DatabaseManager.h \
+ /usr/include/mysql/mysql.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/stdbool.h \
+ /usr/include/mysql/field_types.h /usr/include/mysql/my_list.h \
+ /usr/include/mysql/mysql_com.h /usr/include/mysql/my_command.h \
+ /usr/include/mysql/my_compress.h \
+ /usr/include/mysql/udf_registration_types.h \
+ /usr/include/mysql/client_plugin.h \
+ /usr/include/mysql/plugin_auth_common.h \
+ /usr/include/mysql/mysql_version.h /usr/include/mysql/mysql_time.h \
+ /usr/include/mysql/errmsg.h \
  /home/moon/桌面/code/echo/echoMesh/build/_deps/gflags-build/include/gflags/gflags.h \
  /home/moon/桌面/code/echo/echoMesh/build/_deps/gflags-build/include/gflags/gflags_declare.h \
  /home/moon/桌面/code/echo/echoMesh/build/_deps/spdlog-src/include/spdlog/spdlog.h \

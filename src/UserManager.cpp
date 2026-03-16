@@ -1,5 +1,6 @@
 #include "UserManager.h"
 #include "RoomManager.h"
+#include "DatabaseManager.h"
 #include <spdlog/spdlog.h>
 
 UserManager &UserManager::getInstance() {
@@ -7,25 +8,49 @@ UserManager &UserManager::getInstance() {
   return instance;
 }
 
-UserId UserManager::login(const std::string &username, const Token &token) {
+UserId UserManager::login(const std::string &username, const std::string &password, const Token &token) {
   std::lock_guard<std::mutex> lock(mutex_);
   
-  // In a real app, you might check if the username is already taken.
-  // For this project, we allow multiple logins with the same username.
-  
-  UserId userId = next_user_id_++;
-  
+  auto& db = DatabaseManager::getInstance();
+  auto user_opt = db.getUser(username);
+
+  UserId actual_userId = 0;
+
+  if (!user_opt) {
+      // User not found, create one (auto-register)
+      spdlog::info("User '{}' not found, creating new account", username);
+      if (!db.createUser(username, password)) {
+          spdlog::error("Failed to create user '{}' in database", username);
+          return 0;
+      }
+      user_opt = db.getUser(username);
+      if (!user_opt) return 0;
+  }
+
+  // Password verification (using simple comparison for now)
+  if (user_opt->password_hash != password) {
+      spdlog::warn("Invalid password for user '{}'", username);
+      return 0;
+  }
+
+  actual_userId = user_opt->id;
+
+  // Check if this specific session is already active
+  if (token_to_user_.count(token)) {
+      return token_to_user_[token];
+  }
+
   User newUser;
-  newUser.id = userId;
+  newUser.id = actual_userId;
   newUser.username = username;
   newUser.token = token;
   
-  users_[userId] = newUser;
-  token_to_user_[token] = userId;
+  users_[actual_userId] = newUser;
+  token_to_user_[token] = actual_userId;
   
-  spdlog::info("User '{}' logged in with ID {}", username, userId);
+  spdlog::info("User '{}' logged in with database ID {}", username, actual_userId);
   
-  return userId;
+  return actual_userId;
 }
 
 void UserManager::logout(UserId userId) {
@@ -34,28 +59,21 @@ void UserManager::logout(UserId userId) {
   auto it = users_.find(userId);
   if (it != users_.end()) {
     std::string username = it->second.username;
-    // Remove token mapping first
     token_to_user_.erase(it->second.token);
-    // Then remove user object
     users_.erase(it);
 
     spdlog::info("User '{}' (ID {}) logged out", username, userId);
-
-    // Also remove user from any room they might be in.
-    // This maintains the logic from the old implementation.
     RoomManager::getInstance().userLogout(userId);
   }
 }
 
 UserId UserManager::getUserIdByToken(const Token &token) {
   std::lock_guard<std::mutex> lock(mutex_);
-  
   auto it = token_to_user_.find(token);
   if (it != token_to_user_.end()) {
     return it->second;
   }
-  
-  return 0; // Invalid user id
+  return 0;
 }
 
 void UserManager::joinRoom(UserId userId, const RoomId& roomId) {
@@ -80,5 +98,5 @@ RoomId UserManager::getRoomId(UserId userId) {
     if (it != users_.end()) {
         return it->second.current_room;
     }
-    return ""; // Return empty string if user not found or not in a room
+    return "";
 }

@@ -261,6 +261,30 @@ message.pb.cc.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/message.pb.cc.s
 .PHONY : message.pb.cc.s
 
+src/DatabaseManager.o: src/DatabaseManager.cpp.o
+.PHONY : src/DatabaseManager.o
+
+# target to build an object file
+src/DatabaseManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/DatabaseManager.cpp.o
+.PHONY : src/DatabaseManager.cpp.o
+
+src/DatabaseManager.i: src/DatabaseManager.cpp.i
+.PHONY : src/DatabaseManager.i
+
+# target to preprocess a source file
+src/DatabaseManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/DatabaseManager.cpp.i
+.PHONY : src/DatabaseManager.cpp.i
+
+src/DatabaseManager.s: src/DatabaseManager.cpp.s
+.PHONY : src/DatabaseManager.s
+
+# target to generate assembly for a file
+src/DatabaseManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/echomesh_server.dir/build.make CMakeFiles/echomesh_server.dir/src/DatabaseManager.cpp.s
+.PHONY : src/DatabaseManager.cpp.s
+
 src/EchoMeshServiceImpl.o: src/EchoMeshServiceImpl.cpp.o
 .PHONY : src/EchoMeshServiceImpl.o
 
@@ -379,6 +403,9 @@ help:
 	@echo "... message.pb.o"
 	@echo "... message.pb.i"
 	@echo "... message.pb.s"
+	@echo "... src/DatabaseManager.o"
+	@echo "... src/DatabaseManager.i"
+	@echo "... src/DatabaseManager.s"
 	@echo "... src/EchoMeshServiceImpl.o"
 	@echo "... src/EchoMeshServiceImpl.i"
 	@echo "... src/EchoMeshServiceImpl.s"

@@ -61,6 +61,7 @@ set(SOURCE_FILES
     src/main.cpp
     src/UserManager.cpp
     src/RoomManager.cpp
+    src/DatabaseManager.cpp
     src/EchoMeshServiceImpl.cpp
     ${PROTO_CC}
     ${GRPC_CC}
@@ -79,4 +80,5 @@ target_link_libraries(echomesh_server PRIVATE
     asound
     gflags
     spdlog::spdlog
+    mysqlclient
 )
