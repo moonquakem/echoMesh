@@ -25,14 +25,10 @@ async def run_client(server_addr, room_name, client_id, duration):
             login_req = message_pb2.LoginRequest(username=f"user_{client_id}", password="password")
             login_resp = await stub.Login(login_req)
             token = login_resp.session_token
-            # Metadata key must match server expectation
-            metadata = [('session-token', token)]
+            metadata = [('authorization', token)]
 
-            # 2. Join Room (using correct action and field name)
-            join_req = message_pb2.RoomActionRequest(
-                room_id=room_name, 
-                action_type=message_pb2.RA_CREATE_OR_JOIN
-            )
+            # 2. Join Room
+            join_req = message_pb2.RoomActionRequest(room_id=room_name, action=message_pb2.RA_JOIN)
             await stub.ManageRoom(join_req, metadata=metadata)
 
             # 3. Stream Audio
@@ -44,8 +40,8 @@ async def run_client(server_addr, room_name, client_id, duration):
             async def audio_generator():
                 nonlocal sent_count
                 while time.time() - start_time < duration:
-                    # Field name in VoicePacket is 'audio_data'
-                    packet = message_pb2.VoicePacket(audio_data=random.randbytes(160), user_id=client_id)
+                    # Typical 20ms Opus packet size is ~160 bytes
+                    packet = message_pb2.VoicePacket(data=random.randbytes(160), user_id=client_id)
                     yield packet
                     sent_count += 1
                     await asyncio.sleep(0.02)
@@ -79,7 +75,7 @@ async def run_room_test(server_addr, room_name, clients_per_room, duration, base
 async def main():
     parser = argparse.ArgumentParser(description="EchoMesh Multi-Room Load Tester")
     parser.add_argument("--host", default="localhost", help="Server host")
-    parser.add_argument("--port", default="8888", help="Server port")
+    parser.add_argument("--port", default="50051", help="Server port")
     parser.add_argument("--rooms", type=int, default=2, help="Number of rooms")
     parser.add_argument("--clients-per-room", type=int, default=10, help="Clients per room")
     parser.add_argument("--duration", type=int, default=10, help="Test duration in seconds")
@@ -98,8 +94,8 @@ async def main():
     room_tasks = []
     for r in range(args.rooms):
         room_name = f"room_{r+1}"
-        # Offset IDs to ensure uniqueness
-        room_base_id = (r + 1) * 1000 
+        # Offset IDs to ensure uniqueness across rooms
+        room_base_id = r * 1000 
         room_tasks.append(run_room_test(server_addr, room_name, args.clients_per_room, args.duration, room_base_id))
 
     # Run all rooms in parallel
@@ -112,6 +108,7 @@ async def main():
     total_recv = sum(r[1] for r in all_results)
     
     # Expected received packets calculation:
+    # In each room, 1 sent packet should be received by (clients_per_room - 1) other clients.
     expected_recv = 0
     for r_idx in range(args.rooms):
         room_sent_packets = all_results[r_idx][0]
